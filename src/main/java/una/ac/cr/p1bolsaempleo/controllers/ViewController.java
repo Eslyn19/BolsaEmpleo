@@ -1,19 +1,19 @@
-package una.ac.cr.p1bolsaempleo;
+package una.ac.cr.p1bolsaempleo.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class ViewController {
 
-    @RequestMapping({"/", "/MainView.html"})
-    public String mainView() {
-        return "MainView.html";
+    @GetMapping("/")
+    public String getMainPage() {
+        return "MainView";
     }
 
-    @RequestMapping("/")
-    public String loginView() {
+    @GetMapping("/login")
+    public String getLoginPage() {
         return "LoginView";
     }
+
 }
