@@ -5,6 +5,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# Compiled files
+*.class
+
 ### STS ###
 .apt_generated
 .classpath
@@ -31,6 +34,30 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+# OS files
+.DS_Store
+Thumbs.db
+
 ### VS Code ###
 .vscode/
 .vs/
+
+# Maven wrapper logs
+.mvn/wrapper/maven-wrapper.properties
+
+# Build folders
+build/
+
+# Temporary files
+*.tmp
+*.swp
+
+# Environment files
+.env
+
+# Node (por si usas frontend luego)
+node_modules/
+
+# Application secrets (si existieran)
+application-local.properties
+application-dev.properties

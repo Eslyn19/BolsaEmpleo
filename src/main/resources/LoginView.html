@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingreso</title>
+    <link rel="stylesheet" href="static/css/Login.css">
+    <link rel="icon" href="static/images/loginIcon.png" type="image/x-icon">
+</head>
+<body>
+    <!-- Espacios para obtener correo & pass -->
+    <input type="radio" name="mode" id="signInTab" checked hidden>
+    <input type="radio" name="mode" id="signUpTab" hidden>
+    <div class="container" id="container">
+
+        <div class="form-container sign-up-container">
+            <form action="#">
+                <h1>Crear cuenta</h1>
+                <div class="social-container">
+                    <a href="#" class="social"> <img src="static/images/facebook.png" alt="Facebook"> </a>
+                    <a href="#" class="social"> <img src="static/images/google.png" alt="Google"> </a>
+                    <a href="#" class="social"> <img src="static/images/linkedin.png" alt="Linkedin"> </a>
+                </div>
+                <span>O usa tu correo para registrarte</span>
+                <input type="text" placeholder="Nombre" />
+                <input type="email" placeholder="Correo" />
+                <input type="password" placeholder="Contraseña" />
+                <button>Registrarse</button>
+            </form>
+        </div>
+
+        <div class="form-container sign-in-container">
+            <form action="#">
+                <h1>Iniciar sesión</h1>
+                <div class="social-container">
+                    <a href="#" class="social"> <img src="static/images/facebook.png" alt="Facebook"> </a>
+                    <a href="#" class="social"> <img src="static/images/google.png" alt="Google"> </a>
+                    <a href="#" class="social"> <img src="static/images/linkedin.png" alt="Linkedin"> </a>
+                </div>
+                <span>O usa tu cuenta</span>
+                <input type="email" placeholder="Correo" />
+                <input type="password" placeholder="Contraseña"/>
+                <a href="#">¿Olvidaste tu contraseña?</a>
+                <button>Ingresar</button>
+            </form>
+        </div>
+
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Bienvenido/a!</h1>
+                    <p>Para mantenerse conectado con nosotros, inicia sesión con tu información personal.</p>
+                    <label style="cursor: pointer" class="ghost" for="signInTab">Ingresar</label>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Hola, amigo/a!</h1>
+                    <p>Introduce tus datos personales y comienza tu viaje con nosotros</p>
+                    <label style="cursor: pointer" class="ghost" for="signUpTab">Registrarse</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>
+            Creado por Eslyn Jara C. y Mishelle Rojas C.<br>
+            Mira como creamos este proyecto y como funciona
+            <a target="_blank" href=https://github.com/Eslyn19/BolsaEmpleo">aquí.</a>
+        </p>
+    </footer>
+
+</body>
+</html>
