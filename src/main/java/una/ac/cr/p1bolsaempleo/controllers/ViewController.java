@@ -16,4 +16,9 @@ public class ViewController {
         return "LoginView";
     }
 
+    @GetMapping("/form")
+    public String getFormPage() {
+        return "FormView";
+    }
+
 }
