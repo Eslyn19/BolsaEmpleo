@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario pre-ingreso</title>
+    <link rel="stylesheet" href="/css/form.css">
+    <link rel="icon" href="/images/formIcon.png" type="image/x-icon">
+</head>
+
+<body>
+    <div class="contact-us">
+        <form action="#">
+
+            <label for="customerName">
+                Nombre y apellidos
+            </label>
+            <input type="text" id="customerName" name="customerName" required>
+
+            <label for="customerId">
+                Identificación
+            </label>
+            <input type="text" id="customerId" name="customerId" required>
+
+            <label for="customerEmail">
+                Correo
+            </label>
+            <input type="email" id="customerEmail" name="customerEmail" required>
+
+            <label for="customerPhone">Telefono</label>
+            <input type="tel" id="customerPhone" name="customerPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+
+            <label for="orderNumber">Nacionalidad</label>
+            <input type="text" id="orderNumber" name="orderNumber">
+
+            <h3>Proporcione toda la información sobre su peticion de registro.</h3>
+
+            <button id="customerOrder">SUBMIT</button>
+        </form>
+    </div>
+
+</body>
+</html>
