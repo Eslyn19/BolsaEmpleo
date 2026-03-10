@@ -16,9 +16,14 @@ public class ViewController {
         return "LoginView";
     }
 
-    @GetMapping("/form")
-    public String getFormPage() {
-        return "FormView";
+    @GetMapping("/userform")
+    public String getOferenteFormPage() {
+        return "OferenteFormView";
     }
+
+//    @GetMapping("/empresa")
+//    public String getEmpresaPage() {
+//        return "EmpresaView";
+//    }
 
 }

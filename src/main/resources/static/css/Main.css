@@ -17,13 +17,11 @@ body {
     flex-direction: column;
 }
 
-/* Top bar */
 .top-bar {
     height: 4px;
     background: linear-gradient(90deg, #6b9bd1 0%, #8bb8e8 100%);
 }
 
-/* Main nav header */
 .main-nav {
     display: flex;
     align-items: center;
@@ -136,7 +134,6 @@ body {
     margin-left: 0.15rem;
 }
 
-/* Main content */
 .main-content {
     flex: 1;
     max-width: 1200px;
@@ -154,7 +151,6 @@ body {
     margin-bottom: 2rem;
 }
 
-/* Two-column layout */
 .content-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -173,7 +169,6 @@ body {
     }
 }
 
-/* Text column */
 .text-column {
     padding-right: 1rem;
 }

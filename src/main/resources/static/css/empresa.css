@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Spartan&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@400;600&display=swap');
 
 *{
     margin:0;
@@ -6,7 +6,7 @@
 }
 
 body{
-    background:url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/38816/image-from-rawpixel-id-2044837-jpeg.jpg") center center no-repeat;
+    background:url("../images/a.jpg") center center no-repeat;
     background-size:cover;
     width:100vw;
     height:100vh;
@@ -20,9 +20,8 @@ body{
 
 .contact-us{
     background:#f8f4e5;
-    padding:50px 100px;
-    border-radius: 40px;
-    border-top:10px solid #f45702;
+    padding:35px 80px;
+    border-radius: 50px;
 }
 
 label,
@@ -36,7 +35,47 @@ textarea{
 }
 
 input{
-    margin-bottom:24pt;
+    margin-bottom:18pt;
+}
+
+
+.field-floating{
+    position:relative;
+    margin-bottom:18pt;
+    padding-top:20px;
+}
+
+.field-floating input{
+    margin-bottom:0;
+    padding-top:18px;
+}
+
+.field-floating label{
+    position:absolute;
+    left:8px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:12pt;
+    color:rgba(42,41,62,.6);
+    pointer-events:none;
+    transition:all .2s ease;
+}
+
+.field-floating input:focus + label,
+.field-floating input:not(:placeholder-shown) + label{
+    top:4px;
+    transform:translateY(0);
+    font-size:10pt;
+    color:#f45702;
+}
+
+.field-row{
+    display:flex;
+    gap:20px;
+}
+
+.field-col{
+    flex:1;
 }
 
 h3{
@@ -64,11 +103,12 @@ textarea{
     background:#f8f4e5;
     padding-left:5px;
     outline:none;
+    transition: border 0.2s ease;
 }
 
-input:focus,
-textarea:focus{
-    border:1px solid #6bd4b1;
+input:hover,
+textarea:hover{
+    border:1px solid #f45702;
 }
 
 textarea{
@@ -82,7 +122,7 @@ button{
     padding:0 20px;
     border:none;
     background:#f45702;
-    color:white;
+    color: #ffffff;
     letter-spacing:2px;
     transition:.2s all ease-in-out;
     border-bottom:2px solid transparent;
@@ -94,10 +134,6 @@ button:hover{
     background:inherit;
     color:#f45702;
     border-bottom:2px solid #f45702;
-}
-
-::selection{
-    background:rgb(255,199,184);
 }
 
 input:-webkit-autofill,

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario pre-ingreso</title>
+    <link rel="icon" href="/images/formIcon.png" type="image/x-icon">
+</head>
+
+<body>
+<!-- Cargar el css aqui para evitar atraso carga de imagen -->
+<link rel="stylesheet" href="/css/Oferenteform.css">
+<div class="contact-us">
+    <form action="#">
+
+        <div class="field">
+            <label for="customerName">Nombre completo</label>
+            <input type="text" id="customerName" name="customerName" required>
+        </div>
+
+        <div class="field-row">
+
+            <div class="field">
+                <label for="customerId">Identificación</label>
+                <input type="text" id="customerId" name="customerId" required>
+            </div>
+
+            <div class="field">
+                <label for="customerPhone">Teléfono</label>
+                <input type="tel" id="customerPhone" name="customerPhone">
+            </div>
+
+        </div>
+
+        <div class="field-row">
+
+            <div class="field">
+                <label for="customerEmail">Correo</label>
+                <input type="email" id="customerEmail" name="customerEmail" required>
+            </div>
+
+            <div class="field">
+                <label for="customerId">Lugar de residencia</label>
+                <input type="text" id="residenciaId" name="customerResidencia" required>
+            </div>
+
+        </div>
+
+        <div class="field">
+            <label for="nacionalidadId">Nacionalidad</label>
+            <input type="text" id="nacionalidadId" name="nacionalidad" required>
+        </div>
+
+        <div class="field">
+            <label for="customerPassword">Contraseña</label>
+            <input type="password" id="customerPassword" name="customerPassword" required>
+        </div>
+
+        <div class="field">
+            <label for="customerPasswordConfirm">Verificar contraseña</label>
+            <input type="password" id="customerPasswordConfirm" name="customerPasswordConfirm" required>
+        </div>
+
+        <h3>Proporcione toda la información sobre su petición de registro.</h3>
+
+        <button type="submit">Enviar</button>
+
+    </form>
+</div>
+
+</body>
+</html>
