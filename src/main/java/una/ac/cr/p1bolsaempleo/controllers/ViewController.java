@@ -13,7 +13,7 @@ public class ViewController {
 
     @GetMapping("/login")
     public String getLoginPage() {
-        return "LoginView";
+        return "Registro";
     }
 
     @GetMapping("/userform")
