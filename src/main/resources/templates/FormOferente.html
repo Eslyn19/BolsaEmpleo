@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario pre-ingreso</title>
+    <title>Formulario oferente</title>
     <link rel="icon" href="/images/formIcon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/FormOferente.css">
 </head>
 
 <body>
-<!-- Cargar el css aqui para evitar atraso carga de imagen -->
-<link rel="stylesheet" href="/css/Oferenteform.css">
+<a href="/inicio" class="back-button">← Volver</a>
+<div class="gradient-background"></div>
 <div class="contact-us">
-    <form action="#">
+    <form action="#" autocomplete="off">
 
         <div class="field">
             <label for="customerName">Nombre completo</label>
@@ -40,7 +41,7 @@
             </div>
 
             <div class="field">
-                <label for="customerId">Lugar de residencia</label>
+                <label for="residenciaId">Lugar de residencia</label>
                 <input type="text" id="residenciaId" name="customerResidencia" required>
             </div>
 

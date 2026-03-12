@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ViewController {
 
-    @GetMapping("/")
+    @GetMapping("/inicio")
     public String getMainPage() {
-        return "MainView";
+        return "Inicio";
     }
 
     @GetMapping("/login")
@@ -18,7 +18,7 @@ public class ViewController {
 
     @GetMapping("/userform")
     public String getOferenteFormPage() {
-        return "OferenteFormView";
+        return "FormOferente";
     }
 
 //    @GetMapping("/empresa")
