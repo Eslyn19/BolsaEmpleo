@@ -35,10 +35,9 @@ public class ViewController {
         return "Dashboard";
     }
 
-//    @GetMapping("/empresa")
-//    public String getEmpresaPage() {
-//        return "EmpresaView";
-//    }
+    @GetMapping("/empresa")
+    public String getEmpresaPage() { return "FormEmpresa"; }
+
     @PostMapping("/userform")
     public String procesarRegistro(Oferente oferente, Model model) {
     try {

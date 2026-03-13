@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario empresa</title>
+    <link rel="icon" href="/images/empresaIcon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/FormEmpresa.css">
+</head>
+
+<body>
+<a href="/" class="back-button">Inicio</a>
+<div class="gradient-background"></div>
+
+<div class="contact-us">
+    <form action="#" autocomplete="off">
+
+        <div class="field-row">
+            <div class="field">
+
+                <label for="customerName">🏢 Nombre Empresa</label>
+                <input type="text" id="customerName" name="customerName" required>
+            </div>
+            <div class="field">
+                <label for="PaisId">🌎 Localizacion</label>
+                <input type="text" id="PaisId" name="Pais" required>
+            </div>
+        </div>
+
+        <div class="field-row">
+            <div class="field">
+                <label for="residenciaId">📧 Correo</label>
+                <input type="text" id="residenciaId" name="customerResidencia" required>
+            </div>
+
+            <div class="field">
+                <label for="customerPhone">📱 Teléfono</label>
+                <input type="tel" id="customerPhone" name="customerPhone">
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="descripcionId">📄 Descripcion </label>
+            <input type="text" id="descripcionId" name="descripcionId" required>
+        </div>
+
+        <div class="field-row">
+            <div class="field">
+                <label for="customerPassword">🔒 Contraseña</label>
+                <input type="password" id="customerPassword" name="customerPassword" required>
+            </div>
+
+            <div class="field">
+                <label for="customerPasswordConfirm">🔑 Verificar contraseña</label>
+                <input type="password" id="customerPasswordConfirm" name="customerPasswordConfirm" required>
+            </div>
+        </div>
+
+        <h3>Proporcione toda la información para registrar su empresa.</h3>
+        <button type="submit">Enviar</button>
+
+    </form>
+</div>
+</body>
+</html>
