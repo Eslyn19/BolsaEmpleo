@@ -15,15 +15,15 @@
 
     <div class="container" id="container">
         <div class="form-container sign-in-container">
-            <form th:action="@{/login}" method="post">
-                <h1>Iniciar sesión</h1>
+            <form action="/admin/login" method="post">
 
-                <input type="text" name="usuario" placeholder="Correo" required />
-                <input type="password" name="clave" placeholder="Contraseña" required />
+                <h1>Usuario</h1>
+                <input type="text" name="identificacion" placeholder="Identificación" autocomplete="off">
+                <h2>Contraseña</h2>
+                <input type="password" name="clave" placeholder="Contraseña">
+
                 <button type="submit">Ingresar</button>
 
-                <!-- Mensaje de error -->
-                <div th:if="${error}" class="error-message" th:text="${error}"></div>
             </form>
         </div>
 

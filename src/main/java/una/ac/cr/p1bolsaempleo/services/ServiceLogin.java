@@ -1,8 +1,9 @@
-package una.ac.cr.p1bolsaempleo.logic;
+package una.ac.cr.p1bolsaempleo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import una.ac.cr.p1bolsaempleo.data.LoginRepository;
+import una.ac.cr.p1bolsaempleo.models.Login;
 
 @Service
 public class ServiceLogin {

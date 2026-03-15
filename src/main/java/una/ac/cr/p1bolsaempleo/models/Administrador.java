@@ -1,4 +1,4 @@
-package una.ac.cr.p1bolsaempleo.Entities;
+package una.ac.cr.p1bolsaempleo.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;

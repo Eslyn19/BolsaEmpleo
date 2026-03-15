@@ -1,4 +1,4 @@
-package una.ac.cr.p1bolsaempleo.logic;
+package una.ac.cr.p1bolsaempleo.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

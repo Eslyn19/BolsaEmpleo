@@ -1,7 +1,8 @@
-package una.ac.cr.p1bolsaempleo.logic;
+package una.ac.cr.p1bolsaempleo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import una.ac.cr.p1bolsaempleo.data.OferenteRepository;
+import una.ac.cr.p1bolsaempleo.models.Oferente;
 
 import java.util.List;
 
