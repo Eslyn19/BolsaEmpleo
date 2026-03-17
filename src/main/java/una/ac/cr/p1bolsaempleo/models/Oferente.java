@@ -30,7 +30,7 @@ public class Oferente {
     private String id;
     private String nombre;
     private String primerAp;
-    private int nacionalidad;
+    private String nacionalidad;
     private String telefono;
     private String correo;
     private String lugarResidencia;

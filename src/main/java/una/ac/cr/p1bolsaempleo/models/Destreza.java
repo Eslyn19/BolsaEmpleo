@@ -1,7 +1,6 @@
 package una.ac.cr.p1bolsaempleo.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,8 +11,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Destreza {
+
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String nombre;
-    private int nivel;       // 1 a 5
+    private String descripcion;
+    private Boolean activa = true;
+
+    @ManyToOne
+    @JoinColumn(name = "padre_id")
+    private Destreza padre; // referencia a la destreza padre
 }
+

@@ -67,20 +67,21 @@ CREATE TABLE Oferente (
 );
 
 -- ============================================================
--- 4. CARACTERÍSTICAS
+-- 4. Destreza
 -- ============================================================
-CREATE TABLE caracteristica (
-    id            INT UNSIGNED    AUTO_INCREMENT PRIMARY KEY,
-    nombre        VARCHAR(100)    NOT NULL,
+CREATE TABLE destreza (
+    id            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nombre        VARCHAR(100) NOT NULL,
     descripcion   TEXT,
-    padre_id      INT UNSIGNED    NULL,
-    activa        TINYINT(1)      NOT NULL DEFAULT 1,
-    creado_en     DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    padre_id      INT UNSIGNED NULL, -- referencia a la destreza padre
+    activa        TINYINT(1) NOT NULL DEFAULT 1,
+    creado_en     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT fk_caract_padre
-        FOREIGN KEY (padre_id) REFERENCES caracteristica(id)
+    CONSTRAINT fk_destreza_padre
+        FOREIGN KEY (padre_id) REFERENCES destreza(id)
             ON DELETE RESTRICT ON UPDATE CASCADE
 );
+
 
 -- ============================================================
 -- 5. HABILIDADES DEL OFERENTE
@@ -88,19 +89,19 @@ CREATE TABLE caracteristica (
 -- ============================================================
 CREATE TABLE oferente_habilidad (
     oferente_id      INT UNSIGNED NOT NULL,
-    caracteristica_id INT UNSIGNED NOT NULL,
+    destreza_id INT UNSIGNED NOT NULL,
     nivel            TINYINT UNSIGNED NOT NULL DEFAULT 1 CHECK (nivel BETWEEN 1 AND 5),
     actualizado_en   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,
 
-    PRIMARY KEY (oferente_id, caracteristica_id),
+    PRIMARY KEY (oferente_id, destreza_id),
 
     CONSTRAINT fk_oh_oferente
         FOREIGN KEY (oferente_id) REFERENCES oferente(id)
             ON DELETE CASCADE ON UPDATE CASCADE,
 
     CONSTRAINT fk_oh_caract
-        FOREIGN KEY (caracteristica_id) REFERENCES caracteristica(id)
+        FOREIGN KEY (destreza_id) REFERENCES destreza(id)
             ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -130,18 +131,18 @@ CREATE TABLE puesto (
 -- ============================================================
 CREATE TABLE puesto_requisito (
     puesto_id         INT UNSIGNED NOT NULL,
-    caracteristica_id INT UNSIGNED NOT NULL,
+    destreza_id INT UNSIGNED NOT NULL,
     nivel_requerido   TINYINT UNSIGNED NOT NULL DEFAULT 1
     CHECK (nivel_requerido BETWEEN 1 AND 5),
 
-    PRIMARY KEY (puesto_id, caracteristica_id),
+    PRIMARY KEY (puesto_id, destreza_id),
 
     CONSTRAINT fk_pr_puesto
       FOREIGN KEY (puesto_id) REFERENCES puesto(id)
           ON DELETE CASCADE ON UPDATE CASCADE,
 
     CONSTRAINT fk_pr_caract
-      FOREIGN KEY (caracteristica_id) REFERENCES caracteristica(id)
+      FOREIGN KEY (destreza_id) REFERENCES destreza(id)
           ON DELETE RESTRICT ON UPDATE CASCADE
 );
 

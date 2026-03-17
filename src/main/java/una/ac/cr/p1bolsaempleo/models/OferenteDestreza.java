@@ -13,12 +13,9 @@ public class OferenteDestreza {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     private Oferente oferente;
-
     @ManyToOne
     private Destreza destreza;
-
     private int nivel; // 1 a 5
 }

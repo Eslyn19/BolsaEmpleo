@@ -24,7 +24,7 @@ public class AdministradorController {
 
         Optional<Administrador> admin = administradorService.login(identificacion, clave);
 
-        if(admin.isPresent()) { return "Dashboard"; }
+        if(admin.isPresent()) { return "DashboardOferente"; }
 
         model.addAttribute("error","Credenciales incorrectas");
         return "Registro";

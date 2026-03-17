@@ -16,4 +16,5 @@ public class Login {
     @Id
     private String usuario;
     private String clave;
+    private int tipo;//1 oferente, 2 empresa, 3 admin
 }

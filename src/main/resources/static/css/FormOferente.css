@@ -17,7 +17,7 @@ select{
 }
 
 body{
-    background:linear-gradient(-45deg, #398893, #3fa0e3, #dc9766, #ffe775);
+    background:white;
     background-size:400% 400%;
     animation:gradient 15s ease infinite;
     min-height:100vh;
@@ -93,10 +93,72 @@ textarea:hover{
 textarea{
     resize:none;
 }
+.habilidades-layout {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.panel {
+    flex: 1;
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border: 4px solid transparent;
+    background-clip: padding-box, border-box;
+    background-origin: border-box;
+    background-image: linear-gradient(#fff, #fff),
+    linear-gradient(135deg, #398893, #3fa0e3, #dc9766, #ffe775);
+}
+
+.panel h2 {
+    margin-bottom: 15px;
+    font-size: 16pt;
+}
+
+.panel-left ul {
+    list-style: none;
+    padding: 0;
+}
+
+.panel-left li {
+    margin-bottom: 8px;
+}
+
+.panel-middle .ruta {
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.panel-middle .habilidades-ruta div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.panel-right select {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.btn-agregar {
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(135deg,var(--accent),var(--accent-soft));
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+}
 
 button{
     display:block;
-    margin-left:auto;
     padding:10px 26px;
     border:none;
     background:linear-gradient(135deg,var(--accent),var(--accent-soft));
@@ -130,8 +192,112 @@ button:hover{
     transition:.25s;
 }
 
+
 .back-button:hover{
     background:white;
     color:#355edb;
     transform:translateY(-2px);
+}
+
+
+
+.site-header {
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between; /* menú a la izquierda, logo a la derecha */
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.site-header .menu {
+    display: flex;
+    gap: 20px;
+}
+
+.site-header .nav-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.site-header .nav-link:hover {
+    color: var(--accent);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 70px;
+    width: auto;
+}
+
+.site-footer {
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+
+.dashboard-container {
+    background: #fff;
+    width: 90%;
+    min-height: 70vh;
+    margin: 100px auto 80px; /* centrado horizontal con auto */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    border: 8px solid transparent;
+    background-clip: padding-box, border-box;
+    background-origin: border-box;
+    background-image: linear-gradient(#fff, #fff),
+    linear-gradient(135deg, #398893, #3fa0e3, #dc9766, #ffe775);
+    text-align: left; /* asegura que el contenido se alinee a la izquierda */
+}
+
+
+.dashboard-container h1 {
+    font-size: 28pt;
+    margin-bottom: 10px;
+}
+
+.dashboard-container h3 {
+    font-size: 14pt;
+    margin-bottom: 30px;
+    color: #555;
+}
+
+.button-row {
+    display: flex;
+    gap: 8px;              /* menos espacio entre botones */
+    justify-content: flex-start; /* alineados a la izquierda */
+}
+
+.button-row button {
+    padding: 12px 24px;      /* un poco más compacto */
+    border: none;
+    background: linear-gradient(135deg,var(--accent),var(--accent-soft));
+    color: #fff;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all .25s ease;
+}
+
+.button-row button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    background: linear-gradient(135deg,var(--accent-dark),var(--accent));
 }

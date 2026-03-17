@@ -6,14 +6,14 @@
     <title>Talents Costa Rica</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/Inicio.css"/>
-    <link rel="icon" href="/images/coding.png" type="image/x-icon">
+    <link rel="icon" href="/images/logo.png" type="image/x-icon">
 </head>
 
 <body>
 <header class="navbar">
 
     <div class="nav-left">
-        <a href="#" class="logo">Talents</a>
+        <a href="#" class="logo">JobConnect</a>
         <a href="#" class="nav-link">Inicio</a>
         <a href="/userform" class="nav-link">Postularme</a>
     </div>
@@ -174,20 +174,7 @@
     </section>
 </main>
 
-<footer>
-    <div class="footer-links">
-        <a href="#">Buscar empleos</a>
-        <a href="#">Buscar empresas</a>
-        <a href="#">Acerca de</a>
-        <a href="#">Ayuda</a>
-    </div>
-    <div class="footer-legal">
-        <span>© 2026 Talents</span>
-        <a href="#">Accesibilidad en Talents</a>
-        <a href="#">Centro de privacidad y Preferencias de publicidad</a>
-        <a href="#">Condiciones</a>
-    </div>
-</footer>
+<div th:replace="fragments :: footer"></div>
 
 <script>
     const toggle = document.getElementById('themeToggle');

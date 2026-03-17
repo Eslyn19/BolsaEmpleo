@@ -4,6 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import una.ac.cr.p1bolsaempleo.data.LoginRepository;
 import una.ac.cr.p1bolsaempleo.models.Login;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 @Service
 public class ServiceLogin {
@@ -11,14 +15,30 @@ public class ServiceLogin {
     @Autowired
     private LoginRepository loginRepository;
 
-    public Login autenticar(String usuario, String clave) {
-        Login login = loginRepository.findByUsuario(usuario)
-                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado. Regístrese primero."));
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-        if (!login.getClave().equals(clave)) {
-            throw new IllegalArgumentException("Contraseña incorrecta.");
+    public Login autenticar(String usuario, String clave) {
+        Optional<Login> loginOpt = loginRepository.findByUsuario(usuario);
+
+        if (loginOpt.isEmpty()) {
+            throw new IllegalArgumentException("Usuario no encontrado");
         }
 
-        return login; // autenticación exitosa
+        Login login = loginOpt.get();
+
+        // Verificar hash
+        if (!passwordEncoder.matches(clave, login.getClave())) {
+            throw new IllegalArgumentException("Contraseña incorrecta");
+        }
+
+        // Aquí podrías validar estado aprobado si lo deseas
+        return login;
     }
+
+    public void registrarUsuario(String usuario, String clavePlano, int tipo) {
+        String hash = passwordEncoder.encode(clavePlano);
+        Login nuevo = new Login(usuario, hash, tipo);
+        loginRepository.save(nuevo);
+    }
+
 }
