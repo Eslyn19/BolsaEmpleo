@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${titulo} + ' — BolsaEmpleo'">BolsaEmpleo</title>
+    <link rel="stylesheet" th:href="@{/css/AdministradorView.css}"/>
+</head>
+<body>
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="main-content">
+
+        <section class="dashboard-hero">
+            <div class="hero-text">
+                <h1>Administrador</h1>
+                <p>Aprobaciones, catálogo de características y reportes.</p>
+            </div>
+        </section>
+
+        <section class="dashboard-cards">
+
+            <a th:href="@{/admin/empresas}" class="card">
+                <div class="card-icon">🏢</div>
+                <div class="card-info">
+                    <h3>Empresas pendientes</h3>
+                    <p>Revisar y aprobar nuevas empresas registradas.</p>
+                </div>
+                <span class="card-badge" th:text="${empresasPendientes}">0</span>
+            </a>
+
+            <a th:href="@{/admin/oferentes}" class="card">
+                <div class="card-icon">👤</div>
+                <div class="card-info">
+                    <h3>Oferentes pendientes</h3>
+                    <p>Revisar y aprobar perfiles de oferentes.</p>
+                </div>
+                <span class="card-badge" th:text="${oferentesPendientes}">0</span>
+            </a>
+
+            <a th:href="@{/admin/caracteristicas}" class="card">
+                <div class="card-icon">🏷️</div>
+                <div class="card-info">
+                    <h3>Características</h3>
+                    <p>Gestionar el catálogo de habilidades y categorías.</p>
+                </div>
+            </a>
+
+            <a th:href="@{/admin/reportes}" class="card">
+                <div class="card-icon">📊</div>
+                <div class="card-info">
+                    <h3>Reportes</h3>
+                    <p>Ver estadísticas generales del sistema.</p>
+                </div>
+            </a>
+
+        </section>
+
+    </main>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

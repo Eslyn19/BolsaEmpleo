@@ -1,0 +1,348 @@
+/* ============ Base / Tokens ============ */
+:root{
+    --bg: #0b1220;
+    --surface: rgba(255, 255, 255, 0.06);
+    --surface-2: rgba(255, 255, 255, 0.10);
+    --border: rgba(255, 255, 255, 0.10);
+    --text: rgba(255, 255, 255, 0.92);
+    --muted: rgba(255, 255, 255, 0.72);
+    --muted-2: rgba(255, 255, 255, 0.56);
+    --shadow: 0 16px 50px rgba(0,0,0,0.35);
+    --shadow-soft: 0 10px 30px rgba(0,0,0,0.22);
+    --radius: 16px;
+    --radius-sm: 12px;
+    --accent: #7c3aed;      /* violeta */
+    --accent-2: #22c55e;    /* verde */
+    --danger: #ef4444;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html, body{
+    height:100%;
+}
+
+body{
+    display:flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(1200px 700px at 10% 10%, rgba(124, 58, 237, 0.25), transparent 55%),
+        radial-gradient(900px 600px at 90% 20%, rgba(34, 197, 94, 0.18), transparent 60%),
+        radial-gradient(1000px 700px at 50% 110%, rgba(59, 130, 246, 0.18), transparent 55%),
+        var(--bg);
+}
+
+a{
+    color: inherit;
+}
+
+/* Focus accesible */
+:where(a, button, input, select, textarea):focus-visible{
+    outline: 3px solid rgba(124, 58, 237, 0.55);
+    outline-offset: 2px;
+}
+
+/* ============ Navbar (admin dashboard) ============ */
+nav.navbar,
+.navbar{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 18px;
+    padding: 14px 22px;
+    background: rgba(15, 23, 42, 0.78);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+}
+
+/* Soporte para `fragments/navbar.html` */
+.nav-left{
+    display:flex;
+    align-items:center;
+    gap: 14px;
+    min-width: 0;
+}
+.nav-left .navbar-links{
+    margin-left: 6px;
+}
+.nav-right{
+    display:flex;
+    align-items:flex-end; /* “al fondo” del header */
+    justify-content:flex-end;
+    gap: 12px;
+}
+.logo{
+    font-weight: 750;
+    letter-spacing: 0.2px;
+    text-decoration:none;
+}
+
+/* Soporte para `admin/DashboardAdmin.html` */
+.navbar-brand{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    min-width: 0;
+}
+.brand-logo{
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+.navbar-brand span{
+    font-weight: 760;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+}
+
+.navbar-links{
+    display:flex;
+    align-items:center;
+    gap: 6px;
+    list-style:none;
+    padding: 6px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04);
+    border-radius: 999px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+}
+
+.navbar a,
+.navbar-links a{
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 999px;
+    text-decoration:none;
+    font-size: 13px;
+    color: var(--muted);
+    transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.navbar a:hover,
+.navbar-links a:hover{
+    background: rgba(255,255,255,0.07);
+    color: var(--text);
+    transform: translateY(-1px);
+}
+
+.navbar-user{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    min-width: 0;
+}
+.user-email,
+.admin-email{
+    max-width: 260px;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+    color: var(--muted);
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.04);
+}
+
+.btn-salir,
+.logout{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    background: rgba(239, 68, 68, 0.12);
+    color: rgba(255,255,255,0.92);
+    font-weight: 650;
+    cursor:pointer;
+    transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+    text-decoration:none;
+}
+.btn-salir:hover,
+.logout:hover{
+    transform: translateY(-1px);
+    background: rgba(239, 68, 68, 0.16);
+    border-color: rgba(239, 68, 68, 0.55);
+}
+
+/* ============ Layout ============ */
+.main-content{
+    width: min(1120px, calc(100% - 44px));
+    margin: 26px auto 0;
+    flex: 1 0 auto;
+}
+
+/* ============ Hero ============ */
+.dashboard-hero{
+    border: 1px solid var(--border);
+    background:
+        linear-gradient(135deg, rgba(124,58,237,0.22), rgba(34,197,94,0.10)),
+        rgba(255,255,255,0.04);
+    border-radius: var(--radius);
+    padding: 22px 22px;
+    box-shadow: var(--shadow-soft);
+}
+.hero-text h1{
+    font-size: clamp(22px, 2.6vw, 30px);
+    letter-spacing: 0.2px;
+}
+.hero-text p{
+    margin-top: 8px;
+    color: var(--muted);
+    line-height: 1.4;
+    max-width: 70ch;
+}
+
+/* ============ Cards ============ */
+.dashboard-cards{
+    margin-top: 16px;
+    display:grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 14px;
+}
+
+.card{
+    grid-column: span 6;
+    display:flex;
+    align-items:flex-start;
+    gap: 14px;
+    position: relative;
+    padding: 16px 16px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04);
+    text-decoration:none;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+    transition: transform 170ms ease, box-shadow 170ms ease, border-color 170ms ease, background 170ms ease;
+}
+
+.card:hover{
+    transform: translateY(-2px);
+    border-color: rgba(124, 58, 237, 0.40);
+    background: rgba(255,255,255,0.06);
+    box-shadow: var(--shadow);
+}
+
+.card-icon{
+    width: 44px;
+    height: 44px;
+    display:grid;
+    place-items:center;
+    border-radius: 14px;
+    background: rgba(124,58,237,0.16);
+    border: 1px solid rgba(124,58,237,0.25);
+    font-size: 20px;
+    flex: 0 0 auto;
+}
+
+.card-info h3{
+    font-size: 15px;
+    letter-spacing: 0.2px;
+}
+.card-info p{
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.35;
+}
+
+.card-badge{
+    position:absolute;
+    right: 14px;
+    top: 14px;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 8px;
+    border-radius: 999px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-size: 12px;
+    font-weight: 750;
+    color: rgba(255,255,255,0.92);
+    background: rgba(34,197,94,0.16);
+    border: 1px solid rgba(34,197,94,0.30);
+}
+
+/* ============ Footer ============ */
+.footer{
+    width: 100%;
+    margin-top: auto;
+    padding: 14px 22px;
+    border-radius: 0;
+    border: 0;
+    background: rgba(15, 23, 42, 0.88);
+    border-top: 1px solid var(--border);
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 13px;
+}
+.footer-left{
+    display:flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.footer-right{
+    display:flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: right;
+    margin-left: auto;
+}
+.company{
+    color: var(--muted-2);
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 920px){
+    .navbar-links{
+        display:none;
+    }
+    .card{
+        grid-column: span 12;
+    }
+    .user-email,
+    .admin-email{
+        max-width: 160px;
+    }
+}
+
+@media (max-width: 520px){
+    nav.navbar,
+    .navbar{
+        padding: 12px 14px;
+    }
+    .main-content{
+        width: calc(100% - 28px);
+    }
+    .footer{
+        padding: 14px 14px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .footer-right{
+        text-align: left;
+        margin-left: 0;
+    }
+}
+

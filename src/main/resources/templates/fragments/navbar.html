@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+
+<body>
+
+<nav th:fragment="navbar" class="navbar">
+
+    <div class="nav-left">
+        <div class="navbar-brand">
+            <img src="/images/admin.png" alt="Logo" class="brand-logo"/>
+            <span class="logo">BolsaEmpleo</span>
+        </div>
+
+        <ul class="navbar-links">
+            <li><a th:href="@{/admin/dashboard}">Dashboard</a></li>
+            <li><a th:href="@{/admin/empresas}">Empresas pendientes</a></li>
+            <li><a th:href="@{/admin/oferentes}">Oferentes pendientes</a></li>
+            <li><a th:href="@{/admin/caracteristicas}">Características</a></li>
+            <li><a th:href="@{/admin/reportes}">Reportes</a></li>
+        </ul>
+    </div>
+
+    <div class="nav-right">
+        <span class="admin-email" th:text="${adminEmail}">admin@empresa.com</span>
+        <form th:action="@{/admin/logout}" method="post">
+            <button type="submit" class="btn-salir">Salir</button>
+        </form>
+    </div>
+
+</nav>
+
+</body>
+</html>
