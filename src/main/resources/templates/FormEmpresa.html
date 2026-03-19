@@ -13,7 +13,8 @@
 <div class="gradient-background"></div>
 
 <div class="contact-us">
-    <form action="#" autocomplete="off">
+    <form action="/empresa" method="post" autocomplete="off">
+        <div th:if="${error}" th:text="${error}" class="error" style="margin-bottom:12px; color:#b71c1c;"></div>
 
         <div class="field-row">
             <div class="field">
@@ -35,7 +36,7 @@
 
             <div class="field">
                 <label for="customerPhone">📱 Teléfono</label>
-                <input type="tel" id="customerPhone" name="customerPhone">
+                <input type="tel" id="customerPhone" name="customerPhone" required inputmode="numeric" pattern="[0-9]{8}" minlength="8" maxlength="8">
             </div>
         </div>
 

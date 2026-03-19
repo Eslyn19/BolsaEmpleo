@@ -65,7 +65,7 @@ nav.navbar,
     backdrop-filter: blur(10px);
 }
 
-/* Soporte para `fragments/navbar.html` */
+/* Soporte para `fragments/navbarAdministrador.html` */
 .nav-left{
     display:flex;
     align-items:center;
@@ -81,13 +81,8 @@ nav.navbar,
     justify-content:flex-end;
     gap: 12px;
 }
-.logo{
-    font-weight: 750;
-    letter-spacing: 0.2px;
-    text-decoration:none;
-}
 
-/* Soporte para `admin/DashboardAdmin.html` */
+/* Soporte para `admin/DashboardAdminView.html` */
 .navbar-brand{
     display:flex;
     align-items:center;
@@ -95,10 +90,10 @@ nav.navbar,
     min-width: 0;
 }
 .brand-logo{
-    width: 36px;
-    height: 36px;
+    height: 40px;
+    width: auto;
+    object-fit: contain;
     border-radius: 10px;
-    object-fit: cover;
     box-shadow: 0 8px 20px rgba(0,0,0,0.25);
 }
 .navbar-brand span{

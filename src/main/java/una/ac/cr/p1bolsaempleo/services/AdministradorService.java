@@ -1,8 +1,8 @@
 package una.ac.cr.p1bolsaempleo.services;
 
 import org.springframework.stereotype.Service;
-import una.ac.cr.p1bolsaempleo.models.Administrador;
 import una.ac.cr.p1bolsaempleo.data.AdministradorRepository;
+import una.ac.cr.p1bolsaempleo.models.Administrador;
 
 import java.util.Optional;
 

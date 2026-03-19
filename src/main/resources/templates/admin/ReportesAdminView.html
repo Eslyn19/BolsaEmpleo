@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes</title>
+    <link rel="stylesheet" href="/css/AdministradorView.css">
+</head>
+<body>
+<div th:replace="~{fragments/navbarAdministrador :: navbar}"></div>
+
+<main class="main-content">
+    <section class="dashboard-hero">
+        <h1 style="font-size:clamp(22px,2.3vw,30px);">Reportes</h1>
+        <p style="margin-top:8px;color:rgba(255,255,255,0.72);">
+            Estadísticas del sistema. Próximamente se habilitarán reportes por estado y roles.
+        </p>
+
+        <div style="margin-top:18px;padding:14px 16px;border:1px dashed rgba(255,255,255,0.18);border-radius:14px;background:rgba(255,255,255,0.03);">
+            <p style="color:rgba(255,255,255,0.72);margin:0;">Aún no hay reportes para mostrar.</p>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{fragments/footerAdministrador :: footer}"></div>
+</body>
+</html>
+

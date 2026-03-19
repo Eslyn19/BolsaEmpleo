@@ -5,6 +5,6 @@ import una.ac.cr.p1bolsaempleo.models.Administrador;
 
 import java.util.Optional;
 
-public interface AdministradorRepository extends JpaRepository<Administrador, Long> {
+public interface AdministradorRepository extends JpaRepository<Administrador, Integer> {
     Optional<Administrador> findByIdentificacion(String identificacion);
 }

@@ -6,10 +6,6 @@
     --accent-dark:#355edb;
 }
 
-select{
-    font-family:system-ui,"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji";
-}
-
 *{
     margin:0;
     padding:0;
@@ -36,115 +32,13 @@ body{
     100%{background-position:0% 50%;}
 }
 
-.contact-us{
-    background:#f8f4e5;
-    padding:40px 90px;
-    border-radius:30px;
-    box-shadow:0 20px 50px rgba(0,0,0,0.15);
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
-    user-select: none;
-}
-
-label,
-input,
-textarea{
-    display:block;
-    width:100%;
-    font-size:12pt;
-    line-height:24pt;
-    font-family:'Spartan';
-}
-
-input{
-    margin-bottom:18pt;
-}
-
-.field-row{
-    display:flex;
-    gap:40px;
-}
-
-h3{
-    font-weight:normal;
-    font-size:10pt;
-    line-height:24pt;
-    font-style:italic;
-    margin:0 0 .5em 0;
-}
-
-input,
-textarea{
-    border:1px solid rgba(0,0,0,.1);
-    border-radius:6px;
-    background:#f8f4e5;
-    padding:6px 8px;
-    outline:none;
-    transition:all .2s ease;
-}
-
-input:hover,
-textarea:hover{
-    border:1px solid var(--accent);
-}
-
-textarea{
-    resize:none;
-}
-
-button{
-    display:block;
-    margin-left:auto;
-    padding:10px 26px;
-    border:none;
-    background:linear-gradient(135deg,var(--accent),var(--accent-soft));
-    color:#fff;
-    font-weight:600;
-    letter-spacing:1px;
-    border-radius:30px;
-    cursor:pointer;
-    transition:all .25s ease;
-}
-
-button:hover{
-    transform:translateY(-2px);
-    box-shadow:0 10px 25px rgba(0,0,0,0.15);
-    background:linear-gradient(135deg,var(--accent-dark),var(--accent));
-}
-
-.back-button{
-    position:fixed;
-    top:25px;
-    left:25px;
-    padding:10px 18px;
-    background:rgba(255,255,255,0.25);
-    backdrop-filter:blur(10px);
-    border-radius:25px;
-    font-size:11pt;
-    font-weight:600;
-    color:white;
-    text-decoration:none;
-    border:1px solid rgba(255,255,255,0.4);
-    transition:.25s;
-}
-
-.back-button:hover{
-    background:white;
-    color:#355edb;
-    transform:translateY(-2px);
-}
-
-
-
 .site-header {
     width: 100%;
     background-color: #000;
     color: #fff;
     padding: 15px 30px;
     display: flex;
-    justify-content: space-between; /* menú a la izquierda, logo a la derecha */
+    justify-content: space-between;
     align-items: center;
     position: fixed;
     top: 0;
@@ -187,12 +81,11 @@ button:hover{
     left: 0;
 }
 
-
 .dashboard-container {
     background: #fff;
     width: 90%;
     min-height: 70vh;
-    margin: 100px auto 80px; /* centrado horizontal con auto */
+    margin: 100px auto 80px;
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.15);
@@ -201,9 +94,8 @@ button:hover{
     background-origin: border-box;
     background-image: linear-gradient(#fff, #fff),
     linear-gradient(135deg, #398893, #3fa0e3, #dc9766, #ffe775);
-    text-align: left; /* asegura que el contenido se alinee a la izquierda */
+    text-align: left;
 }
-
 
 .dashboard-container h1 {
     font-size: 28pt;
@@ -218,12 +110,12 @@ button:hover{
 
 .button-row {
     display: flex;
-    gap: 8px;              /* menos espacio entre botones */
-    justify-content: flex-start; /* alineados a la izquierda */
+    gap: 8px;
+    justify-content: flex-start;
 }
 
 .button-row button {
-    padding: 12px 24px;      /* un poco más compacto */
+    padding: 12px 24px;
     border: none;
     background: linear-gradient(135deg,var(--accent),var(--accent-soft));
     color: #fff;
@@ -275,12 +167,6 @@ button:hover{
 .panel-middle .ruta {
     margin-bottom: 15px;
     font-weight: bold;
-}
-
-.panel-middle .habilidades-ruta div {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
 }
 
 .panel-right select {

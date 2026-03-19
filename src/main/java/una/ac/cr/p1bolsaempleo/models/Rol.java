@@ -1,8 +1,7 @@
 package una.ac.cr.p1bolsaempleo.models;
 
-public enum TipoUsuario {
+public enum Rol {
     ADMIN,
     EMPRESA,
     OFERENTE
 }
-

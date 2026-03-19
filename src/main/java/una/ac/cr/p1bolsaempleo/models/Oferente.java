@@ -1,40 +1,92 @@
 package una.ac.cr.p1bolsaempleo.models;
 
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Instant;
 
-
-//Oferente: El sistema deberá permitirles a los oferentes realizar las siguientes funciones:
-//• Registrar sus datos (identificación, nombre, primer apellido, nacionalidad, teléfono, correo electrónico y
-//lugar de residencia).
-//• Ingresar al sistema usando correo la clave, y mostrar su tablero (dashboard)
-//• Registrar (actualizar) la lista de sus característica o destrezas y el nivel que tiene en ellas.
-//• Subir su currículo en formato pdf
-@Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity
+@Table(name = "oferente")
 public class Oferente {
     @Id
-    private String id;
-    private String nombre;
-    private String primerAp;
-    private int nacionalidad;
-    private String telefono;
-    private String correo;
-    private String lugarResidencia;
-    @OneToMany(mappedBy = "oferente", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OferenteDestreza> destrezas = new ArrayList<>();
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_oferente", nullable = false)
+    private Integer id;
 
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private Usuario idUsuario;
+
+    @Column(name = "identificacion", nullable = false, length = 20)
+    private String identificacion;
+
+    @Column(name = "nombre", nullable = false, length = 100)
+    private String nombre;
+
+    @Column(name = "primer_apellido", nullable = false, length = 100)
+    private String primerAp;
+
+    @Column(name = "nacionalidad", length = 80)
+    private String nacionalidad;
+
+    @Column(name = "telefono", length = 20)
+    private String telefono;
+
+    @Column(name = "lugar_residencia", length = 200)
+    private String lugarResidencia;
+
+    @Column(name = "curriculum_pdf")
+    private String curriculumPdf;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_estado", nullable = false)
+    private Estado idEstado;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @JoinColumn(name = "aprobado_por")
+    private Administrador aprobadoPor;
+
+    @Column(name = "fecha_aprobacion")
+    private Instant fechaAprobacion;
+
+    @Transient
+    public String getCorreo() {
+        return idUsuario != null ? idUsuario.getCorreo() : null;
+    }
+
+    @Transient
+    public void setCorreo(String correo) {
+        if (idUsuario != null) {
+            idUsuario.setCorreo(correo);
+        }
+    }
+
+    @Transient
+    public String getClaveHash() {
+        return idUsuario != null ? idUsuario.getClaveHash() : null;
+    }
+
+    @Transient
+    public void setClaveHash(String claveHash) {
+        if (idUsuario != null) {
+            idUsuario.setClaveHash(claveHash);
+        }
+    }
 }

@@ -2,9 +2,14 @@ package una.ac.cr.p1bolsaempleo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import una.ac.cr.p1bolsaempleo.services.ServiceLogin;
 import una.ac.cr.p1bolsaempleo.services.ServiceOferente;
+import una.ac.cr.p1bolsaempleo.models.Rol;
 
 @Controller
 public class ViewController {
@@ -25,6 +30,7 @@ public class ViewController {
     // Redireccionamiento a FormOferente.HTML
     @GetMapping("/userform")
     public String getOferenteFormPage() {
+        // "Postularme" desde Inicio siempre debe mostrar el formulario.
         return "FormOferente";
     }
 
@@ -38,14 +44,35 @@ public class ViewController {
     @GetMapping("/empresa")
     public String getEmpresaPage() { return "FormEmpresa"; }
 
-    // MISHELLE metodos
-//    @PostMapping("/userform")
-//    public String procesarRegistro(Oferente oferente, Model model) {
-//    try {
-//        serviceOferente.oferentesAdd(oferente); // guarda el nuevo usuario
-//        return "redirect:/login"; // obliga al usuario a iniciar sesión
-//    } catch (Exception e) {
-//        model.addAttribute("error", "Error al registrarse: " + e.getMessage());
-//        return "FormOferente"; // vuelve al formulario si falla
-//    }
+    @PostMapping("/userform")
+    public String registrarOferente(
+            @RequestParam("nombre") String nombre,
+            @RequestParam("primerAp") String primerAp,
+            @RequestParam("nacionalidad") String nacionalidad,
+            @RequestParam("identificacion") String identificacion,
+            @RequestParam(value = "telefono", required = false) String telefono,
+            @RequestParam("correo") String correo,
+            @RequestParam("lugarResidencia") String lugarResidencia,
+            @RequestParam("customerPassword") String password,
+            @RequestParam("customerPasswordConfirm") String passwordConfirm,
+            Model model
+    ) {
+        try {
+            serviceOferente.registrarOferente(
+                    nombre,
+                    primerAp,
+                    nacionalidad,
+                    identificacion,
+                    telefono,
+                    correo,
+                    lugarResidencia,
+                    password,
+                    passwordConfirm
+            );
+            return "redirect:/inicio?guardadoOferente=ok";
+        } catch (Exception ex) {
+            model.addAttribute("error", ex.getMessage());
+            return "FormOferente";
+        }
+    }
 }

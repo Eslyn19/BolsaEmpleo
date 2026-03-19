@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="light">
+<html lang="es" data-theme="light" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -45,6 +45,14 @@
 </header>
 
 <main>
+    <div th:if="${param.guardadoEmpresa == 'ok'}" style="margin: 16px 0; padding: 12px 16px; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 8px;">
+        <p style="margin: 0 0 12px 0;">Guardado exitoso.</p>
+        <a href="/inicio" style="display: inline-block; padding: 8px 14px; background: #2e7d32; color: white; border-radius: 6px; text-decoration: none;">OK</a>
+    </div>
+    <div th:if="${param.guardadoOferente == 'ok'}" style="margin: 16px 0; padding: 12px 16px; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 8px;">
+        <p style="margin: 0 0 12px 0;">Solicitud enviada. En breve será revisada por el administrador.</p>
+        <a href="/inicio" style="display: inline-block; padding: 8px 14px; background: #2e7d32; color: white; border-radius: 6px; text-decoration: none;">OK</a>
+    </div>
     <section class="hero">
         <h1>Tu próximo empleo comienza aquí</h1>
         <p class="hero-sub">Crea una cuenta o inicia sesión para ver recomendaciones de empleo personalizadas.</p>
