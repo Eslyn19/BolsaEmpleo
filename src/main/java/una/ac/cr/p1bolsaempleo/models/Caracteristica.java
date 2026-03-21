@@ -13,16 +13,19 @@ import org.hibernate.annotations.OnDeleteAction;
 public class Caracteristica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_caracteristica", nullable = false)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name = "nombre", nullable = false, length = 45)
+    private String nombre;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.SET_NULL)
-    @JoinColumn(name = "id_padre")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "idPadre")
     private Caracteristica idPadre;
 
-    @Column(name = "nombre", nullable = false, length = 100)
-    private String nombre;
+    @Column(name = "estado")
+    private Byte estado;
 
 
 }

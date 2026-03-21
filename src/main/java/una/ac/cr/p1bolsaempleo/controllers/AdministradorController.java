@@ -4,14 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import una.ac.cr.p1bolsaempleo.models.*;
 import una.ac.cr.p1bolsaempleo.services.AdministradorService;
-import una.ac.cr.p1bolsaempleo.models.Administrador;
-import una.ac.cr.p1bolsaempleo.models.EstadoAprobacion;
-import una.ac.cr.p1bolsaempleo.models.Empresa;
-import una.ac.cr.p1bolsaempleo.models.Oferente;
 import una.ac.cr.p1bolsaempleo.services.ServiceOferente;
 import una.ac.cr.p1bolsaempleo.services.EmpresaService;
-import una.ac.cr.p1bolsaempleo.models.Rol;
 
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
@@ -46,32 +42,32 @@ public class AdministradorController {
 
         if(admin.isPresent()) {
             session.setAttribute("adminNombre", admin.get().getNombre());
-            session.setAttribute("adminId", admin.get().getId());
+            session.setAttribute("adminId", admin.get().getIdUsuario());
             return "redirect:/admin/dashboard";
         }
 
         Optional<Oferente> autenticado = serviceOferente.autenticarOferente(identificacion, clave);
         if (autenticado.isPresent()) {
             Oferente o = autenticado.get();
-            if (o.getIdEstado() == null) {
+            if (o.getEstado() == null) {
                 model.addAttribute("error", "Tu solicitud no tiene estado configurado.");
                 return "Registro";
             }
 
-            if (o.getIdEstado().getNombre() == EstadoAprobacion.APROBADO) {
+            if (EstadoAprobacion.APROBADO.name().equals(o.getEstado().getNombre())) {
                 session.setAttribute("usuarioRol", Rol.OFERENTE);
-                session.setAttribute("usuarioId", o.getId());
+                session.setAttribute("usuarioId", o.getIdUsuario());
                 session.setAttribute("usuarioNombre", o.getNombre());
-                session.setAttribute("usuarioPrimerAp", o.getPrimerAp());
+                session.setAttribute("usuarioPrimerAp", o.getApellido());
                 return "redirect:/login/DashboardOferente";
             }
 
-            if (o.getIdEstado().getNombre() == EstadoAprobacion.PENDIENTE) {
+            if (EstadoAprobacion.PENDIENTE.name().equals(o.getEstado().getNombre())) {
                 model.addAttribute("error", "Tu solicitud está pendiente de aprobación por el administrador.");
                 return "Registro";
             }
 
-            if (o.getIdEstado().getNombre() == EstadoAprobacion.RECHAZADO) {
+            if (EstadoAprobacion.RECHAZADO.name().equals(o.getEstado().getNombre())) {
                 model.addAttribute("error", "Tu solicitud fue rechazada. Contacta soporte si crees que es un error.");
                 return "Registro";
             }
@@ -114,29 +110,29 @@ public class AdministradorController {
     }
 
     @PostMapping("/oferentes/{id}/aprobar")
-    public String aprobar(@PathVariable Integer id, HttpSession session) {
-        Integer adminId = (Integer) session.getAttribute("adminId");
+    public String aprobar(@PathVariable String id, HttpSession session) {
+        String adminId = (String) session.getAttribute("adminId");
         serviceOferente.cambiarEstado(id, EstadoAprobacion.APROBADO, adminId);
         return "redirect:/admin/oferentes";
     }
 
     @PostMapping("/oferentes/{id}/rechazar")
-    public String rechazar(@PathVariable Integer id, HttpSession session) {
-        Integer adminId = (Integer) session.getAttribute("adminId");
+    public String rechazar(@PathVariable String id, HttpSession session) {
+        String adminId = (String) session.getAttribute("adminId");
         serviceOferente.cambiarEstado(id, EstadoAprobacion.RECHAZADO, adminId);
         return "redirect:/admin/oferentes";
     }
 
     @PostMapping("/empresas/{id}/aprobar")
-    public String aprobarEmpresa(@PathVariable Integer id, HttpSession session) {
-        Integer adminId = (Integer) session.getAttribute("adminId");
+    public String aprobarEmpresa(@PathVariable String id, HttpSession session) {
+        String adminId = (String) session.getAttribute("adminId");
         empresaService.cambiarEstado(id, EstadoAprobacion.APROBADO, adminId);
         return "redirect:/admin/empresas";
     }
 
     @PostMapping("/empresas/{id}/rechazar")
-    public String rechazarEmpresa(@PathVariable Integer id, HttpSession session) {
-        Integer adminId = (Integer) session.getAttribute("adminId");
+    public String rechazarEmpresa(@PathVariable String id, HttpSession session) {
+        String adminId = (String) session.getAttribute("adminId");
         empresaService.cambiarEstado(id, EstadoAprobacion.RECHAZADO, adminId);
         return "redirect:/admin/empresas";
     }

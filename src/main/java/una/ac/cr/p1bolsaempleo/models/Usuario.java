@@ -3,37 +3,22 @@ package una.ac.cr.p1bolsaempleo.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
-import java.time.Instant;
-
+/**
+ * Alineado con script.sql: tabla Usuario, columnas idUsuario, clave, rol.
+ */
 @Getter
 @Setter
 @Entity
 @Table(name = "usuario")
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_usuario", nullable = false)
-    private Integer id;
+    @Column(name = "idUsuario", nullable = false, length = 9)
+    private String idUsuario;
 
-    @Column(name = "correo", nullable = false, length = 120)
-    private String correo;
+    @Column(name = "clave", nullable = false, length = 300)
+    private String clave;
 
-    @Column(name = "clave_hash", nullable = false)
-    private String claveHash;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipo", nullable = false, length = 20)
-    private Rol tipo;
-
-    @ColumnDefault("1")
-    @Column(name = "activo", nullable = false)
-    private Boolean activo;
-
-    @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "fecha_registro", nullable = false)
-    private Instant fechaRegistro;
-
-
+    @Column(name = "rol", nullable = false, columnDefinition = "ENUM('ADMIN','OFERENTE','EMPRESA')")
+    private String rol;
 }

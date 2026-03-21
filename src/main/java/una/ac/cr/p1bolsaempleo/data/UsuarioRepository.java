@@ -5,6 +5,6 @@ import una.ac.cr.p1bolsaempleo.models.Usuario;
 
 import java.util.Optional;
 
-public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-    Optional<Usuario> findByCorreo(String correo);
+public interface UsuarioRepository extends JpaRepository<Usuario, String> {
+    Optional<Usuario> findByIdUsuario(String idUsuario);
 }

@@ -11,12 +11,11 @@ import lombok.Setter;
 public class Estado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_estado", nullable = false)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "nombre", nullable = false, length = 20)
-    private EstadoAprobacion nombre;
+    @Column(name = "nombre", nullable = false, columnDefinition = "ENUM('PENDIENTE','APROBADO','RECHAZADO')")
+    private String nombre;
 
 
 }

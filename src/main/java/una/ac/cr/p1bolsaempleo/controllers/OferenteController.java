@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpSession;
 import una.ac.cr.p1bolsaempleo.models.Caracteristica;
 import una.ac.cr.p1bolsaempleo.models.Oferente;
-import una.ac.cr.p1bolsaempleo.models.OferenteHabilidad;
+import una.ac.cr.p1bolsaempleo.models.Oferentehabilidad;
 import una.ac.cr.p1bolsaempleo.services.ServiceDestreza;
 import una.ac.cr.p1bolsaempleo.services.ServiceOferenteDestreza;
 
@@ -54,9 +54,9 @@ public class OferenteController {
 
         // Oferente actual (ejemplo)
         Oferente oferente = new Oferente();
-        Integer oferenteId = (Integer) session.getAttribute("usuarioId");
-        oferente.setId(oferenteId != null ? oferenteId : 10101010);
-        List<OferenteHabilidad> destrezasOferente = serviceOferenteDestreza.obtenerDestrezasPorOferente(oferente);
+        String oferenteId = (String) session.getAttribute("usuarioId");
+        oferente.setIdUsuario(oferenteId != null ? oferenteId : "DEFAULT");
+        List<Oferentehabilidad> destrezasOferente = serviceOferenteDestreza.obtenerDestrezasPorOferente(oferente);
 
         model.addAttribute("rutaActual", rutaActual);
         model.addAttribute("categoriaActual", categoriaActual);
@@ -72,14 +72,14 @@ public class OferenteController {
     public String mostrarHabilidades(HttpSession session, Model model) {
         // Oferente autenticado (ejemplo con ID fijo)
         Oferente oferente = new Oferente();
-        Integer oferenteId = (Integer) session.getAttribute("usuarioId");
-        oferente.setId(oferenteId != null ? oferenteId : 10101010);
+        String oferenteId = (String) session.getAttribute("usuarioId");
+        oferente.setIdUsuario(oferenteId != null ? oferenteId : "DEFAULT");
 
         // Todas las destrezas de la BD
         List<Caracteristica> todasDestrezas = serviceDestreza.DestrezasAll();
 
         // Destrezas que ya tiene el oferente
-        List<OferenteHabilidad> destrezasOferente = serviceOferenteDestreza.obtenerDestrezasPorOferente(oferente);
+        List<Oferentehabilidad> destrezasOferente = serviceOferenteDestreza.obtenerDestrezasPorOferente(oferente);
 
         model.addAttribute("todasDestrezas", todasDestrezas);
         model.addAttribute("destrezasOferente", destrezasOferente);
@@ -94,21 +94,21 @@ public class OferenteController {
                                     HttpSession session,
                                   Model model) {
         Oferente oferente = new Oferente();
-        Integer oferenteId = (Integer) session.getAttribute("usuarioId");
-        oferente.setId(oferenteId != null ? oferenteId : 10101010);
+        String oferenteId = (String) session.getAttribute("usuarioId");
+        oferente.setIdUsuario(oferenteId != null ? oferenteId : "DEFAULT");
 
         // Si no la tiene, se agrega
         if (!serviceOferenteDestreza.tieneDestreza(oferente, habilidadId)) {
             Caracteristica caracteristica = serviceDestreza.buscarPorId(habilidadId);
             if (caracteristica != null) {
-                OferenteHabilidad nueva = serviceOferenteDestreza.crearRelacion(oferente, caracteristica, 1);
+                Oferentehabilidad nueva = serviceOferenteDestreza.crearRelacion(oferente, caracteristica, 1);
                 serviceOferenteDestreza.agregarDestreza(nueva);
             }
         }
 
         // Recargar datos
         List<Caracteristica> todasDestrezas = serviceDestreza.DestrezasAll();
-        List<OferenteHabilidad> destrezasOferente = serviceOferenteDestreza.obtenerDestrezasPorOferente(oferente);
+        List<Oferentehabilidad> destrezasOferente = serviceOferenteDestreza.obtenerDestrezasPorOferente(oferente);
 
         model.addAttribute("todasDestrezas", todasDestrezas);
         model.addAttribute("destrezasOferente", destrezasOferente);

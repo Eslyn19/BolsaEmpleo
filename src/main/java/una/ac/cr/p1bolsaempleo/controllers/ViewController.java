@@ -7,15 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import una.ac.cr.p1bolsaempleo.services.ServiceLogin;
 import una.ac.cr.p1bolsaempleo.services.ServiceOferente;
-import una.ac.cr.p1bolsaempleo.models.Rol;
 
 @Controller
 public class ViewController {
     @Autowired
     private ServiceOferente serviceOferente;
-    private ServiceLogin serviceLogin;
 
     // Redireccionamiento a Inicio.HTML
     @GetMapping("/inicio")

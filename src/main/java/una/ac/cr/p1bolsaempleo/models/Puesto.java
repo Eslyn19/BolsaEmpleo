@@ -3,12 +3,8 @@ package una.ac.cr.p1bolsaempleo.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
-import java.math.BigDecimal;
-import java.time.Instant;
 
 @Getter
 @Setter
@@ -17,33 +13,19 @@ import java.time.Instant;
 public class Puesto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_puesto", nullable = false)
+    @Column(name = "idPuesto", nullable = false)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_empresa", nullable = false)
-    private Empresa idEmpresa;
+    @JoinColumn(name = "idUsuario", nullable = false)
+    private Empresa idUsuario;
 
-    @Lob
-    @Column(name = "descripcion", nullable = false)
+    @Column(name = "descripcion", nullable = false, length = 100)
     private String descripcion;
 
-    @Column(name = "salario", precision = 10, scale = 2)
-    private BigDecimal salario;
-
-    @ColumnDefault("'PUBLICO'")
-    @Lob
-    @Column(name = "tipo_publicacion", nullable = false)
-    private String tipoPublicacion;
-
-    @ColumnDefault("1")
-    @Column(name = "activo", nullable = false)
-    private Boolean activo;
-
-    @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "fecha_publicacion", nullable = false)
-    private Instant fechaPublicacion;
+    @Column(name = "salario", nullable = false)
+    private Double salario;
 
 
 }

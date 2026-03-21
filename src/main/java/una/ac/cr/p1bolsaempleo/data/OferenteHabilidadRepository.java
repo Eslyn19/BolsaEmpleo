@@ -1,17 +1,16 @@
 package una.ac.cr.p1bolsaempleo.data;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import una.ac.cr.p1bolsaempleo.models.OferenteHabilidad;
-import una.ac.cr.p1bolsaempleo.models.OferenteHabilidadId;
+import una.ac.cr.p1bolsaempleo.models.Oferentehabilidad;
+import una.ac.cr.p1bolsaempleo.models.OferentehabilidadId;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface OferenteHabilidadRepository extends JpaRepository<OferenteHabilidad, OferenteHabilidadId> {
-    List<OferenteHabilidad> findByIdOferente_Id(Integer idOferente);
+public interface OferenteHabilidadRepository extends JpaRepository<Oferentehabilidad, OferentehabilidadId> {
+    List<Oferentehabilidad> findByIdUsuario_IdUsuario(String idUsuario);
 
-    Optional<OferenteHabilidad> findByIdOferente_IdAndIdCaracteristica_Id(Integer idOferente, Integer idCaracteristica);
+    Optional<Oferentehabilidad> findByIdUsuario_IdUsuarioAndIdCaracteristica_Id(String idUsuario, Integer idCaracteristica);
 
-    boolean existsByIdOferente_IdAndIdCaracteristica_Id(Integer idOferente, Integer idCaracteristica);
+    boolean existsByIdUsuario_IdUsuarioAndIdCaracteristica_Id(String idUsuario, Integer idCaracteristica);
 }
-

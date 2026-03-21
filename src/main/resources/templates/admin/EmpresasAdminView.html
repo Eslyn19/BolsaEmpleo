@@ -25,7 +25,7 @@
                 <thead>
                 <tr>
                     <th style="text-align:left;padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.92);">Nombre</th>
-                    <th style="text-align:left;padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.92);">Localización</th>
+                    <th style="text-align:left;padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.92);">Ubicación</th>
                     <th style="text-align:left;padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.92);">Teléfono</th>
                     <th style="text-align:left;padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.92);">Correo</th>
                     <th style="text-align:left;padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.92);">Estado</th>
@@ -35,15 +35,15 @@
                 <tbody>
                 <tr th:each="e : ${empresas}">
                     <td style="padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.06);"><span th:text="${e.nombre}"></span></td>
-                    <td style="padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.06);"><span th:text="${e.localizacion}"></span></td>
+                    <td style="padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.06);"><span th:text="${e.ubicacion}"></span></td>
                     <td style="padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.06);"><span th:text="${e.telefono}"></span></td>
-                    <td style="padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.06);"><span th:text="${e.idUsuario.correo}"></span></td>
-                    <td style="padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.06);"><span th:text="${e.idEstado.nombre}"></span></td>
+                    <td style="padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.06);"><span th:text="${e.idUsuario}"></span></td>
+                    <td style="padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.06);"><span th:text="${e.tipo}"></span></td>
                     <td style="padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.06);white-space:nowrap;">
-                        <form th:action="@{'/admin/empresas/' + ${e.id} + '/aprobar'}" method="post" style="display:inline;margin-right:8px;">
+                        <form th:action="@{'/admin/empresas/' + ${e.idUsuario} + '/aprobar'}" method="post" style="display:inline;margin-right:8px;">
                             <button type="submit" style="padding:10px 12px;border-radius:12px;border:1px solid rgba(34,197,94,0.35);background:rgba(34,197,94,0.12);color:rgba(255,255,255,0.92);cursor:pointer;">Aceptar</button>
                         </form>
-                        <form th:action="@{'/admin/empresas/' + ${e.id} + '/rechazar'}" method="post" style="display:inline;">
+                        <form th:action="@{'/admin/empresas/' + ${e.idUsuario} + '/rechazar'}" method="post" style="display:inline;">
                             <button type="submit" style="padding:10px 12px;border-radius:12px;border:1px solid rgba(239,68,68,0.35);background:rgba(239,68,68,0.12);color:rgba(255,255,255,0.92);cursor:pointer;">Rechazar</button>
                         </form>
                     </td>

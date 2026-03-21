@@ -9,25 +9,25 @@ import org.hibernate.annotations.OnDeleteAction;
 @Getter
 @Setter
 @Entity
-@Table(name = "puesto_caracteristica")
-public class PuestoCaracteristica {
+@Table(name = "oferentehabilidad")
+public class Oferentehabilidad {
     @EmbeddedId
-    private PuestoCaracteristicaId id;
+    private OferentehabilidadId id;
 
-    @MapsId("idPuesto")
+    @MapsId("idUsuario")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_puesto", nullable = false)
-    private Puesto idPuesto;
+    @JoinColumn(name = "idUsuario", nullable = false)
+    private Oferente idUsuario;
 
     @MapsId("idCaracteristica")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_caracteristica", nullable = false)
+    @JoinColumn(name = "idCaracteristica", nullable = false)
     private Caracteristica idCaracteristica;
 
-    @Column(name = "nivel_requerido", nullable = false)
-    private Byte nivelRequerido;
+    @Column(name = "nivel", nullable = false)
+    private Integer nivel;
 
 
 }

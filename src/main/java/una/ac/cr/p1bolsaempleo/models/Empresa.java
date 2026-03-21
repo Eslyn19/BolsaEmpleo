@@ -6,47 +6,39 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.Instant;
-
 @Getter
 @Setter
 @Entity
 @Table(name = "empresa")
 public class Empresa {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_empresa", nullable = false)
-    private Integer id;
+    @Column(name = "idUsuario", nullable = false, length = 9)
+    private String idUsuario;
 
+    @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_usuario", nullable = false)
-    private Usuario idUsuario;
+    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario", nullable = false)
+    private Usuario usuario;
 
-    @Column(name = "nombre", nullable = false, length = 150)
+    @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
 
-    @Column(name = "localizacion", length = 200)
-    private String localizacion;
+    @Column(name = "ubicacion", nullable = false, length = 45)
+    private String ubicacion;
 
-    @Column(name = "telefono", length = 20)
+    @Column(name = "telefono", nullable = false, length = 11)
     private String telefono;
 
-    @Lob
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", length = 100)
     private String descripcion;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_estado", nullable = false)
-    private Estado idEstado;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.SET_NULL)
-    @JoinColumn(name = "aprobado_por")
-    private Administrador aprobadoPor;
-
-    @Column(name = "fecha_aprobacion")
-    private Instant fechaAprobacion;
+    /**
+     * script.sql: ENUM('PUBLICO','PRIVADO'). Si en tu BD usas PENDIENTE/APROBADO para aprobaciones,
+     * la columna debe ser VARCHAR o un ENUM ampliado; sin columnDefinition para no forzar DDL.
+     */
+    @Column(name = "tipo", length = 30)
+    private String tipo;
 
 
 }

@@ -1,107 +1,238 @@
-CREATE DATABASE IF NOT EXISTS bolsa_empleo;
-USE bolsa_empleo;
+-- MySQL Workbench Forward Engineering
 
-CREATE TABLE estado (
-                        id_estado INT NOT NULL AUTO_INCREMENT,
-                        nombre    ENUM('PENDIENTE','APROBADO','RECHAZADO') NOT NULL,
-                        PRIMARY KEY (id_estado),
-                        UNIQUE (nombre)
-);
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION';
 
-CREATE TABLE usuario (
-                         id_usuario     INT          NOT NULL AUTO_INCREMENT,
-                         correo         VARCHAR(120) NOT NULL,
-                         clave_hash     VARCHAR(255) NOT NULL,
-                         tipo           ENUM('ADMIN','EMPRESA','OFERENTE') NOT NULL,
-                         activo         TINYINT(1)   NOT NULL DEFAULT 1,
-                         fecha_registro DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                         PRIMARY KEY (id_usuario),
-                         UNIQUE (correo)
-);
+DROP SCHEMA IF EXISTS `bolsa_empleo` ;
+CREATE SCHEMA IF NOT EXISTS `bolsa_empleo` DEFAULT CHARACTER SET utf8 ;
+USE `bolsa_empleo` ;
 
-CREATE TABLE administrador (
-                               id_admin       INT          NOT NULL AUTO_INCREMENT,
-                               id_usuario     INT          NOT NULL,
-                               identificacion VARCHAR(20)  NOT NULL,
-                               nombre         VARCHAR(100) NOT NULL,
-                               PRIMARY KEY (id_admin),
-                               UNIQUE (id_usuario),
-                               UNIQUE (identificacion),
-                               FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE
-);
+-- -----------------------------------------------------
+-- Estado
+-- -----------------------------------------------------
+CREATE TABLE Estado (
+                        id INT AUTO_INCREMENT,
+                        nombre ENUM('PENDIENTE', 'APROBADO', 'RECHAZADO') NOT NULL,
+                        PRIMARY KEY (id)
+) ENGINE=InnoDB;
 
-CREATE TABLE empresa (
-                         id_empresa       INT          NOT NULL AUTO_INCREMENT,
-                         id_usuario       INT          NOT NULL,
-                         nombre           VARCHAR(150) NOT NULL,
-                         localizacion     VARCHAR(200),
-                         telefono         VARCHAR(20),
-                         descripcion      TEXT,
-                         id_estado        INT          NOT NULL,
-                         aprobado_por     INT,
-                         fecha_aprobacion DATETIME,
-                         PRIMARY KEY (id_empresa),
-                         UNIQUE (id_usuario),
-                         FOREIGN KEY (id_usuario)   REFERENCES usuario(id_usuario)     ON DELETE CASCADE,
-                         FOREIGN KEY (id_estado)    REFERENCES estado(id_estado),
-                         FOREIGN KEY (aprobado_por) REFERENCES administrador(id_admin) ON DELETE SET NULL
-);
+-- -----------------------------------------------------
+-- Usuario (PADRE)
+-- -----------------------------------------------------
+CREATE TABLE Usuario (
+                         idUsuario VARCHAR(9) NOT NULL,
+                         clave VARCHAR(300) NOT NULL,
+                         rol ENUM('ADMIN', 'OFERENTE', 'EMPRESA') NOT NULL,
+                         PRIMARY KEY (idUsuario)
+) ENGINE=InnoDB;
 
-CREATE TABLE oferente (
-                          id_oferente      INT          NOT NULL AUTO_INCREMENT,
-                          id_usuario       INT          NOT NULL,
-                          identificacion   VARCHAR(20)  NOT NULL,
-                          nombre           VARCHAR(100) NOT NULL,
-                          primer_apellido  VARCHAR(100) NOT NULL,
-                          nacionalidad     VARCHAR(80),
-                          telefono         VARCHAR(20),
-                          lugar_residencia VARCHAR(200),
-                          curriculum_pdf   VARCHAR(255),
-                          id_estado        INT          NOT NULL,
-                          aprobado_por     INT,
-                          fecha_aprobacion DATETIME,
-                          PRIMARY KEY (id_oferente),
-                          UNIQUE (id_usuario),
-                          UNIQUE (identificacion),
-                          FOREIGN KEY (id_usuario)   REFERENCES usuario(id_usuario)     ON DELETE CASCADE,
-                          FOREIGN KEY (id_estado)    REFERENCES estado(id_estado),
-                          FOREIGN KEY (aprobado_por) REFERENCES administrador(id_admin) ON DELETE SET NULL
-);
+-- -----------------------------------------------------
+-- Oferente (HIJA)
+-- -----------------------------------------------------
+CREATE TABLE Oferente (
+                          idUsuario VARCHAR(9) NOT NULL,
+                          nombre VARCHAR(45) NOT NULL,
+                          apellido VARCHAR(45) NOT NULL,
+                          nacionalidad VARCHAR(40) NOT NULL,
+                          telefono VARCHAR(11) NOT NULL,
+                          correo VARCHAR(50) NOT NULL,
+                          residencia VARCHAR(50) NOT NULL,
+                          rutaCV VARCHAR(200),
+                          estado INT NOT NULL,
 
-CREATE TABLE caracteristica (
-                                id_caracteristica INT          NOT NULL AUTO_INCREMENT,
-                                id_padre          INT,
-                                nombre            VARCHAR(100) NOT NULL,
-                                PRIMARY KEY (id_caracteristica),
-                                FOREIGN KEY (id_padre) REFERENCES caracteristica(id_caracteristica) ON DELETE SET NULL
-);
+                          PRIMARY KEY (idUsuario),
+                          FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario) ON DELETE CASCADE,
+                          FOREIGN KEY (estado) REFERENCES Estado(id)
+) ENGINE=InnoDB;
 
-CREATE TABLE puesto (
-                        id_puesto         INT          NOT NULL AUTO_INCREMENT,
-                        id_empresa        INT          NOT NULL,
-                        descripcion       TEXT         NOT NULL,
-                        salario           DECIMAL(10,2),
-                        tipo_publicacion  ENUM('PUBLICO','PRIVADO') NOT NULL DEFAULT 'PUBLICO',
-                        activo            TINYINT(1)   NOT NULL DEFAULT 1,
-                        fecha_publicacion DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                        PRIMARY KEY (id_puesto),
-                        FOREIGN KEY (id_empresa) REFERENCES empresa(id_empresa) ON DELETE CASCADE
-);
+-- -----------------------------------------------------
+-- Administrador (HIJA)
+-- -----------------------------------------------------
+CREATE TABLE Administrador (
+                               idUsuario VARCHAR(9) NOT NULL,
+                               nombre VARCHAR(60) NOT NULL,
 
-CREATE TABLE puesto_caracteristica (
-                                       id_puesto         INT     NOT NULL,
-                                       id_caracteristica INT     NOT NULL,
-                                       nivel_requerido   TINYINT NOT NULL CHECK (nivel_requerido BETWEEN 1 AND 5),
-                                       PRIMARY KEY (id_puesto, id_caracteristica),
-                                       FOREIGN KEY (id_puesto)         REFERENCES puesto(id_puesto)                 ON DELETE CASCADE,
-                                       FOREIGN KEY (id_caracteristica) REFERENCES caracteristica(id_caracteristica) ON DELETE CASCADE
-);
+                               PRIMARY KEY (idUsuario),
+                               FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario) ON DELETE CASCADE
+) ENGINE=InnoDB;
 
-CREATE TABLE oferente_habilidad (
-                                    id_oferente       INT     NOT NULL,
-                                    id_caracteristica INT     NOT NULL,
-                                    nivel             TINYINT NOT NULL CHECK (nivel BETWEEN 1 AND 5),
-                                    PRIMARY KEY (id_oferente, id_caracteristica),
-                                    FOREIGN KEY (id_oferente)       REFERENCES oferente(id_oferente)             ON DELETE CASCADE,
-                                    FOREIGN KEY (id_caracteristica) REFERENCES caracteristica(id_caracteristica) ON DELETE CASCADE
-);
+-- -----------------------------------------------------
+-- Empresa (HIJA)
+-- -----------------------------------------------------
+CREATE TABLE Empresa (
+                         idUsuario VARCHAR(9) NOT NULL,
+                         nombre VARCHAR(45) NOT NULL,
+                         ubicacion VARCHAR(45) NOT NULL,
+                         telefono VARCHAR(11) NOT NULL,
+                         descripcion VARCHAR(100),
+                         tipo ENUM('PUBLICO', 'PRIVADO'),
+
+                         PRIMARY KEY (idUsuario),
+                         UNIQUE (telefono),
+                         FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- Caracteristica (JERÁRQUICA)
+-- -----------------------------------------------------
+CREATE TABLE Caracteristica (
+                                id INT AUTO_INCREMENT,
+                                nombre VARCHAR(45) NOT NULL,
+                                idPadre INT NULL,
+                                estado TINYINT,
+
+                                PRIMARY KEY (id),
+                                UNIQUE (nombre),
+                                FOREIGN KEY (idPadre) REFERENCES Caracteristica(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- Oferente - Caracteristica (N:M)
+-- -----------------------------------------------------
+CREATE TABLE OferenteHabilidad (
+                                   idUsuario VARCHAR(9),
+                                   idCaracteristica INT,
+                                   nivel INT NOT NULL,
+
+                                   PRIMARY KEY (idUsuario, idCaracteristica),
+                                   FOREIGN KEY (idUsuario) REFERENCES Oferente(idUsuario) ON DELETE CASCADE,
+                                   FOREIGN KEY (idCaracteristica) REFERENCES Caracteristica(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- Puesto (1:N con Empresa)
+-- -----------------------------------------------------
+CREATE TABLE Puesto (
+                        idPuesto INT AUTO_INCREMENT,
+                        idUsuario VARCHAR(9) NOT NULL,
+                        descripcion VARCHAR(100) NOT NULL,
+                        salario DOUBLE NOT NULL,
+
+                        PRIMARY KEY (idPuesto),
+                        FOREIGN KEY (idUsuario) REFERENCES Empresa(idUsuario) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- INSERTS
+-- -----------------------------------------------------
+
+-- Admin 1
+INSERT INTO Usuario VALUES ('208380902', '111', 'ADMIN');
+
+INSERT INTO Administrador (idUsuario, nombre)
+SELECT idUsuario, 'Eslyn Jara'
+FROM Usuario
+WHERE idUsuario = '208380902' AND rol = 'ADMIN';
+
+-- Admin 2
+INSERT INTO Usuario VALUES ('208640831', '111', 'ADMIN');
+
+INSERT INTO Administrador (idUsuario, nombre)
+SELECT idUsuario, 'Mishelle Rojas'
+FROM Usuario
+WHERE idUsuario = '208640831' AND rol = 'ADMIN';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+VALUES ('Informatica', NULL, 1);
+
+# ====== (raiz) = Informatica #1
+# ====== Lenguajes de programacion #2
+# ====== Tecnologias Web #3
+# ====== Bases de datos #4
+# ====== Ciberserguridad #5
+# ====== DevOps #6
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'Lenguajes de Programacion', id, 1 FROM Caracteristica WHERE nombre='Informatica';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'Tecnologias Web', id, 1 FROM Caracteristica WHERE nombre='Informatica';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'Bases de Datos', id, 1 FROM Caracteristica WHERE nombre='Informatica';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'Ciberseguridad', id, 1 FROM Caracteristica WHERE nombre='Informatica';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'DevOps', id, 1 FROM Caracteristica WHERE nombre='Informatica';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'Java', id, 1 FROM Caracteristica WHERE nombre='Lenguajes de Programacion';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'C#', id, 1 FROM Caracteristica WHERE nombre='Lenguajes de Programacion';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'JavaScript', id, 1 FROM Caracteristica WHERE nombre='Lenguajes de Programacion';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'Python', id, 1 FROM Caracteristica WHERE nombre='Lenguajes de Programacion';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'C++', id, 1 FROM Caracteristica WHERE nombre='Lenguajes de Programacion';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'HTML', id, 1 FROM Caracteristica WHERE nombre='Tecnologias Web';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'CSS', id, 1 FROM Caracteristica WHERE nombre='Tecnologias Web';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'React', id, 1 FROM Caracteristica WHERE nombre='Tecnologias Web';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'Angular', id, 1 FROM Caracteristica WHERE nombre='Tecnologias Web';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'Vue', id, 1 FROM Caracteristica WHERE nombre='Tecnologias Web';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'MySQL', id, 1 FROM Caracteristica WHERE nombre='Bases de Datos';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'PostgreSQL', id, 1 FROM Caracteristica WHERE nombre='Bases de Datos';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'MongoDB', id, 1 FROM Caracteristica WHERE nombre='Bases de Datos';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'Oracle', id, 1 FROM Caracteristica WHERE nombre='Bases de Datos';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'SQL Server', id, 1 FROM Caracteristica WHERE nombre='Bases de Datos';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'Pentesting', id, 1 FROM Caracteristica WHERE nombre='Ciberseguridad';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'Analisis de vulnerabilidades', id, 1 FROM Caracteristica WHERE nombre='Ciberseguridad';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'Criptografia', id, 1 FROM Caracteristica WHERE nombre='Ciberseguridad';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'Seguridad en redes', id, 1 FROM Caracteristica WHERE nombre='Ciberseguridad';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'Ethical Hacking', id, 1 FROM Caracteristica WHERE nombre='Ciberseguridad';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'Docker', id, 1 FROM Caracteristica WHERE nombre='DevOps';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'Kubernetes', id, 1 FROM Caracteristica WHERE nombre='DevOps';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'CI/CD', id, 1 FROM Caracteristica WHERE nombre='DevOps';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'AWS', id, 1 FROM Caracteristica WHERE nombre='DevOps';
+
+INSERT INTO Caracteristica (nombre, idPadre, estado)
+SELECT 'Azure', id, 1 FROM Caracteristica WHERE nombre='DevOps';
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

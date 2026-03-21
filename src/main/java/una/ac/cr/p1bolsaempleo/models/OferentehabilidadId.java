@@ -12,12 +12,12 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode
 @Embeddable
-public class OferenteHabilidadId implements Serializable {
-    private static final long serialVersionUID = 6556863210186666459L;
-    @Column(name = "id_oferente", nullable = false)
-    private Integer idOferente;
+public class OferentehabilidadId implements Serializable {
+    private static final long serialVersionUID = 6771875535579011161L;
+    @Column(name = "idUsuario", nullable = false, length = 9)
+    private String idUsuario;
 
-    @Column(name = "id_caracteristica", nullable = false)
+    @Column(name = "idCaracteristica", nullable = false)
     private Integer idCaracteristica;
 
 

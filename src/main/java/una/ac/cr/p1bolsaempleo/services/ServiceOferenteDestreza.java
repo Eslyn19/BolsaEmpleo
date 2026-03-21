@@ -4,7 +4,8 @@ import org.springframework.stereotype.Service;
 import una.ac.cr.p1bolsaempleo.data.OferenteHabilidadRepository;
 import una.ac.cr.p1bolsaempleo.models.Caracteristica;
 import una.ac.cr.p1bolsaempleo.models.Oferente;
-import una.ac.cr.p1bolsaempleo.models.OferenteHabilidad;
+import una.ac.cr.p1bolsaempleo.models.Oferentehabilidad;
+import una.ac.cr.p1bolsaempleo.models.OferentehabilidadId;
 
 import java.util.List;
 
@@ -16,38 +17,42 @@ public class ServiceOferenteDestreza {
         this.oferenteHabilidades = oferenteHabilidades;
     }
 
-    public List<OferenteHabilidad> obtenerTodasDestrezas() {
+    public List<Oferentehabilidad> obtenerTodasDestrezas() {
         return oferenteHabilidades.findAll();
     }
 
-    public List<OferenteHabilidad> obtenerDestrezasPorOferente(Oferente oferente) {
-        if (oferente == null || oferente.getId() == null) {
+    public List<Oferentehabilidad> obtenerDestrezasPorOferente(Oferente oferente) {
+        if (oferente == null || oferente.getIdUsuario() == null) {
             return List.of();
         }
-        return oferenteHabilidades.findByIdOferente_Id(oferente.getId());
+        return oferenteHabilidades.findByIdUsuario_IdUsuario(oferente.getIdUsuario());
     }
 
-    public OferenteHabilidad agregarDestreza(OferenteHabilidad destreza) {
+    public Oferentehabilidad agregarDestreza(Oferentehabilidad destreza) {
         return oferenteHabilidades.save(destreza);
     }
 
-    public OferenteHabilidad actualizarNivel(OferenteHabilidad destreza, int nuevoNivel) {
-        destreza.setNivel((byte) nuevoNivel);
+    public Oferentehabilidad actualizarNivel(Oferentehabilidad destreza, int nuevoNivel) {
+        destreza.setNivel(nuevoNivel);
         return oferenteHabilidades.save(destreza);
     }
 
     public boolean tieneDestreza(Oferente oferente, Integer habilidadId) {
-        if (oferente == null || oferente.getId() == null || habilidadId == null) {
+        if (oferente == null || oferente.getIdUsuario() == null || habilidadId == null) {
             return false;
         }
-        return oferenteHabilidades.existsByIdOferente_IdAndIdCaracteristica_Id(oferente.getId(), habilidadId);
+        return oferenteHabilidades.existsByIdUsuario_IdUsuarioAndIdCaracteristica_Id(oferente.getIdUsuario(), habilidadId);
     }
 
-    public OferenteHabilidad crearRelacion(Oferente oferente, Caracteristica caracteristica, int nivel) {
-        OferenteHabilidad rel = new OferenteHabilidad();
-        rel.setIdOferente(oferente);
+    public Oferentehabilidad crearRelacion(Oferente oferente, Caracteristica caracteristica, int nivel) {
+        Oferentehabilidad rel = new Oferentehabilidad();
+        OferentehabilidadId id = new OferentehabilidadId();
+        id.setIdUsuario(oferente.getIdUsuario());
+        id.setIdCaracteristica(caracteristica.getId());
+        rel.setId(id);
+        rel.setIdUsuario(oferente);
         rel.setIdCaracteristica(caracteristica);
-        rel.setNivel((byte) nivel);
+        rel.setNivel(nivel);
         return rel;
     }
 }

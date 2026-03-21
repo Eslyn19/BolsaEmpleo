@@ -7,14 +7,8 @@ import una.ac.cr.p1bolsaempleo.data.AdministradorRepository;
 import una.ac.cr.p1bolsaempleo.data.EmpresaRepository;
 import una.ac.cr.p1bolsaempleo.data.EstadoRepository;
 import una.ac.cr.p1bolsaempleo.data.UsuarioRepository;
-import una.ac.cr.p1bolsaempleo.models.Empresa;
-import una.ac.cr.p1bolsaempleo.models.Estado;
-import una.ac.cr.p1bolsaempleo.models.Administrador;
-import una.ac.cr.p1bolsaempleo.models.EstadoAprobacion;
-import una.ac.cr.p1bolsaempleo.models.Rol;
-import una.ac.cr.p1bolsaempleo.models.Usuario;
+import una.ac.cr.p1bolsaempleo.models.*;
 
-import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -47,59 +41,35 @@ public class EmpresaService {
         if (telefono == null || !telefono.matches("^\\d{8}$")) {
             throw new IllegalArgumentException("El teléfono debe contener exactamente 8 números.");
         }
-        if (usuarios.findByCorreo(correo).isPresent()) {
-            throw new IllegalArgumentException("Correo ya registrado.");
+        if (usuarios.findById(correo).isPresent()) {
+            throw new IllegalArgumentException("Identificador/Correo ya registrado.");
         }
 
-        Estado estadoPendiente = estados.findByNombre(EstadoAprobacion.PENDIENTE)
-                .orElseGet(() -> {
-                    Estado e = new Estado();
-                    e.setNombre(EstadoAprobacion.PENDIENTE);
-                    return estados.save(e);
-                });
-
         Usuario u = new Usuario();
-        u.setCorreo(correo);
-        u.setClaveHash(password);
-        u.setTipo(Rol.EMPRESA);
-        u.setActivo(true);
-        u.setFechaRegistro(Instant.now());
+        u.setIdUsuario(correo);
+        u.setClave(password);
+        u.setRol(Rol.EMPRESA.name());
         u = usuarios.save(u);
 
         Empresa e = new Empresa();
-        e.setIdUsuario(u);
+        e.setUsuario(u);
         e.setNombre(nombreEmpresa);
-        e.setLocalizacion(localizacion);
+        e.setUbicacion(localizacion);
         e.setTelefono(telefono);
         e.setDescripcion(descripcion);
-        e.setIdEstado(estadoPendiente);
+        e.setTipo(EstadoAprobacion.PENDIENTE.name());
         return empresas.save(e);
     }
 
     public List<Empresa> listarPendientes() {
-        return empresas.findByIdEstado_Nombre(EstadoAprobacion.PENDIENTE);
+        return empresas.findByTipoIgnoreCase(EstadoAprobacion.PENDIENTE.name());
     }
 
     @Transactional
-    public void cambiarEstado(Integer empresaId, EstadoAprobacion nuevoEstado, Integer adminId) {
+    public void cambiarEstado(String empresaId, EstadoAprobacion nuevoEstado, String adminId) {
         Empresa e = empresas.findById(empresaId)
                 .orElseThrow(() -> new IllegalArgumentException("Empresa no encontrada"));
-
-        Estado estado = estados.findByNombre(nuevoEstado)
-                .orElseGet(() -> {
-                    Estado created = new Estado();
-                    created.setNombre(nuevoEstado);
-                    return estados.save(created);
-                });
-
-        e.setIdEstado(estado);
-
-        if (adminId != null) {
-            Administrador admin = administradores.findById(adminId)
-                    .orElseThrow(() -> new IllegalArgumentException("Admin no encontrado"));
-            e.setAprobadoPor(admin);
-            e.setFechaAprobacion(Instant.now());
-        }
+        e.setTipo(nuevoEstado.name());
 
         empresas.save(e);
     }
