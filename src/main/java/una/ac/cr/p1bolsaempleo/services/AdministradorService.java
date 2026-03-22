@@ -1,6 +1,8 @@
 package una.ac.cr.p1bolsaempleo.services;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import una.ac.cr.p1bolsaempleo.data.AdministradorRepository;
 import una.ac.cr.p1bolsaempleo.models.Administrador;
 
@@ -8,26 +10,25 @@ import java.util.Optional;
 
 @Service
 public class AdministradorService {
-    private final AdministradorRepository administradorRepository;
 
-    public AdministradorService(AdministradorRepository administradorRepository) {
+    private final AdministradorRepository administradorRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public AdministradorService(AdministradorRepository administradorRepository, PasswordEncoder passwordEncoder) {
         this.administradorRepository = administradorRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    /**
-     * Login admin: debe existir la identificación en BD y la clave guardada debe coincidir (texto plano, sin hash).
-     */
-    public Optional<Administrador> login(String id, String clave) {
-        if (id == null || clave == null) {
-            return Optional.empty();
-        }
-        String identificacion = id.trim();
-        if (identificacion.isEmpty()) {
-            return Optional.empty();
-        }
+    @Transactional(readOnly = true)
+    public Optional<Administrador> login(String identificacion, String clave) {
+        return administradorRepository.findByIdWithUsuario(identificacion)
+                .filter(admin -> matchesClave(clave, admin.getUsuario().getClave()));
+    }
 
-        return administradorRepository.findByIdUsuario(identificacion)
-                .filter(a -> a.getUsuario() != null && a.getUsuario().getClave() != null)
-                .filter(a -> a.getUsuario().getClave().equals(clave.trim()));
+    private boolean matchesClave(String raw, String stored) {
+        if (stored.startsWith("$2")) {
+            return passwordEncoder.matches(raw, stored);
+        }
+        return stored.equals(raw);
     }
 }

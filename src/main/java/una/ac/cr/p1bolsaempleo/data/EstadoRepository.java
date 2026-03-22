@@ -6,5 +6,6 @@ import una.ac.cr.p1bolsaempleo.models.Estado;
 import java.util.Optional;
 
 public interface EstadoRepository extends JpaRepository<Estado, Integer> {
-    Optional<Estado> findByNombre(String nombre);
+
+    Optional<Estado> findFirstByNombreOrderByIdAsc(String nombre);
 }

@@ -24,8 +24,8 @@ public class Caracteristica {
     @JoinColumn(name = "idPadre")
     private Caracteristica idPadre;
 
-    @Column(name = "estado")
-    private Byte estado;
+    @Column(name = "activo")
+    private Byte activo;
 
 
 }

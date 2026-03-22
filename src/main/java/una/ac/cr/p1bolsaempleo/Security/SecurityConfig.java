@@ -12,7 +12,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    /** Para guardar contraseñas hasheadas (BCrypt) en `usuario.clave`. */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -24,20 +23,14 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-
-                        // Públicas (sin login)
                         .requestMatchers(
-                                "/", "/inicio",
+                                "/", "/inicio", "/inicio/**",
                                 "/login", "/login/**", "/registro",
                                 "/userform",
                                 "/empresa", "/empresa/", "/empresa/**",
                                 "/css/**", "/js/**", "/images/**", "/webjars/**", "/favicon.ico"
                         ).permitAll()
-
-                        // Controlado por sesión (no Spring Security roles)
                         .requestMatchers("/admin/**", "/Dashboard", "/dashboard/**", "/DashboardOferente", "/oferente/**").permitAll()
-
-                        // Cualquier otra requiere autenticación
                         .anyRequest().authenticated()
                 )
 

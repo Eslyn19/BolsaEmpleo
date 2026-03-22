@@ -4,21 +4,21 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Alineado con script.sql: tabla Usuario, columnas idUsuario, clave, rol.
- */
 @Getter
 @Setter
 @Entity
 @Table(name = "usuario")
 public class Usuario {
     @Id
-    @Column(name = "idUsuario", nullable = false, length = 9)
+    @Column(name = "idUsuario", nullable = false, length = 50)
     private String idUsuario;
 
     @Column(name = "clave", nullable = false, length = 300)
     private String clave;
 
-    @Column(name = "rol", nullable = false, columnDefinition = "ENUM('ADMIN','OFERENTE','EMPRESA')")
+    @Lob
+    @Column(name = "rol", nullable = false)
     private String rol;
+
+
 }

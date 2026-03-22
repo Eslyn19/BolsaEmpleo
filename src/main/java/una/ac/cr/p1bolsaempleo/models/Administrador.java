@@ -6,9 +6,6 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-/**
- * script.sql: Administrador(idUsuario PK/FK -> Usuario.idUsuario, nombre)
- */
 @Getter
 @Setter
 @Entity
@@ -21,9 +18,11 @@ public class Administrador {
     @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario", nullable = false)
+    @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
 
     @Column(name = "nombre", nullable = false, length = 60)
     private String nombre;
+
+
 }

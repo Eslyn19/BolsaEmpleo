@@ -14,7 +14,8 @@ public class Estado {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "nombre", nullable = false, columnDefinition = "ENUM('PENDIENTE','APROBADO','RECHAZADO')")
+    @Lob
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
 

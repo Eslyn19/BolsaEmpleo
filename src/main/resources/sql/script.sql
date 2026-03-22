@@ -12,110 +12,114 @@ USE `bolsa_empleo` ;
 -- Estado
 -- -----------------------------------------------------
 CREATE TABLE Estado (
-                        id INT AUTO_INCREMENT,
-                        nombre ENUM('PENDIENTE', 'APROBADO', 'RECHAZADO') NOT NULL,
-                        PRIMARY KEY (id)
+    id INT AUTO_INCREMENT,
+    nombre ENUM('PENDIENTE', 'ACEPTADO', 'RECHAZADO') NOT NULL,
+    PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
 -- Usuario (PADRE)
 -- -----------------------------------------------------
 CREATE TABLE Usuario (
-                         idUsuario VARCHAR(9) NOT NULL,
-                         clave VARCHAR(300) NOT NULL,
-                         rol ENUM('ADMIN', 'OFERENTE', 'EMPRESA') NOT NULL,
-                         PRIMARY KEY (idUsuario)
+     idUsuario VARCHAR(9) NOT NULL,
+     clave VARCHAR(300) NOT NULL,
+     rol ENUM('ADMIN', 'OFERENTE', 'EMPRESA') NOT NULL,
+     PRIMARY KEY (idUsuario)
 ) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
 -- Oferente (HIJA)
 -- -----------------------------------------------------
 CREATE TABLE Oferente (
-                          idUsuario VARCHAR(9) NOT NULL,
-                          nombre VARCHAR(45) NOT NULL,
-                          apellido VARCHAR(45) NOT NULL,
-                          nacionalidad VARCHAR(40) NOT NULL,
-                          telefono VARCHAR(11) NOT NULL,
-                          correo VARCHAR(50) NOT NULL,
-                          residencia VARCHAR(50) NOT NULL,
-                          rutaCV VARCHAR(200),
-                          estado INT NOT NULL,
+      idUsuario VARCHAR(9) NOT NULL,
+      nombre VARCHAR(45) NOT NULL,
+      apellidos VARCHAR(45) NOT NULL,
+      nacionalidad VARCHAR(40) NOT NULL,
+      telefono VARCHAR(11) NOT NULL,
+      correo VARCHAR(50) NOT NULL,
+      residencia VARCHAR(50) NOT NULL,
+      rutaCV VARCHAR(200),
+      estado INT NOT NULL,
 
-                          PRIMARY KEY (idUsuario),
-                          FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario) ON DELETE CASCADE,
-                          FOREIGN KEY (estado) REFERENCES Estado(id)
+      PRIMARY KEY (idUsuario),
+      FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario) ON DELETE CASCADE,
+      FOREIGN KEY (estado) REFERENCES Estado(id)
 ) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
 -- Administrador (HIJA)
 -- -----------------------------------------------------
 CREATE TABLE Administrador (
-                               idUsuario VARCHAR(9) NOT NULL,
-                               nombre VARCHAR(60) NOT NULL,
+       idUsuario VARCHAR(9) NOT NULL,
+       nombre VARCHAR(60) NOT NULL,
 
-                               PRIMARY KEY (idUsuario),
-                               FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario) ON DELETE CASCADE
+       PRIMARY KEY (idUsuario),
+       FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
 -- Empresa (HIJA)
 -- -----------------------------------------------------
 CREATE TABLE Empresa (
-                         idUsuario VARCHAR(9) NOT NULL,
-                         nombre VARCHAR(45) NOT NULL,
-                         ubicacion VARCHAR(45) NOT NULL,
-                         telefono VARCHAR(11) NOT NULL,
-                         descripcion VARCHAR(100),
-                         tipo ENUM('PUBLICO', 'PRIVADO'),
+     idUsuario VARCHAR(50) NOT NULL,
+     nombre VARCHAR(45) NOT NULL,
+     ubicacion VARCHAR(45) NOT NULL,
+     telefono VARCHAR(11) NOT NULL,
+     descripcion VARCHAR(100),
+     tipo ENUM('PUBLICO', 'PRIVADO'),
+     estado INT NOT NULL,
 
-                         PRIMARY KEY (idUsuario),
-                         UNIQUE (telefono),
-                         FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario) ON DELETE CASCADE
+     PRIMARY KEY (idUsuario),
+     UNIQUE (telefono),
+     FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario) ON DELETE CASCADE,
+     FOREIGN KEY (estado) REFERENCES Estado(id)
 ) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
 -- Caracteristica (JERÁRQUICA)
 -- -----------------------------------------------------
 CREATE TABLE Caracteristica (
-                                id INT AUTO_INCREMENT,
-                                nombre VARCHAR(45) NOT NULL,
-                                idPadre INT NULL,
-                                estado TINYINT,
+    id INT AUTO_INCREMENT,
+    nombre VARCHAR(45) NOT NULL,
+    idPadre INT NULL,
+    activo TINYINT,
 
-                                PRIMARY KEY (id),
-                                UNIQUE (nombre),
-                                FOREIGN KEY (idPadre) REFERENCES Caracteristica(id) ON DELETE CASCADE
+    PRIMARY KEY (id),
+    UNIQUE (nombre),
+    FOREIGN KEY (idPadre) REFERENCES Caracteristica(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
 -- Oferente - Caracteristica (N:M)
 -- -----------------------------------------------------
 CREATE TABLE OferenteHabilidad (
-                                   idUsuario VARCHAR(9),
-                                   idCaracteristica INT,
-                                   nivel INT NOT NULL,
+       idUsuario VARCHAR(9),
+       idCaracteristica INT,
+       nivel INT NOT NULL,
 
-                                   PRIMARY KEY (idUsuario, idCaracteristica),
-                                   FOREIGN KEY (idUsuario) REFERENCES Oferente(idUsuario) ON DELETE CASCADE,
-                                   FOREIGN KEY (idCaracteristica) REFERENCES Caracteristica(id) ON DELETE CASCADE
+       PRIMARY KEY (idUsuario, idCaracteristica),
+       FOREIGN KEY (idUsuario) REFERENCES Oferente(idUsuario) ON DELETE CASCADE,
+       FOREIGN KEY (idCaracteristica) REFERENCES Caracteristica(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
 -- Puesto (1:N con Empresa)
 -- -----------------------------------------------------
 CREATE TABLE Puesto (
-                        idPuesto INT AUTO_INCREMENT,
-                        idUsuario VARCHAR(9) NOT NULL,
-                        descripcion VARCHAR(100) NOT NULL,
-                        salario DOUBLE NOT NULL,
+    idPuesto INT AUTO_INCREMENT,
+    idUsuario VARCHAR(9) NOT NULL,
+    descripcion VARCHAR(100) NOT NULL,
+    salario DOUBLE NOT NULL,
 
-                        PRIMARY KEY (idPuesto),
-                        FOREIGN KEY (idUsuario) REFERENCES Empresa(idUsuario) ON DELETE CASCADE
+    PRIMARY KEY (idPuesto),
+    FOREIGN KEY (idUsuario) REFERENCES Empresa(idUsuario) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
 -- INSERTS
 -- -----------------------------------------------------
+
+-- INSERT INTO Estado (nombre) VALUES ('PENDIENTE'), ('ACEPTADO'), ('RECHAZADO');
 
 -- Admin 1
 INSERT INTO Usuario VALUES ('208380902', '111', 'ADMIN');
@@ -136,12 +140,15 @@ WHERE idUsuario = '208640831' AND rol = 'ADMIN';
 INSERT INTO Caracteristica (nombre, idPadre, estado)
 VALUES ('Informatica', NULL, 1);
 
-# ====== (raiz) = Informatica #1
-# ====== Lenguajes de programacion #2
-# ====== Tecnologias Web #3
-# ====== Bases de datos #4
-# ====== Ciberserguridad #5
-# ====== DevOps #6
+-- TIPOS DE ESTADO
+INSERT INTO Estado (nombre) VALUES ('PENDIENTE'), ('ACEPTADO'), ('RECHAZADO');
+
+-- (raiz) = Informatica #1
+-- Lenguajes de programacion #2
+-- Tecnologias Web #3
+-- Bases de datos #4
+-- Ciberserguridad #5
+-- DevOps #6
 
 INSERT INTO Caracteristica (nombre, idPadre, estado)
 SELECT 'Lenguajes de Programacion', id, 1 FROM Caracteristica WHERE nombre='Informatica';
