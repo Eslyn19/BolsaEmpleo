@@ -178,6 +178,28 @@
     align-items:center;
 }
 
+.emp-puesto-btn-icon{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:4px;
+    border:none;
+    border-radius:8px;
+    background:transparent;
+    cursor:pointer;
+    transition:transform 0.15s ease, background 0.15s ease;
+}
+
+.emp-puesto-btn-icon:hover{
+    background:rgba(255,255,255,0.08);
+    transform:scale(1.08);
+}
+
+.emp-puesto-btn-icon img{
+    display:block;
+    vertical-align:middle;
+}
+
 .emp-puesto-linkbtn{
     display:inline-flex;
     padding:8px 12px;

@@ -75,4 +75,12 @@ public class PuestoService {
         p.setActivo((byte) 0);
         puestoRepository.save(p);
     }
+
+    @Transactional
+    public void activar(String idEmpresa, Integer idPuesto) {
+        Puesto p = puestoRepository.findByIdAndIdUsuario_IdUsuario(idPuesto, idEmpresa)
+                .orElseThrow(() -> new IllegalArgumentException("Puesto no encontrado"));
+        p.setActivo((byte) 1);
+        puestoRepository.save(p);
+    }
 }

@@ -174,6 +174,18 @@ public class EmpresaController {
         return "redirect:/empresa/puestos";
     }
 
+    @PostMapping("/empresa/puestos/{id}/activar")
+    public String activarPuesto(HttpSession session, @PathVariable Integer id) {
+        if (session.getAttribute("empresaId") == null) {
+            return "redirect:/login";
+        }
+        try {
+            puestoService.activar((String) session.getAttribute("empresaId"), id);
+        } catch (Exception ignored) {
+        }
+        return "redirect:/empresa/puestos";
+    }
+
     @GetMapping("/empresa/puestos/{id}/candidatos")
     public String candidatosPlaceholder(HttpSession session, Model model, @PathVariable Integer id) {
         if (session.getAttribute("empresaId") == null) {

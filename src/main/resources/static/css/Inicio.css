@@ -113,18 +113,20 @@ body.inicio-page{
 
 .btn-signin{
     padding:9px 18px;
-    border:1px solid rgba(124,58,237,0.45);
+    border:1px solid rgba(20,184,166,0.5);
     border-radius:999px;
-    color:rgba(255,255,255,0.92);
+    color:#fff;
     font-size:0.85rem;
     font-weight:600;
     text-decoration:none;
-    background:rgba(124,58,237,0.12);
+    background:linear-gradient(135deg,#14b8a6,#0d9488);
+    box-shadow:0 4px 16px rgba(20,184,166,0.3);
     transition:var(--in-transition);
 }
 .btn-signin:hover{
-    background:rgba(124,58,237,0.22);
-    border-color:rgba(167,139,250,0.55);
+    filter:brightness(1.12);
+    transform:translateY(-1px);
+    box-shadow:0 6px 20px rgba(20,184,166,0.4);
 }
 
 .btn-post{

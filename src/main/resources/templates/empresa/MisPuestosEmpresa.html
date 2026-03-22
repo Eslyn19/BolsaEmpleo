@@ -57,9 +57,11 @@
                     </td>
                     <td class="emp-puesto-actions-cell">
                         <form th:if="${p.activo != null and p.activo == 1}" th:action="@{/empresa/puestos/{id}/desactivar(id=${p.id})}" method="post" style="display:inline;">
-                            <button type="submit" class="emp-puesto-btn-danger">Desactivar puesto</button>
+                            <button type="submit" class="emp-puesto-btn-icon" title="Desactivar"><img th:src="@{/images/TurnOn.png}" alt="Desactivar" width="28" height="28"></button>
                         </form>
-                        <span th:if="${p.activo == null or p.activo == 0}" class="emp-puesto-muted" style="font-size:13px;">—</span>
+                        <form th:if="${p.activo == null or p.activo == 0}" th:action="@{/empresa/puestos/{id}/activar(id=${p.id})}" method="post" style="display:inline;">
+                            <button type="submit" class="emp-puesto-btn-icon" title="Activar"><img th:src="@{/images/turnOff.png}" alt="Activar" width="28" height="28"></button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>
