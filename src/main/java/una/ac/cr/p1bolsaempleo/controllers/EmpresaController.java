@@ -1,6 +1,8 @@
 package una.ac.cr.p1bolsaempleo.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,5 +45,42 @@ public class EmpresaController {
         }
 
         return "redirect:/inicio?guardadoEmpresa=ok";
+    }
+
+    @GetMapping("/empresa/login")
+    public String loginForm() {
+        return "redirect:/login";
+    }
+
+    @GetMapping("/empresa/dashboard")
+    public String dashboard(HttpSession session, Model model) {
+        if (session.getAttribute("empresaId") == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("empresaEmail", session.getAttribute("empresaEmail"));
+        model.addAttribute("empresaNombre", session.getAttribute("empresaNombre"));
+        return "empresa/DashboardEmpresa";
+    }
+
+    @GetMapping("/empresa/puestos")
+    public String puestos(HttpSession session) {
+        if (session.getAttribute("empresaId") == null) {
+            return "redirect:/login";
+        }
+        return "redirect:/empresa/dashboard";
+    }
+
+    @GetMapping("/empresa/buscar-puestos")
+    public String buscarPuestos(HttpSession session) {
+        if (session.getAttribute("empresaId") == null) {
+            return "redirect:/login";
+        }
+        return "redirect:/empresa/dashboard";
+    }
+
+    @PostMapping("/empresa/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/inicio";
     }
 }

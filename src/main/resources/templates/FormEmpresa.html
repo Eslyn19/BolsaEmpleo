@@ -3,61 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario empresa</title>
+    <title>Registro empresa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="/images/empresaIcon.png" type="image/x-icon">
     <link rel="stylesheet" href="/css/FormEmpresa.css">
 </head>
+<body class="empresa-page">
+    <a href="/inicio" class="empresa-back">← Volver al inicio</a>
 
-<body>
-<a href="/inicio" class="back-button">Inicio</a>
-<div class="gradient-background"></div>
-
-<div class="contact-us">
-    <form action="/empresa" method="post" autocomplete="off">
-        <div th:if="${error}" th:text="${error}" class="error" style="margin-bottom:12px; color:#b71c1c;"></div>
-
-        <div class="field-row">
-            <div class="field">
-                <label for="customerName">🏢 Nombre Empresa</label>
-                <input type="text" id="customerName" name="customerName" required>
-            </div>
-            <div class="field">
-                <label for="correo">📧 Correo</label>
-                <input type="email" id="correo" name="correo" required>
-            </div>
-        </div>
-        <div class="field-row">
-            <div class="field">
-                <label for="ubicacion">🌎 Ubicación</label>
-                <input type="text" id="ubicacion" name="ubicacion" required>
-            </div>
-            <div class="field">
-                <label for="customerPhone">📱 Teléfono</label>
-                <input type="tel" id="customerPhone" name="customerPhone" required inputmode="numeric" pattern="[0-9]{8}" minlength="8" maxlength="8">
-            </div>
-        </div>
-
-        <div class="field">
-            <label for="descripcion">📄 Descripcion</label>
-            <input type="text" id="descripcion" name="descripcion" required>
-        </div>
-
-        <div class="field-row">
-            <div class="field">
-                <label for="customerPassword">🔒 Contraseña</label>
-                <input type="password" id="customerPassword" name="customerPassword" required>
+    <main class="empresa-shell">
+        <section class="empresa-card" aria-labelledby="empresa-title">
+            <div class="empresa-brand">
+                <img src="/images/logo.png" alt="Logo" class="empresa-logo" width="48" height="48">
+                <div>
+                    <h1 id="empresa-title" class="empresa-title">Registrar empresa</h1>
+                    <p class="empresa-sub">Completa los datos. Un administrador revisará tu solicitud.</p>
+                </div>
             </div>
 
-            <div class="field">
-                <label for="customerPasswordConfirm">🔑 Verificar contraseña</label>
-                <input type="password" id="customerPasswordConfirm" name="customerPasswordConfirm" required>
-            </div>
-        </div>
+            <form class="empresa-form" th:action="@{/empresa}" method="post" autocomplete="off">
+                <div th:if="${error}" th:text="${error}" class="empresa-error" role="alert"></div>
 
-        <h3>Proporcione toda la información para registrar su empresa.</h3>
-        <button type="submit">Enviar</button>
+                <div class="empresa-grid">
+                    <label class="empresa-field">
+                        <span class="empresa-label">Nombre de la empresa</span>
+                        <input class="empresa-input" type="text" id="customerName" name="customerName" required autocomplete="off">
+                    </label>
+                    <label class="empresa-field">
+                        <span class="empresa-label">Correo</span>
+                        <input class="empresa-input" type="email" id="correo" name="correo" required autocomplete="off">
+                    </label>
+                </div>
 
-    </form>
-</div>
+                <div class="empresa-grid">
+                    <label class="empresa-field">
+                        <span class="empresa-label">Ubicación</span>
+                        <input class="empresa-input" type="text" id="ubicacion" name="ubicacion" required autocomplete="off">
+                    </label>
+                    <label class="empresa-field">
+                        <span class="empresa-label">Teléfono</span>
+                        <input class="empresa-input" type="tel" id="customerPhone" name="customerPhone" required inputmode="numeric" pattern="[0-9]{8}" minlength="8" maxlength="8" autocomplete="off">
+                    </label>
+                </div>
+
+                <label class="empresa-field">
+                    <span class="empresa-label">Descripción</span>
+                    <input class="empresa-input" type="text" id="descripcion" name="descripcion" required autocomplete="off">
+                </label>
+
+                <div class="empresa-grid">
+                    <label class="empresa-field">
+                        <span class="empresa-label">Contraseña</span>
+                        <input class="empresa-input" type="password" id="customerPassword" name="customerPassword" required autocomplete="off">
+                    </label>
+                    <label class="empresa-field">
+                        <span class="empresa-label">Confirmar contraseña</span>
+                        <input class="empresa-input" type="password" id="customerPasswordConfirm" name="customerPasswordConfirm" required autocomplete="off">
+                    </label>
+                </div>
+
+                <p class="empresa-hint">Tu cuenta quedará pendiente hasta ser aprobada.</p>
+                <button type="submit" class="empresa-submit">Enviar registro</button>
+            </form>
+        </section>
+    </main>
 </body>
 </html>

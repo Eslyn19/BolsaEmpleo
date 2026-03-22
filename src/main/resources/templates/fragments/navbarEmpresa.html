@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+
+<nav th:fragment="navbar" class="navbar">
+
+    <div class="nav-left">
+        <div class="navbar-brand">
+            <img src="/images/logo.png" alt="Logo" class="brand-logo"/>
+        </div>
+
+        <ul class="navbar-links">
+            <li><a th:href="@{/empresa/dashboard}">Dashboard</a></li>
+            <li><a th:href="@{/empresa/puestos}">Mis puestos</a></li>
+            <li><a th:href="@{/empresa/buscar-puestos}">Buscar puestos</a></li>
+        </ul>
+    </div>
+
+    <div class="nav-right">
+        <span class="admin-email" th:text="${empresaEmail}">empresa@mail.com</span>
+        <form th:action="@{/empresa/logout}" method="post">
+            <button type="submit" class="btn-salir">Salir</button>
+        </form>
+    </div>
+
+</nav>
+
+</body>
+</html>

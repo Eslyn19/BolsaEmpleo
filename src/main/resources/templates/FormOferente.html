@@ -3,75 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario oferente</title>
+    <title>Registro oferente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="/images/formIcon.png" type="image/x-icon">
     <link rel="stylesheet" href="/css/FormOferente.css">
 </head>
+<body class="oferente-page">
+    <a href="/inicio" class="oferente-back">← Volver al inicio</a>
 
-<body>
-<a href="/inicio" class="back-button">← Volver</a>
-<div class="gradient-background"></div>
-<div class="contact-us">
-    <form th:action="@{/userform}" method="post" autocomplete="off">
-
-        <div th:if="${error}" th:text="${error}" class="error" style="margin-bottom:12px; color:#b71c1c;"></div>
-
-    <div class="field-row">
-            <div class="field">
-                <label for="nombre">👤 Nombre </label>
-                <input type="text" id="nombre" name="nombre" required>
-            </div>
-            <div class="field">
-                <label for="primerAp">👤 Primer Apellido</label>
-                <input type="text" id="primerAp" name="primerAp" required>
-            </div>
-            <div class="field">
-                <label for="nacionalidad">🌎 Nacionalidad</label>
-                <input type="text" id="nacionalidad" name="nacionalidad" required>
-            </div>
-        </div>
-
-        <div class="field-row">
-            <div class="field">
-                <label for="identificacion">🪪 Identificación</label>
-                <input type="text" id="identificacion" name="identificacion" required>
+    <main class="oferente-shell">
+        <section class="oferente-card" aria-labelledby="oferente-title">
+            <div class="oferente-brand">
+                <img src="/images/logo.png" alt="Logo" class="oferente-logo" width="48" height="48">
+                <div>
+                    <h1 id="oferente-title" class="oferente-title">Registro oferente</h1>
+                    <p class="oferente-sub">Completa tus datos. Un administrador revisará tu solicitud.</p>
+                </div>
             </div>
 
-            <div class="field">
-                <label for="telefono">📱 Teléfono</label>
-                <input type="tel" id="telefono" name="telefono">
-            </div>
-        </div>
+            <form class="oferente-form" th:action="@{/userform}" method="post" autocomplete="off">
+                <div th:if="${error}" th:text="${error}" class="oferente-error" role="alert"></div>
 
-        <div class="field-row">
-            <div class="field">
-                <label for="correo">📧 Correo</label>
-                <input type="email" id="correo" name="correo" required>
-            </div>
-            <div class="field">
-                <label for="lugarResidencia">🏠️ Lugar de residencia</label>
-                <input type="text" id="lugarResidencia" name="lugarResidencia" required>
-            </div>
-        </div>
+                <div class="oferente-grid oferente-grid--3">
+                    <label class="oferente-field">
+                        <span class="oferente-label">Nombre</span>
+                        <input class="oferente-input" type="text" id="nombre" name="nombre" required autocomplete="off">
+                    </label>
+                    <label class="oferente-field">
+                        <span class="oferente-label">Primer apellido</span>
+                        <input class="oferente-input" type="text" id="primerAp" name="primerAp" required autocomplete="off">
+                    </label>
+                    <label class="oferente-field">
+                        <span class="oferente-label">Nacionalidad</span>
+                        <input class="oferente-input" type="text" id="nacionalidad" name="nacionalidad" required autocomplete="off">
+                    </label>
+                </div>
 
-        <div class="field-row">
-            <div class="field">
-                <label for="customerPassword">🔒 Contraseña</label>
-                <input type="password" id="customerPassword" name="customerPassword" required>
-            </div>
+                <div class="oferente-grid">
+                    <label class="oferente-field">
+                        <span class="oferente-label">Identificación</span>
+                        <input class="oferente-input" type="text" id="identificacion" name="identificacion" required autocomplete="off">
+                    </label>
+                    <label class="oferente-field">
+                        <span class="oferente-label">Teléfono</span>
+                        <input class="oferente-input" type="tel" id="telefono" name="telefono" autocomplete="off">
+                    </label>
+                </div>
 
-            <div class="field">
-                <label for="customerPasswordConfirm">🔑 Verificar contraseña</label>
-                <input type="password" id="customerPasswordConfirm" name="customerPasswordConfirm" required>
-            </div>
-        </div>
+                <div class="oferente-grid">
+                    <label class="oferente-field">
+                        <span class="oferente-label">Correo</span>
+                        <input class="oferente-input" type="email" id="correo" name="correo" required autocomplete="off">
+                    </label>
+                    <label class="oferente-field">
+                        <span class="oferente-label">Lugar de residencia</span>
+                        <input class="oferente-input" type="text" id="lugarResidencia" name="lugarResidencia" required autocomplete="off">
+                    </label>
+                </div>
 
-        <h3>Proporcione toda la información sobre su petición de registro.</h3>
+                <div class="oferente-grid">
+                    <label class="oferente-field">
+                        <span class="oferente-label">Contraseña</span>
+                        <input class="oferente-input" type="password" id="customerPassword" name="customerPassword" required autocomplete="off">
+                    </label>
+                    <label class="oferente-field">
+                        <span class="oferente-label">Confirmar contraseña</span>
+                        <input class="oferente-input" type="password" id="customerPasswordConfirm" name="customerPasswordConfirm" required autocomplete="off">
+                    </label>
+                </div>
 
-        <button type="submit">Enviar</button>
-
-    </form>
-</div>
-
+                <p class="oferente-hint">Tu cuenta quedará pendiente hasta ser aprobada.</p>
+                <button type="submit" class="oferente-submit">Enviar registro</button>
+            </form>
+        </section>
+    </main>
 </body>
 </html>

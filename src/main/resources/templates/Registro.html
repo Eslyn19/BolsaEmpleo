@@ -3,45 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrarse</title>
+    <title>Ingreso</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/Registro.css">
     <link rel="icon" href="/images/loginIcon.png" type="image/x-icon">
 </head>
+<body class="login-page">
+    <a href="/inicio" class="login-back">← Volver al inicio</a>
 
-<body>
-    <a href="/inicio" class="btn-volver">← Volver</a>
-    <input type="radio" name="mode" id="signInTab" checked hidden>
-    <input type="radio" name="mode" id="signUpTab" hidden>
-
-    <div class="container" id="container">
-        <div class="form-container sign-in-container">
-            <form action="/admin/login" method="post">
-
-                <h1>Usuario</h1>
-                <div th:if="${error}" th:text="${error}" class="error"></div>
-                <input type="text" name="identificacion" placeholder="Identificación" autocomplete="off">
-                <h2>Contraseña</h2>
-                <input type="password" name="clave" placeholder="Contraseña">
-
-                <button type="submit">Ingresar</button>
-
-            </form>
-        </div>
-
-        <div class="overlay-container">
-            <div class="overlay">
-                <div class="overlay-panel overlay-left">
-                    <h1>Bienvenido/a!</h1>
-                    <p>Para mantenerse conectado con nosotros, inicia sesión con tu información personal.</p>
-                </div>
-
-                <div class="overlay-panel overlay-right">
-                    <h1>Hola, amigo/a!</h1>
-                    <p>Introduce tus datos personales y comienza tu busqueda con nosotros</p>
+    <main class="login-shell">
+        <section class="login-card" aria-labelledby="login-title">
+            <div class="login-brand">
+                <img src="/images/logo.png" alt="Logo" class="login-logo" width="48" height="48">
+                <div>
+                    <h1 id="login-title" class="login-title">Bienvenido</h1>
+                    <p class="login-sub">Ingresa con tu identificación o correo de empresa.</p>
                 </div>
             </div>
 
-        </div>
-    </div>
+            <form class="login-form" th:action="@{/ingreso}" method="post" autocomplete="off">
+                <div th:if="${error}" th:text="${error}" class="login-error" role="alert"></div>
+
+                <label class="login-field">
+                    <span class="login-label">Usuario</span>
+                    <input class="login-input" type="text" name="identificacion" placeholder="Identificación o correo" required autocomplete="username">
+                </label>
+
+                <label class="login-field">
+                    <span class="login-label">Contraseña</span>
+                    <input class="login-input" type="password" name="clave" placeholder="••••••••" required autocomplete="current-password">
+                </label>
+
+                <button type="submit" class="login-submit">Entrar</button>
+            </form>
+        </section>
+    </main>
 </body>
 </html>

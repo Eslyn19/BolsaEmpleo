@@ -11,6 +11,7 @@ import una.ac.cr.p1bolsaempleo.models.Estado;
 import una.ac.cr.p1bolsaempleo.models.Usuario;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmpresaService {
@@ -54,6 +55,33 @@ public class EmpresaService {
         empresa.setEstado(estadoPendiente);
         empresaRepository.save(empresa);
         return null;
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Empresa> login(String correo, String clave) {
+        String id = correo != null ? correo.trim() : "";
+        if (id.isEmpty()) {
+            return Optional.empty();
+        }
+        return usuarioRepository.findById(id)
+                .filter(u -> "EMPRESA".equalsIgnoreCase(trimRol(u.getRol())))
+                .filter(u -> matchesClave(clave, u.getClave()))
+                .flatMap(u -> empresaRepository.findByIdUsuarioWithEstado(id))
+                .filter(e -> "ACEPTADO".equalsIgnoreCase(e.getEstado().getNombre()));
+    }
+
+    private static String trimRol(String rol) {
+        return rol != null ? rol.trim() : "";
+    }
+
+    private boolean matchesClave(String raw, String stored) {
+        if (stored == null) {
+            return false;
+        }
+        if (stored.startsWith("$2")) {
+            return passwordEncoder.matches(raw, stored);
+        }
+        return stored.equals(raw);
     }
 
     public List<Empresa> listarPendientes() {
