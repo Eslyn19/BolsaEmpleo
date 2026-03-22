@@ -7,10 +7,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import una.ac.cr.p1bolsaempleo.models.Caracteristica;
+import una.ac.cr.p1bolsaempleo.services.CaracteristicaService;
 import una.ac.cr.p1bolsaempleo.services.EmpresaService;
 import una.ac.cr.p1bolsaempleo.services.OferenteService;
 
 import jakarta.servlet.http.HttpSession;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -18,10 +21,13 @@ public class AdminController {
 
     private final EmpresaService empresaService;
     private final OferenteService oferenteService;
+    private final CaracteristicaService caracteristicaService;
 
-    public AdminController(EmpresaService empresaService, OferenteService oferenteService) {
+    public AdminController(EmpresaService empresaService, OferenteService oferenteService,
+                           CaracteristicaService caracteristicaService) {
         this.empresaService = empresaService;
         this.oferenteService = oferenteService;
+        this.caracteristicaService = caracteristicaService;
     }
 
     @GetMapping("/dashboard")
@@ -32,7 +38,7 @@ public class AdminController {
         }
         model.addAttribute("titulo", "Dashboard");
         model.addAttribute("empresasPendientes", empresaService.listarPendientes().size());
-        model.addAttribute("oferentesPendientes", 0);
+        model.addAttribute("oferentesPendientes", oferenteService.listarPendientes().size());
         model.addAttribute("adminEmail", adminEmail);
         return "admin/DashboardAdminView";
     }
@@ -81,6 +87,49 @@ public class AdminController {
     public String rechazarOferente(@PathVariable String id) {
         oferenteService.rechazar(id);
         return "redirect:/admin/oferentes";
+    }
+
+    @GetMapping("/caracteristicas")
+    public String caracteristicas(HttpSession session, Model model,
+                                  @RequestParam(required = false) Integer parentId) {
+        String adminEmail = (String) session.getAttribute("adminEmail");
+        if (adminEmail == null) {
+            return "redirect:/login";
+        }
+        Optional<Integer> raizOpt = caracteristicaService.idRaizPasiva();
+        model.addAttribute("items", caracteristicaService.listarItemsVista(parentId));
+        model.addAttribute("padresSelect", caracteristicaService.opcionesPadre(parentId));
+        model.addAttribute("parentId", parentId);
+        model.addAttribute("raizPasivaId", raizOpt.orElse(null));
+        model.addAttribute("adminEmail", adminEmail);
+        String etiqueta = "raíces";
+        if (parentId != null) {
+            Optional<Caracteristica> cur = caracteristicaService.obtenerConPadre(parentId);
+            if (cur.isPresent()) {
+                etiqueta = cur.get().getNombre();
+                boolean volverRaices = caracteristicaService.volverEsRaices(cur.get(), raizOpt.orElse(null));
+                model.addAttribute("volverRaices", volverRaices);
+                if (!volverRaices && cur.get().getIdPadre() != null) {
+                    model.addAttribute("volverPid", cur.get().getIdPadre().getId());
+                } else {
+                    model.addAttribute("volverPid", null);
+                }
+            } else {
+                model.addAttribute("volverRaices", true);
+                model.addAttribute("volverPid", null);
+            }
+        } else {
+            model.addAttribute("volverRaices", false);
+            model.addAttribute("volverPid", null);
+        }
+        model.addAttribute("etiquetaCategoria", etiqueta);
+        return "admin/CaracteristicasAdminView";
+    }
+
+    @PostMapping("/caracteristicas")
+    public String crearCaracteristica(@RequestParam String nombre, @RequestParam Integer idPadre) {
+        caracteristicaService.crear(nombre, idPadre);
+        return "redirect:/admin/caracteristicas?parentId=" + idPadre;
     }
 
     @PostMapping("/logout")
