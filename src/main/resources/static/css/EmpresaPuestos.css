@@ -1,0 +1,210 @@
+.main-empresa-puestos{
+    margin-bottom:48px;
+}
+
+.emp-puesto-form{
+    margin-top:22px;
+    max-width:520px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+.emp-puesto-field{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    text-align:left;
+}
+
+.emp-puesto-label{
+    font-size:13px;
+    font-weight:650;
+    color:rgba(255,255,255,0.72);
+}
+
+.emp-puesto-input{
+    width:100%;
+    padding:12px 14px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.1);
+    background:rgba(255,255,255,0.04);
+    color:rgba(255,255,255,0.92);
+    font-size:14px;
+    outline:none;
+}
+
+.emp-puesto-input:focus{
+    border-color:rgba(124,58,237,0.55);
+    box-shadow:0 0 0 3px rgba(124,58,237,0.2);
+}
+
+.emp-puesto-actions{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:14px;
+    margin-top:8px;
+}
+
+.emp-puesto-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:10px 20px;
+    border-radius:12px;
+    border:1px solid rgba(34,197,94,0.35);
+    background:rgba(34,197,94,0.12);
+    color:rgba(255,255,255,0.92);
+    font-size:14px;
+    font-weight:750;
+    cursor:pointer;
+    text-decoration:none;
+}
+
+.emp-puesto-btn:hover{
+    background:rgba(34,197,94,0.2);
+}
+
+.emp-puesto-btn--inline{
+    align-self:flex-start;
+}
+
+.emp-puesto-link{
+    color:rgba(255,255,255,0.72);
+    font-size:14px;
+    text-decoration:none;
+}
+
+.emp-puesto-link:hover{
+    color:rgba(255,255,255,0.92);
+}
+
+.emp-puesto-msg{
+    margin-top:16px;
+    padding:12px 14px;
+    border-radius:12px;
+    font-size:14px;
+}
+
+.emp-puesto-msg--ok{
+    border:1px solid rgba(34,197,94,0.35);
+    background:rgba(34,197,94,0.1);
+    color:rgba(187,247,208,0.95);
+}
+
+.emp-puesto-msg--err{
+    border:1px solid rgba(239,68,68,0.35);
+    background:rgba(239,68,68,0.12);
+    color:#fca5a5;
+}
+
+.emp-puesto-hint-inline{
+    margin:0 0 10px 0;
+    font-size:0.8125rem;
+    color:rgba(255,255,255,0.55);
+    line-height:1.4;
+}
+
+.emp-puesto-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    max-height:220px;
+    overflow:auto;
+    padding:4px 2px 8px 0;
+}
+
+.emp-puesto-chip{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 12px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.12);
+    background:rgba(255,255,255,0.04);
+    font-size:13px;
+    color:rgba(255,255,255,0.88);
+    cursor:pointer;
+    user-select:none;
+}
+
+.emp-puesto-chip input{
+    width:16px;
+    height:16px;
+    accent-color:#7c3aed;
+    cursor:pointer;
+}
+
+.emp-puesto-cars{
+    max-width:280px;
+    font-size:13px;
+    line-height:1.45;
+    color:rgba(255,255,255,0.82);
+}
+
+.emp-puesto-muted{
+    color:rgba(255,255,255,0.35);
+}
+
+.emp-puesto-table{
+    width:100%;
+    border-collapse:separate;
+    border-spacing:0;
+    min-width:640px;
+}
+
+.emp-puesto-table th{
+    text-align:left;
+    padding:12px 10px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    color:rgba(255,255,255,0.92);
+    font-size:13px;
+}
+
+.emp-puesto-table td{
+    padding:12px 10px;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    color:rgba(255,255,255,0.88);
+    font-size:14px;
+    vertical-align:middle;
+}
+
+.emp-puesto-actions-cell{
+    white-space:nowrap;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    align-items:center;
+}
+
+.emp-puesto-linkbtn{
+    display:inline-flex;
+    padding:8px 12px;
+    border-radius:10px;
+    border:1px solid rgba(124,58,237,0.35);
+    background:rgba(124,58,237,0.12);
+    color:rgba(255,255,255,0.92);
+    font-size:13px;
+    font-weight:650;
+    text-decoration:none;
+}
+
+.emp-puesto-linkbtn:hover{
+    background:rgba(124,58,237,0.22);
+}
+
+.emp-puesto-btn-danger{
+    padding:8px 12px;
+    border-radius:10px;
+    border:1px solid rgba(239,68,68,0.35);
+    background:rgba(239,68,68,0.12);
+    color:rgba(255,255,255,0.92);
+    font-size:13px;
+    font-weight:650;
+    cursor:pointer;
+}
+
+.emp-puesto-btn-danger:hover{
+    background:rgba(239,68,68,0.2);
+}

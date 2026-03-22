@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis puestos</title>
+    <title>Buscar candidatos</title>
     <link rel="stylesheet" th:href="@{/css/AdministradorView.css}">
     <link rel="stylesheet" th:href="@{/css/EmpresaPuestos.css}">
 </head>
@@ -15,19 +15,16 @@
     <section class="dashboard-hero">
         <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:16px;">
             <div>
-                <h1 style="font-size:clamp(22px,2.3vw,30px);">Mis puestos</h1>
-                <p style="margin-top:8px;color:rgba(255,255,255,0.72);">Puestos publicados por tu empresa.</p>
+                <h1 style="font-size:clamp(22px,2.3vw,30px);">Buscar candidatos</h1>
+                <p style="margin-top:8px;color:rgba(255,255,255,0.72);">
+                    Elige un puesto publicado para buscar candidatos que encajen con el rol.
+                </p>
             </div>
-            <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
-                <a class="emp-puesto-link" th:href="@{/empresa/buscar-puestos}">Buscar candidatos</a>
-                <a class="emp-puesto-btn emp-puesto-btn--inline" th:href="@{/empresa/puestos/publicar}">Publicar puesto</a>
-            </div>
+            <a class="emp-puesto-link emp-puesto-btn--inline" th:href="@{/empresa/puestos}" style="text-decoration:none;">← Mis puestos</a>
         </div>
 
-        <div th:if="${msgOk}" th:text="${msgOk}" class="emp-puesto-msg emp-puesto-msg--ok"></div>
-
         <div th:if="${#lists.isEmpty(puestos)}" style="margin-top:18px;">
-            <p style="color:rgba(255,255,255,0.72);">Aún no has publicado puestos.</p>
+            <p style="color:rgba(255,255,255,0.72);">No tienes puestos publicados. Publica uno desde <a class="emp-puesto-link" th:href="@{/empresa/puestos/publicar}">Publicar puesto</a>.</p>
         </div>
 
         <div th:if="${!#lists.isEmpty(puestos)}" style="margin-top:18px;overflow-x:auto;">
@@ -38,7 +35,7 @@
                     <th>Salario</th>
                     <th>Características</th>
                     <th>Estado</th>
-                    <th>Gestión</th>
+                    <th>Buscar candidatos</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -56,10 +53,11 @@
                         <span th:if="${p.activo == null or p.activo == 0}" style="color:rgba(248,113,113,0.9);">Inactivo</span>
                     </td>
                     <td class="emp-puesto-actions-cell">
-                        <form th:if="${p.activo != null and p.activo == 1}" th:action="@{/empresa/puestos/{id}/desactivar(id=${p.id})}" method="post" style="display:inline;">
-                            <button type="submit" class="emp-puesto-btn-danger">Desactivar puesto</button>
-                        </form>
-                        <span th:if="${p.activo == null or p.activo == 0}" class="emp-puesto-muted" style="font-size:13px;">—</span>
+                        <a th:if="${p.activo != null and p.activo == 1}" class="emp-puesto-linkbtn"
+                           th:href="@{/empresa/puestos/{id}/candidatos(id=${p.id})}">Buscar candidatos</a>
+                        <span th:if="${p.activo == null or p.activo == 0}" class="emp-puesto-muted" style="font-size:13px;">
+                            Puesto inactivo — reactívalo en <a class="emp-puesto-link" th:href="@{/empresa/puestos}">Mis puestos</a>.
+                        </span>
                     </td>
                 </tr>
                 </tbody>

@@ -72,4 +72,17 @@ public class CaracteristicaService {
         c.setActivo((byte) 1);
         caracteristicaRepository.save(c);
     }
+
+    @Transactional
+    public void alternarActivo(Integer id) {
+        Caracteristica c = caracteristicaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Característica no encontrada"));
+        boolean encendida = c.getActivo() == null || c.getActivo() == 1;
+        c.setActivo(encendida ? (byte) 0 : (byte) 1);
+        caracteristicaRepository.save(c);
+    }
+
+    public List<Caracteristica> listarActivasParaSeleccionPuesto() {
+        return caracteristicaRepository.findActivasParaSeleccionPuesto();
+    }
 }

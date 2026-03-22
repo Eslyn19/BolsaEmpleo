@@ -17,6 +17,24 @@
             <p style="margin-top:8px;">Bienvenido, <span th:text="${empresaNombre}">Empresa</span>.</p>
         </div>
     </section>
+
+    <section class="dashboard-cards">
+        <a th:href="@{/empresa/puestos}" class="card">
+            <div class="card-icon">📋</div>
+            <div class="card-info">
+                <h3>Buscar puesto</h3>
+                <p>Ver tus puestos publicados, publicar nuevos y gestionar el estado.</p>
+            </div>
+        </a>
+
+        <a th:href="@{/empresa/buscar-puestos}" class="card">
+            <div class="card-icon">👥</div>
+            <div class="card-info">
+                <h3>Buscar candidatos</h3>
+                <p>Elegir un puesto activo para buscar perfiles que encajen.</p>
+            </div>
+        </a>
+    </section>
 </main>
 
 <div th:replace="~{fragments/footerAdministrador :: footer}"></div>

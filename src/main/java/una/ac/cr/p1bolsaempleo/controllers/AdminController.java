@@ -132,6 +132,19 @@ public class AdminController {
         return "redirect:/admin/caracteristicas?parentId=" + idPadre;
     }
 
+    @PostMapping("/caracteristicas/{id}/toggle-activo")
+    public String toggleActivoCaracteristica(@PathVariable Integer id,
+                                            @RequestParam(required = false) Integer parentId) {
+        try {
+            caracteristicaService.alternarActivo(id);
+        } catch (Exception ignored) {
+        }
+        if (parentId != null) {
+            return "redirect:/admin/caracteristicas?parentId=" + parentId;
+        }
+        return "redirect:/admin/caracteristicas";
+    }
+
     @PostMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();

@@ -6,6 +6,9 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -18,7 +21,7 @@ public class Puesto {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "idUsuario", nullable = false)
+    @JoinColumn(name = "id_usuario", nullable = false, referencedColumnName = "idUsuario")
     private Empresa idUsuario;
 
     @Column(name = "descripcion", nullable = false, length = 100)
@@ -27,5 +30,15 @@ public class Puesto {
     @Column(name = "salario", nullable = false)
     private Double salario;
 
+    @Column(name = "activo")
+    private Byte activo;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "puesto_caracteristica",
+            joinColumns = @JoinColumn(name = "idPuesto", referencedColumnName = "idPuesto"),
+            inverseJoinColumns = @JoinColumn(name = "idCaracteristica", referencedColumnName = "id")
+    )
+    private Set<Caracteristica> caracteristicas = new LinkedHashSet<>();
 
 }

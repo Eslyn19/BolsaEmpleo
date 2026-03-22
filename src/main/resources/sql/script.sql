@@ -110,6 +110,7 @@ CREATE TABLE Puesto (
     idUsuario VARCHAR(9) NOT NULL,
     descripcion VARCHAR(100) NOT NULL,
     salario DOUBLE NOT NULL,
+    activo TINYINT NULL,
 
     PRIMARY KEY (idPuesto),
     FOREIGN KEY (idUsuario) REFERENCES Empresa(idUsuario) ON DELETE CASCADE
@@ -137,7 +138,7 @@ SELECT idUsuario, 'Mishelle Rojas'
 FROM Usuario
 WHERE idUsuario = '208640831' AND rol = 'ADMIN';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 VALUES ('Informatica', NULL, 1);
 
 -- TIPOS DE ESTADO
@@ -150,95 +151,106 @@ INSERT INTO Estado (nombre) VALUES ('PENDIENTE'), ('ACEPTADO'), ('RECHAZADO');
 -- Ciberserguridad #5
 -- DevOps #6
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'Lenguajes de Programacion', id, 1 FROM Caracteristica WHERE nombre='Informatica';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'Tecnologias Web', id, 1 FROM Caracteristica WHERE nombre='Informatica';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'Bases de Datos', id, 1 FROM Caracteristica WHERE nombre='Informatica';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'Ciberseguridad', id, 1 FROM Caracteristica WHERE nombre='Informatica';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'DevOps', id, 1 FROM Caracteristica WHERE nombre='Informatica';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'Java', id, 1 FROM Caracteristica WHERE nombre='Lenguajes de Programacion';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'C#', id, 1 FROM Caracteristica WHERE nombre='Lenguajes de Programacion';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'JavaScript', id, 1 FROM Caracteristica WHERE nombre='Lenguajes de Programacion';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'Python', id, 1 FROM Caracteristica WHERE nombre='Lenguajes de Programacion';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'C++', id, 1 FROM Caracteristica WHERE nombre='Lenguajes de Programacion';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'HTML', id, 1 FROM Caracteristica WHERE nombre='Tecnologias Web';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'CSS', id, 1 FROM Caracteristica WHERE nombre='Tecnologias Web';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'React', id, 1 FROM Caracteristica WHERE nombre='Tecnologias Web';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'Angular', id, 1 FROM Caracteristica WHERE nombre='Tecnologias Web';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'Vue', id, 1 FROM Caracteristica WHERE nombre='Tecnologias Web';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'MySQL', id, 1 FROM Caracteristica WHERE nombre='Bases de Datos';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'PostgreSQL', id, 1 FROM Caracteristica WHERE nombre='Bases de Datos';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'MongoDB', id, 1 FROM Caracteristica WHERE nombre='Bases de Datos';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'Oracle', id, 1 FROM Caracteristica WHERE nombre='Bases de Datos';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'SQL Server', id, 1 FROM Caracteristica WHERE nombre='Bases de Datos';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'Pentesting', id, 1 FROM Caracteristica WHERE nombre='Ciberseguridad';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'Analisis de vulnerabilidades', id, 1 FROM Caracteristica WHERE nombre='Ciberseguridad';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'Criptografia', id, 1 FROM Caracteristica WHERE nombre='Ciberseguridad';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'Seguridad en redes', id, 1 FROM Caracteristica WHERE nombre='Ciberseguridad';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'Ethical Hacking', id, 1 FROM Caracteristica WHERE nombre='Ciberseguridad';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'Docker', id, 1 FROM Caracteristica WHERE nombre='DevOps';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'Kubernetes', id, 1 FROM Caracteristica WHERE nombre='DevOps';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'CI/CD', id, 1 FROM Caracteristica WHERE nombre='DevOps';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'AWS', id, 1 FROM Caracteristica WHERE nombre='DevOps';
 
-INSERT INTO Caracteristica (nombre, idPadre, estado)
+INSERT INTO Caracteristica (nombre, idPadre, activo)
 SELECT 'Azure', id, 1 FROM Caracteristica WHERE nombre='DevOps';
+
+-- -----------------------------------------------------
+-- Puesto - Caracteristica (N:M)
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS puesto_caracteristica (
+    idPuesto INT NOT NULL,
+    idCaracteristica INT NOT NULL,
+    PRIMARY KEY (idPuesto, idCaracteristica),
+    FOREIGN KEY (idPuesto) REFERENCES Puesto(idPuesto) ON DELETE CASCADE,
+    FOREIGN KEY (idCaracteristica) REFERENCES Caracteristica(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

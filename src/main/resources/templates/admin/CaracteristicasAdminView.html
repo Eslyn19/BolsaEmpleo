@@ -30,8 +30,24 @@
                 <div class="cat-list-wrap">
                     <div th:if="${#lists.isEmpty(items)}" class="cat-empty">No hay características en este nivel.</div>
                     <div class="cat-row" th:each="c : ${items}">
-                        <span class="cat-row-name" th:text="${c.nombre}"></span>
-                        <a th:if="${raizPasivaId == null or c.id != raizPasivaId}" class="cat-btn-entrar" th:href="@{/admin/caracteristicas(parentId=${c.id})}">Entrar</a>
+                        <div class="cat-row-main">
+                            <span class="cat-row-name" th:text="${c.nombre}"></span>
+                            <span class="cat-badge"
+                                  th:classappend="${c.activo == null or c.activo == 1} ? ' cat-badge--on' : ' cat-badge--off'"
+                                  th:text="${c.activo == null or c.activo == 1} ? 'Activa' : 'Inactiva'">Activa</span>
+                        </div>
+                        <div class="cat-row-actions">
+                            <a th:if="${raizPasivaId == null or c.id != raizPasivaId}" class="cat-btn-entrar" th:href="@{/admin/caracteristicas(parentId=${c.id})}">Entrar</a>
+                            <form method="post" th:action="@{/admin/caracteristicas/{id}/toggle-activo(id=${c.id})}" class="cat-toggle-form">
+                                <input type="hidden" name="parentId" th:value="${parentId}" th:if="${parentId != null}">
+                                <button type="submit" class="cat-toggle-hit" title="Activar o desactivar en catálogo">
+                                    <span class="cat-toggle-track"
+                                          th:classappend="${c.activo == null or c.activo == 1} ? ' cat-toggle-track--on' : ' cat-toggle-track--off'">
+                                        <span class="cat-toggle-knob"></span>
+                                    </span>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
