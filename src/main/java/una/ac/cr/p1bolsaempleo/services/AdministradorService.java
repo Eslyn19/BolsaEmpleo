@@ -18,7 +18,10 @@ public class AdministradorService {
         this.administradorRepository = administradorRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
+    public Administrador buscarPorId(String id) {
+        return administradorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Admin no encontrado"));
+    }
     @Transactional(readOnly = true)
     public Optional<Administrador> login(String identificacion, String clave) {
         return administradorRepository.findByIdWithUsuario(identificacion)

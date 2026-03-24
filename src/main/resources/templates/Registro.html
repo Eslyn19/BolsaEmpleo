@@ -23,20 +23,24 @@
                 </div>
             </div>
 
-            <form class="login-form" th:action="@{/ingreso}" method="post" autocomplete="off">
-                <div th:if="${error}" th:text="${error}" class="login-error" role="alert"></div>
+            <form th:action="@{/login}" method="post">
+
+                <div th:if="${param.error}" class="login-error">
+                    Usuario o contraseña incorrectos
+                </div>
 
                 <label class="login-field">
                     <span class="login-label">Usuario</span>
-                    <input class="login-input" type="text" name="identificacion" placeholder="Identificación o correo" required autocomplete="username">
+                    <input class="login-input" type="text" name="username" required>
                 </label>
 
                 <label class="login-field">
                     <span class="login-label">Contraseña</span>
-                    <input class="login-input" type="password" name="clave" placeholder="••••••••" required autocomplete="current-password">
+                    <input class="login-input" type="password" name="password" required>
                 </label>
 
                 <button type="submit" class="login-submit">Entrar</button>
+
             </form>
         </section>
     </main>

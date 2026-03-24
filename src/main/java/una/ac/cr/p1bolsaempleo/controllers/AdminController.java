@@ -1,5 +1,6 @@
 package una.ac.cr.p1bolsaempleo.controllers;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import una.ac.cr.p1bolsaempleo.models.Administrador;
 import una.ac.cr.p1bolsaempleo.models.Caracteristica;
+import una.ac.cr.p1bolsaempleo.services.AdministradorService;
 import una.ac.cr.p1bolsaempleo.services.CaracteristicaService;
 import una.ac.cr.p1bolsaempleo.services.EmpresaService;
 import una.ac.cr.p1bolsaempleo.services.OferenteService;
@@ -22,36 +25,48 @@ public class AdminController {
     private final EmpresaService empresaService;
     private final OferenteService oferenteService;
     private final CaracteristicaService caracteristicaService;
+    private final AdministradorService administradorService;
 
-    public AdminController(EmpresaService empresaService, OferenteService oferenteService,
-                           CaracteristicaService caracteristicaService) {
+    public AdminController(EmpresaService empresaService,
+                           OferenteService oferenteService,
+                           CaracteristicaService caracteristicaService,
+                           AdministradorService administradorService) {
         this.empresaService = empresaService;
         this.oferenteService = oferenteService;
         this.caracteristicaService = caracteristicaService;
+        this.administradorService = administradorService;
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(HttpSession session, Model model) {
-        String adminEmail = (String) session.getAttribute("adminEmail");
-        if (adminEmail == null) {
-            return "redirect:/login";
-        }
+    public String dashboard(Authentication auth, Model model) {
+
+        String idUsuario = auth.getName(); // ← ESTE ES EL ID DEL ADMIN
+
+        Administrador admin = administradorService.buscarPorId(idUsuario);
+
         model.addAttribute("titulo", "Dashboard");
         model.addAttribute("empresasPendientes", empresaService.listarPendientes().size());
         model.addAttribute("oferentesPendientes", oferenteService.listarPendientes().size());
-        model.addAttribute("adminEmail", adminEmail);
+
+        model.addAttribute("adminNombre", admin.getNombre());
+
         return "admin/DashboardAdminView";
     }
 
     @GetMapping("/empresas")
-    public String empresas(HttpSession session, Model model) {
-        String adminEmail = (String) session.getAttribute("adminEmail");
-        if (adminEmail == null) {
-            return "redirect:/login";
-        }
+    public String empresas(Authentication auth, Model model) {
+
         model.addAttribute("empresas", empresaService.listarPendientes());
-        model.addAttribute("adminEmail", adminEmail);
+
         return "admin/EmpresasAdminView";
+    }
+
+    @GetMapping("/oferentes")
+    public String oferentes(Authentication auth, Model model) {
+
+        model.addAttribute("pendientes", oferenteService.listarPendientes());
+
+        return "admin/OferentesAdminView";
     }
 
     @PostMapping("/empresas/{id}/aprobar")
@@ -66,17 +81,6 @@ public class AdminController {
         return "redirect:/admin/empresas";
     }
 
-    @GetMapping("/oferentes")
-    public String oferentes(HttpSession session, Model model) {
-        String adminEmail = (String) session.getAttribute("adminEmail");
-        if (adminEmail == null) {
-            return "redirect:/login";
-        }
-        model.addAttribute("pendientes", oferenteService.listarPendientes());
-        model.addAttribute("adminEmail", adminEmail);
-        return "admin/OferentesAdminView";
-    }
-
     @PostMapping("/oferentes/{id}/aprobar")
     public String aprobarOferente(@PathVariable String id) {
         oferenteService.aprobar(id);
@@ -87,67 +91,5 @@ public class AdminController {
     public String rechazarOferente(@PathVariable String id) {
         oferenteService.rechazar(id);
         return "redirect:/admin/oferentes";
-    }
-
-    @GetMapping("/caracteristicas")
-    public String caracteristicas(HttpSession session, Model model,
-                                  @RequestParam(required = false) Integer parentId) {
-        String adminEmail = (String) session.getAttribute("adminEmail");
-        if (adminEmail == null) {
-            return "redirect:/login";
-        }
-        Optional<Integer> raizOpt = caracteristicaService.idRaizPasiva();
-        model.addAttribute("items", caracteristicaService.listarItemsVista(parentId));
-        model.addAttribute("padresSelect", caracteristicaService.opcionesPadre(parentId));
-        model.addAttribute("parentId", parentId);
-        model.addAttribute("raizPasivaId", raizOpt.orElse(null));
-        model.addAttribute("adminEmail", adminEmail);
-        String etiqueta = "raíces";
-        if (parentId != null) {
-            Optional<Caracteristica> cur = caracteristicaService.obtenerConPadre(parentId);
-            if (cur.isPresent()) {
-                etiqueta = cur.get().getNombre();
-                boolean volverRaices = caracteristicaService.volverEsRaices(cur.get(), raizOpt.orElse(null));
-                model.addAttribute("volverRaices", volverRaices);
-                if (!volverRaices && cur.get().getIdPadre() != null) {
-                    model.addAttribute("volverPid", cur.get().getIdPadre().getId());
-                } else {
-                    model.addAttribute("volverPid", null);
-                }
-            } else {
-                model.addAttribute("volverRaices", true);
-                model.addAttribute("volverPid", null);
-            }
-        } else {
-            model.addAttribute("volverRaices", false);
-            model.addAttribute("volverPid", null);
-        }
-        model.addAttribute("etiquetaCategoria", etiqueta);
-        return "admin/CaracteristicasAdminView";
-    }
-
-    @PostMapping("/caracteristicas")
-    public String crearCaracteristica(@RequestParam String nombre, @RequestParam Integer idPadre) {
-        caracteristicaService.crear(nombre, idPadre);
-        return "redirect:/admin/caracteristicas?parentId=" + idPadre;
-    }
-
-    @PostMapping("/caracteristicas/{id}/toggle-activo")
-    public String toggleActivoCaracteristica(@PathVariable Integer id,
-                                            @RequestParam(required = false) Integer parentId) {
-        try {
-            caracteristicaService.alternarActivo(id);
-        } catch (Exception ignored) {
-        }
-        if (parentId != null) {
-            return "redirect:/admin/caracteristicas?parentId=" + parentId;
-        }
-        return "redirect:/admin/caracteristicas";
-    }
-
-    @PostMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/login";
     }
 }

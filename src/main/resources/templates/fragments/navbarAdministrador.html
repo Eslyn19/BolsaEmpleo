@@ -22,8 +22,8 @@
     </div>
 
     <div class="nav-right">
-        <span class="admin-email" th:text="${adminEmail}">admin@empresa.com</span>
-        <form th:action="@{/admin/logout}" method="post">
+        <span class="admin-email" th:text="${adminNombre}">admin@empresa.com</span>
+        <form th:action="@{/logout}" method="post">
             <button type="submit" class="btn-salir">Salir</button>
         </form>
     </div>

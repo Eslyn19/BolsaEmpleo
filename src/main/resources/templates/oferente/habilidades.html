@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Habilidades — Job Connect</title>
+
+    <!-- MISMO CSS DEL ADMIN -->
+    <link rel="stylesheet" th:href="@{/css/AdministradorView.css}"/>
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbarOferente :: navbar}"></div>
+
+<main class="main-content">
+
+    <section class="dashboard-hero">
+        <div class="hero-text">
+            <h1>Mis Habilidades</h1>
+            <p>Administra tus destrezas y niveles</p>
+        </div>
+    </section>
+
+    <section class="dashboard-cards">
+
+        <!-- 🔹 CUADRO 1 -->
+        <div class="card">
+            <div class="card-icon">📊</div>
+            <div class="card-info">
+                <h3>Mis habilidades</h3>
+
+                <table style="width:100%; margin-top:10px;">
+                    <tr>
+                        <th>Característica</th>
+                        <th>Nivel</th>
+                    </tr>
+
+                    <tr th:each="h : ${habilidades}">
+                        <td th:text="${h.idCaracteristica.nombre}"></td>
+                        <td th:text="${h.nivel}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- 🔹 CUADRO 2 -->
+        <div class="card">
+            <div class="card-icon">📁</div>
+            <div class="card-info">
+
+                <h3>Ruta</h3>
+
+                <div style="margin-bottom:10px;">
+                    <span th:each="r : ${rutaActual}">
+                        <a th:href="@{/oferente/habilidades(actual=${r.id})}"
+                           class="btn-primary"
+                           th:text="${r.nombre}">
+                        </a>
+                    </span>
+                </div>
+
+                <table style="width:100%;">
+                    <tr th:each="sub : ${subHabilidades}">
+                        <td th:text="${sub.nombre}"></td>
+                        <td>
+                        <td>
+                        <form th:if="${!@caracteristicaService.esHoja(sub.id)}"
+                              th:action="@{/oferente/entrar}" method="get">
+
+                            <input type="hidden" name="id" th:value="${sub.id}">
+                                <button type="submit" class="btn-salir">Entrar</button>
+                            </form>
+                        </td>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+
+        <!-- 🔹 CUADRO 3 -->
+        <div class="card">
+            <div class="card-icon">➕</div>
+            <div class="card-info">
+
+                <h3>Agregar habilidad</h3>
+
+                <form th:action="@{/oferente/agregar}" method="post">
+
+                    <!-- ESTE ES EL INPUT QUE TE FALTABA -->
+                    <input type="hidden" name="actual"
+                           th:value="${categoriaActual != null ? categoriaActual.id : ''}">
+
+                    <!-- COMBO HABILIDADES -->
+                    <select id="habilidadSelect" name="habilidadId" class="input-select" required>
+                        <option value="">Seleccione</option>
+                        <option th:each="h : ${habilidadesFiltradas}"
+                                th:value="${h.id}"
+                                th:text="${h.nombre}">
+                        </option>
+                    </select>
+
+                    <br><br>
+
+                    <!-- NIVEL -->
+                    <select id="nivelSelect" name="nivel" class="input-select" required>
+                        <option value="">Nivel</option>
+                        <option th:each="i : ${#numbers.sequence(1,5)}"
+                                th:value="${i}"
+                                th:text="${i}">
+                        </option>
+                    </select>
+
+                    <br><br>
+
+                    <button type="submit" class="input-select">
+                        Agregar
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+<div th:replace="~{fragments/footerAdministrador :: footer}"></div>
+
+</body>
+</html>

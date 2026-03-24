@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Dashboard Oferente — Job Connect</title>
+
+    <!-- reutiliza el MISMO CSS del admin -->
+    <link rel="stylesheet" th:href="@{/css/AdministradorView.css}"/>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div th:replace="~{fragments/navbarOferente :: navbar}"></div>
+
+<main class="main-content">
+
+    <!-- HERO -->
+    <section class="dashboard-hero">
+        <div class="hero-text">
+            <h1>Oferente</h1>
+            <p>Administra tus habilidades y tu currículum.</p>
+
+            <p style="margin-top:10px;">
+                Bienvenido:
+                <strong th:text="${usuarioNombre}">Nombre</strong>
+                <strong th:text="${usuarioPrimerAp}">Apellido</strong>
+            </p>
+        </div>
+    </section>
+
+    <!-- CARDS -->
+    <section class="dashboard-cards">
+
+        <a th:href="@{/oferente/habilidades}" class="card">
+            <div class="card-icon">🧠</div>
+            <div class="card-info">
+                <h3>Mis habilidades</h3>
+                <p>Gestiona tus destrezas registradas.</p>
+            </div>
+        </a>
+
+        <a th:href="@{/oferente/cv}" class="card">
+            <div class="card-icon">📄</div>
+            <div class="card-info">
+                <h3>Mi CV</h3>
+                <p>Sube y administra tu currículum.</p>
+            </div>
+        </a>
+
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<div th:replace="~{fragments/footerAdministrador :: footer}"></div>
+
+</body>
+</html>

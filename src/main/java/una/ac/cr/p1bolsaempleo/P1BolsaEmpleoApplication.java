@@ -5,7 +5,5 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class P1BolsaEmpleoApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(P1BolsaEmpleoApplication.class, args);
-    }
+    public static void main(String[] args) {SpringApplication.run(P1BolsaEmpleoApplication.class, args);}
 }

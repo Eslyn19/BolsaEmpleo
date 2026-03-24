@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-</head>
 <body>
 
 <nav th:fragment="navbar" class="navbar">
@@ -12,15 +10,19 @@
         </div>
 
         <ul class="navbar-links">
-            <li><a th:href="@{/empresa/dashboard}">Dashboard</a></li>
-            <li><a th:href="@{/empresa/puestos}">Mis puestos</a></li>
-            <li><a th:href="@{/empresa/buscar-puestos}">Buscar candidatos</a></li>
+            <li><a th:href="@{/oferente/dashboard}">Dashboard</a></li>
+            <li><a th:href="@{/oferente/habilidades}">Habilidades</a></li>
+            <li><a th:href="@{/oferente/cv}">CV</a></li>
         </ul>
     </div>
 
     <div class="nav-right">
-        <span class="admin-email" th:text="${adminNombre}">admin@empresa.com</span>
-        <form th:action="@{/empresa/logout}" method="post">
+        <span class="admin-email"
+              th:text="${usuarioNombre + ' ' + usuarioPrimerAp}">
+            Usuario
+        </span>
+
+        <form th:action="@{/logout}" method="post">
             <button type="submit" class="btn-salir">Salir</button>
         </form>
     </div>

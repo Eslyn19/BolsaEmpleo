@@ -17,11 +17,17 @@ public class CaracteristicaService {
     public CaracteristicaService(CaracteristicaRepository caracteristicaRepository) {
         this.caracteristicaRepository = caracteristicaRepository;
     }
-
+    public boolean esHoja(Integer id) {
+        return caracteristicaRepository.findByIdPadre_IdOrderByNombreAsc(id).isEmpty();
+    }
     public List<Caracteristica> listarRaices() {
         return caracteristicaRepository.findByIdPadreIsNullOrderByNombreAsc();
     }
-
+    public List<Caracteristica> listarHojas(List<Caracteristica> lista) {
+        return lista.stream()
+                .filter(c -> esHoja(c.getId()))
+                .toList();
+    }
     public List<Caracteristica> listarHijos(Integer idPadre) {
         return caracteristicaRepository.findByIdPadre_IdOrderByNombreAsc(idPadre);
     }

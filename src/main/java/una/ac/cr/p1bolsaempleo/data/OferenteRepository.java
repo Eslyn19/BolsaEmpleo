@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface OferenteRepository extends JpaRepository<Oferente, String> {
 
-    @Query("SELECT o FROM Oferente o JOIN FETCH o.estado est WHERE est.nombre = 'PENDIENTE'")
+    @Query("""
+        SELECT o FROM Oferente o
+        WHERE o.estado.nombre = 'PENDIENTE'
+    """)
     List<Oferente> findByEstadoPendiente();
 }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Mi CV — Job Connect</title>
+
+    <!-- MISMO CSS del admin -->
+    <link rel="stylesheet" th:href="@{/css/AdministradorView.css}"/>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div th:replace="~{fragments/navbarOferente :: navbar}"></div>
+
+<main class="main-content">
+
+    <section class="dashboard-hero">
+        <div class="hero-text">
+            <h1>Mi CV</h1>
+            <p>Sube tu currículum en formato PDF.</p>
+        </div>
+    </section>
+
+    <section class="dashboard-cards">
+
+        <!-- ✅ MENSAJE DESPUÉS DE SUBIR -->
+        <div th:if="${cvSubido}" class="card">
+            <div class="card-icon">✅</div>
+            <div class="card-info">
+                <h3>CV subido correctamente</h3>
+
+                <p>
+                    Archivo:
+                    <strong th:text="${#strings.substringAfter(rutaCV, 'cv/')}"></strong>
+                </p>
+
+                <a th:href="@{${rutaCV}}" target="_blank" class="btn-salir">
+                    Ver CV
+                </a>
+            </div>
+        </div>
+
+        <!-- ✅ CV PERMANENTE -->
+        <div th:if="${rutaCV != null and !#strings.isEmpty(rutaCV)}" class="card">
+            <div class="card-icon">📄</div>
+            <div class="card-info">
+                <h3>CV actual</h3>
+
+                <p>
+                    Archivo:
+                    <strong th:text="${#strings.substringAfter(rutaCV, 'cv/')}"></strong>
+                </p>
+
+                <a th:href="@{${rutaCV}}" target="_blank" class="btn-salir">
+                    Abrir CV
+                </a>
+            </div>
+        </div>
+
+        <!-- SUBIR / REEMPLAZAR -->
+        <div class="card">
+            <div class="card-icon">⬆️</div>
+            <div class="card-info">
+
+                <h3 th:text="${rutaCV != null} ? 'Reemplazar CV' : 'Subir CV'"></h3>
+
+                <form th:action="@{/oferente/cv}" method="post" enctype="multipart/form-data">
+
+                    <input type="file" name="archivo" accept="application/pdf" required
+                           style="margin-bottom:10px; color:white;">
+
+                    <button type="submit" class="btn-salir">
+                        Subir CV
+                    </button>
+
+                </form>
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<div th:replace="~{fragments/footerAdministrador :: footer}"></div>
+
+</body>
+</html>
