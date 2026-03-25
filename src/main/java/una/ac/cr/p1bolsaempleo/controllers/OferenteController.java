@@ -138,8 +138,9 @@ public class OferenteController {
             return "redirect:/login";
         }
 
-        if (!oferente.getEstado().getNombre().equals("APROBADO")) {
-            return "redirect:/login?noAutorizado";
+        String estadoNombre = oferente.getEstado() != null ? oferente.getEstado().getNombre() : "";
+        if (!"APROBADO".equalsIgnoreCase(estadoNombre)) {
+            return "redirect:/login?error=true";
         }
 
         return "oferente/DashboardOferente";
@@ -159,13 +160,13 @@ public class OferenteController {
             RedirectAttributes redirectAttributes) {
         if (!clave.equals(claveConfirm)) {
             redirectAttributes.addFlashAttribute("error", "Las contraseñas no coinciden");
-            return "redirect:/userform";
+            return "redirect:/oferente/userform";
         }
         String error = oferenteService.registrar(identificacion, nombre, primerAp, nacionalidad,
                 telefono, correo, lugarResidencia, clave);
         if (error != null) {
             redirectAttributes.addFlashAttribute("error", error);
-            return "redirect:/userform";
+            return "redirect:/oferente/userform";
         }
         return "redirect:/inicio?guardadoOferente=ok";
     }

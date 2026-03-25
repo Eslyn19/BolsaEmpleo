@@ -103,6 +103,10 @@ public class OferenteService {
     @Transactional
     public String registrar(String identificacion, String nombre, String primerAp, String nacionalidad,
                             String telefono, String correo, String lugarResidencia, String clave) {
+        identificacion = identificacion != null ? identificacion.trim() : "";
+        if (identificacion.isEmpty()) {
+            return "La identificación es obligatoria";
+        }
         if (usuarioRepository.existsByIdUsuario(identificacion)) {
             return "La identificación ya está registrada";
         }

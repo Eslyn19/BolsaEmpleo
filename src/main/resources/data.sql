@@ -4,18 +4,18 @@ INSERT INTO estado (nombre) VALUES ('APROBADO');
 INSERT INTO estado (nombre) VALUES ('PENDIENTE');
 
 -- Usuarios
-INSERT INTO usuario (idUsuario, clave, rol) --clave 1
+INSERT INTO usuario (idUsuario, clave, rol) --clave: '1'
 VALUES ('1', '$2a$10$r9b216cEaFbEuKQ6RvK/.eDQksUtq7On/s4fs8N9FJuzk/NbKmyWG', 'ROLE_ADMIN');
 
-INSERT INTO usuario (idUsuario, clave, rol) --clave 2
+INSERT INTO usuario (idUsuario, clave, rol) --clave: '2'
 VALUES ('2', '$2a$10$HVfrEeFtZ4n3BT/ErcBFKuhFz1BH1FbAtOLcEeUqFdJKcLM9sdu2S', 'ROLE_ADMIN');
 
-INSERT INTO usuario (idUsuario, clave, rol) --clave 123456
+INSERT INTO usuario (idUsuario, clave, rol) --clave: '123456'
 VALUES ('208640831', '$2a$10$IPyTU83ZhkohMO/9JoWKKO9t7sBBBXr1L4TY6d08h6cwxSZ5phAm.', 'ROLE_OFERENTE');
 
 -- Administrador
 INSERT INTO administrador (idUsuario, nombre)
-VALUES ('1', 'Eslyn');
+VALUES ('1', 'Eslyn Jara');
 
 INSERT INTO administrador (idUsuario, nombre)
 VALUES ('2', 'Mishelle');

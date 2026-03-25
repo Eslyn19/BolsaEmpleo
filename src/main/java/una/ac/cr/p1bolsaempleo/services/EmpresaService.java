@@ -34,6 +34,10 @@ public class EmpresaService {
     @Transactional
     public String registrar(String correo, String nombre, String ubicacion, String telefono,
                             String descripcion, String clave) {
+        correo = correo != null ? correo.trim() : "";
+        if (correo.isEmpty()) {
+            return "El correo es obligatorio";
+        }
         if (usuarioRepository.existsByIdUsuario(correo)) {
             return "El correo ya está registrado";
         }
@@ -42,7 +46,7 @@ public class EmpresaService {
         Usuario usuario = new Usuario();
         usuario.setIdUsuario(correo);
         usuario.setClave(passwordEncoder.encode(clave));
-        usuario.setRol("EMPRESA");
+        usuario.setRol("ROLE_EMPRESA");
         usuarioRepository.save(usuario);
         Empresa empresa = new Empresa();
         empresa.setIdUsuario(correo);
@@ -64,10 +68,10 @@ public class EmpresaService {
             return Optional.empty();
         }
         return usuarioRepository.findById(id)
-                .filter(u -> "EMPRESA".equalsIgnoreCase(trimRol(u.getRol())))
+                .filter(u -> "ROLE_EMPRESA".equalsIgnoreCase(trimRol(u.getRol())))
                 .filter(u -> matchesClave(clave, u.getClave()))
                 .flatMap(u -> empresaRepository.findByIdUsuarioWithEstado(id))
-                .filter(e -> "ACEPTADO".equalsIgnoreCase(e.getEstado().getNombre()));
+                .filter(e -> "APROBADO".equalsIgnoreCase(e.getEstado().getNombre()));
     }
 
     private static String trimRol(String rol) {
@@ -92,8 +96,8 @@ public class EmpresaService {
     public void aprobar(String idUsuario, String tipo) {
         Empresa empresa = empresaRepository.findById(idUsuario).orElseThrow();
         empresa.setTipo(tipo);
-        Estado aceptado = estadoRepository.findFirstByNombreOrderByIdAsc("ACEPTADO").orElseThrow();
-        empresa.setEstado(aceptado);
+        Estado aprobado = estadoRepository.findFirstByNombreOrderByIdAsc("APROBADO").orElseThrow();
+        empresa.setEstado(aprobado);
         empresaRepository.save(empresa);
     }
 
