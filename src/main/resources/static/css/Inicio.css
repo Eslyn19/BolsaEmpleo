@@ -243,6 +243,17 @@ body.inicio-page{
     background:var(--in-border);
 }
 
+.inicio-sin-puestos{
+    padding:20px 18px;
+    border-radius:14px;
+    border:1px solid var(--in-border2);
+    background:var(--in-surface);
+    color:var(--in-muted);
+    font-size:0.95rem;
+    line-height:1.55;
+}
+.inicio-sin-puestos p{margin:0;}
+
 .news-section{
     max-width:1100px;
     margin:0 auto;
@@ -284,6 +295,25 @@ body.inicio-page{
     font-weight:600;
 }
 .section-link:hover{opacity:0.85;}
+
+/* Enlace envuelve la tarjeta: el grid sigue viendo cada <article> como ítem */
+a.inicio-puesto-card-link{
+    display:contents;
+    color:inherit;
+    text-decoration:none;
+}
+a.inicio-puesto-card-link:focus-visible .news-card{
+    outline:2px solid var(--in-accent2);
+    outline-offset:3px;
+}
+a.inicio-puesto-card-link .news-card{
+    cursor:pointer;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+a.inicio-puesto-card-link:hover .news-card{
+    transform:translateY(-2px);
+    box-shadow:0 12px 36px rgba(0,0,0,0.35);
+}
 
 .news-grid{
     display:grid;

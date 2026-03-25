@@ -37,6 +37,7 @@
                     <th>Descripción</th>
                     <th>Salario</th>
                     <th>Características</th>
+                    <th>Acceso</th>
                     <th>Estado</th>
                     <th>Gestión</th>
                 </tr>
@@ -51,17 +52,33 @@
                             <span th:text="${car.nombre}"></span><span th:if="${!it.last}">, </span>
                         </span>
                     </td>
+                    <td style="white-space:nowrap;font-size:13px;">
+                        <span th:if="${p.acceso != null and p.acceso == 1}" style="color:rgba(34,197,94,0.9);">Público</span>
+                        <span th:if="${p.acceso == null or p.acceso == 0}" style="color:rgba(148,163,184,0.95);">Privado</span>
+                        <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;">
+                            <form th:if="${p.acceso == null or p.acceso == 0}" th:action="@{/empresa/puestos/{id}/acceso-publico(id=${p.id})}" method="post" style="display:inline;">
+                                <button type="submit" class="emp-puesto-btn" style="padding:6px 10px;font-size:12px;">Hacer público</button>
+                            </form>
+                            <form th:if="${p.acceso != null and p.acceso == 1}" th:action="@{/empresa/puestos/{id}/acceso-privado(id=${p.id})}" method="post" style="display:inline;">
+                                <button type="submit" style="padding:6px 10px;font-size:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.88);cursor:pointer;">Hacer privado</button>
+                            </form>
+                        </div>
+                    </td>
                     <td>
-                        <span th:if="${p.activo != null and p.activo == 1}" style="color:rgba(34,197,94,0.9);">Activo</span>
-                        <span th:if="${p.activo == null or p.activo == 0}" style="color:rgba(248,113,113,0.9);">Inactivo</span>
+                        <span th:if="${p.oferenteAsignado != null}" style="color:rgba(147,197,253,0.95);">
+                            Cerrado — asignado a <span th:text="|${p.oferenteAsignado.nombre} ${p.oferenteAsignado.apellido}|">—</span>
+                        </span>
+                        <span th:if="${p.oferenteAsignado == null and p.activo != null and p.activo == 1}" style="color:rgba(34,197,94,0.9);">Activo</span>
+                        <span th:if="${p.oferenteAsignado == null and (p.activo == null or p.activo == 0)}" style="color:rgba(248,113,113,0.9);">Inactivo</span>
                     </td>
                     <td class="emp-puesto-actions-cell">
-                        <form th:if="${p.activo != null and p.activo == 1}" th:action="@{/empresa/puestos/{id}/desactivar(id=${p.id})}" method="post" style="display:inline;">
+                        <form th:if="${p.oferenteAsignado == null and p.activo != null and p.activo == 1}" th:action="@{/empresa/puestos/{id}/desactivar(id=${p.id})}" method="post" style="display:inline;">
                             <button type="submit" class="emp-puesto-btn-icon" title="Desactivar"><img th:src="@{/images/TurnOn.png}" alt="Desactivar" width="28" height="28"></button>
                         </form>
-                        <form th:if="${p.activo == null or p.activo == 0}" th:action="@{/empresa/puestos/{id}/activar(id=${p.id})}" method="post" style="display:inline;">
+                        <form th:if="${p.oferenteAsignado == null and (p.activo == null or p.activo == 0)}" th:action="@{/empresa/puestos/{id}/activar(id=${p.id})}" method="post" style="display:inline;">
                             <button type="submit" class="emp-puesto-btn-icon" title="Activar"><img th:src="@{/images/turnOff.png}" alt="Activar" width="28" height="28"></button>
                         </form>
+                        <span th:if="${p.oferenteAsignado != null}" class="emp-puesto-muted" style="font-size:12px;">—</span>
                     </td>
                 </tr>
                 </tbody>

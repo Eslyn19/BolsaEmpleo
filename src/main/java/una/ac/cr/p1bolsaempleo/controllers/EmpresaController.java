@@ -186,15 +186,75 @@ public class EmpresaController {
         return "redirect:/empresa/puestos";
     }
 
-    @GetMapping("/empresa/puestos/{id}/candidatos")
-    public String candidatosPlaceholder(HttpSession session, Model model, @PathVariable Integer id) {
+    @PostMapping("/empresa/puestos/{id}/acceso-publico")
+    public String accesoPublico(HttpSession session, @PathVariable Integer id) {
         if (session.getAttribute("empresaId") == null) {
             return "redirect:/login";
         }
+        try {
+            puestoService.marcarAccesoPublico((String) session.getAttribute("empresaId"), id);
+        } catch (Exception ignored) {
+        }
+        return "redirect:/empresa/puestos";
+    }
+
+    @PostMapping("/empresa/puestos/{id}/acceso-privado")
+    public String accesoPrivado(HttpSession session, @PathVariable Integer id) {
+        if (session.getAttribute("empresaId") == null) {
+            return "redirect:/login";
+        }
+        try {
+            puestoService.marcarAccesoPrivado((String) session.getAttribute("empresaId"), id);
+        } catch (Exception ignored) {
+        }
+        return "redirect:/empresa/puestos";
+    }
+
+    @GetMapping("/empresa/puestos/{id}/candidatos")
+    public String candidatosPuesto(HttpSession session, Model model, RedirectAttributes redirectAttributes,
+                                   @PathVariable Integer id) {
+        if (session.getAttribute("empresaId") == null) {
+            return "redirect:/login";
+        }
+        String idEmpresa = (String) session.getAttribute("empresaId");
         model.addAttribute("empresaEmail", session.getAttribute("empresaEmail"));
         model.addAttribute("empresaNombre", session.getAttribute("empresaNombre"));
-        model.addAttribute("idPuesto", id);
-        return "empresa/CandidatosPuestoPlaceholder";
+
+        return puestoService.obtenerPuestoEmpresaParaCandidatos(id, idEmpresa)
+                .filter(p -> p.getOferenteAsignado() == null
+                        && p.getActivo() != null
+                        && p.getActivo() == 1)
+                .map(p -> {
+                    model.addAttribute("puesto", p);
+                    model.addAttribute("candidatos", puestoService.listarCandidatosCompatibles(p));
+                    return "empresa/CandidatosPuestoEmpresa";
+                })
+                .orElseGet(() -> {
+                    redirectAttributes.addFlashAttribute("error",
+                            "Este puesto no admite búsqueda de candidatos (cerrado, ya asignado o no existe).");
+                    return "redirect:/empresa/buscar-puestos";
+                });
+    }
+
+    @PostMapping("/empresa/puestos/{id}/asignar-candidato")
+    public String asignarCandidato(HttpSession session,
+                                   @PathVariable Integer id,
+                                   @RequestParam("idOferente") String idOferente,
+                                   RedirectAttributes redirectAttributes) {
+        if (session.getAttribute("empresaId") == null) {
+            return "redirect:/login";
+        }
+        String idEmpresa = (String) session.getAttribute("empresaId");
+        try {
+            puestoService.asignarOferenteYCerrarPuesto(idEmpresa, id, idOferente.trim());
+            redirectAttributes.addFlashAttribute("msgOk", "Candidato aceptado. El puesto quedó asignado y cerrado.");
+        } catch (Exception e) {
+            log.warn("No se pudo asignar candidato al puesto {}", id, e);
+            redirectAttributes.addFlashAttribute("error",
+                    "No se pudo asignar el candidato: " + mensajeCausaRaiz(e));
+            return "redirect:/empresa/puestos/" + id + "/candidatos";
+        }
+        return "redirect:/empresa/buscar-puestos";
     }
 
     @GetMapping("/empresa/buscar-puestos")
@@ -205,7 +265,7 @@ public class EmpresaController {
         String id = (String) session.getAttribute("empresaId");
         model.addAttribute("empresaEmail", session.getAttribute("empresaEmail"));
         model.addAttribute("empresaNombre", session.getAttribute("empresaNombre"));
-        model.addAttribute("puestos", puestoService.listarPorEmpresa(id));
+        model.addAttribute("puestos", puestoService.listarAbiertosParaBuscarCandidatos(id));
         return "empresa/BuscarPuestosEmpresa";
     }
 

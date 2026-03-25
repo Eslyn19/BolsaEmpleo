@@ -18,4 +18,7 @@ public interface OferenteRepository extends JpaRepository<Oferente, String> {
 
     @Query("SELECT o FROM Oferente o JOIN FETCH o.estado WHERE o.idUsuario = :id")
     Optional<Oferente> findByIdWithEstado(@Param("id") String id);
+
+    @Query("SELECT o FROM Oferente o JOIN FETCH o.estado WHERE o.estado.nombre = 'APROBADO' ORDER BY o.nombre, o.apellido")
+    List<Oferente> findAllAprobados();
 }

@@ -36,121 +36,51 @@
 
     <section class="hero">
         <h1>Tu próximo empleo comienza aquí</h1>
-        <p class="hero-sub">Crea una cuenta o inicia sesión para ver recomendaciones de empleo personalizadas.</p>
-
-        <div class="search-bar">
-            <div class="search-field">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon">
-                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                </svg>
-                <input type="text" placeholder="Puesto, empresa o palabras clave" />
-            </div>
-
-            <div class="search-divider"></div>
-
-            <div class="search-field">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon">
-                    <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-                </svg>
-                <input type="text" placeholder="Ciudad, provincia o &quot;remoto&quot;" />
-            </div>
-
-            <button type="button" class="btn-search">Ir</button>
-        </div>
+        <p class="hero-sub">Abajo ves las ofertas públicas más relevantes (por salario). Inicia sesión como oferente o empresa para gestionar tu perfil o tus puestos.</p>
     </section>
 
     <div class="section-divider"></div>
 
     <section class="news-section">
         <div class="section-header">
-            <h2 class="section-title"><span class="section-dot"></span>Noticias de empleo</h2>
-            <a href="#" class="section-link">Ver todas →</a>
+            <h2 class="section-title"><span class="section-dot"></span>Oportunidades destacadas</h2>
+            <span class="section-link" style="cursor:default;opacity:0.85;">Las 5 ofertas públicas más relevantes</span>
         </div>
 
-        <div class="news-grid">
+        <div th:if="${#lists.isEmpty(puestosDestacados)}" class="inicio-sin-puestos">
+            <p>No hay puestos públicos activos por ahora. Las empresas pueden marcar un puesto como <strong>público</strong> desde «Mis puestos».</p>
+        </div>
 
-            <article class="news-card featured">
-                <div class="card-accent-bar accent-blue"></div>
-                <div class="card-body">
-                    <span class="card-tag">Mercado Laboral</span>
-                    <h3 class="card-title">El empleo tech en Costa Rica creció un 18% en el primer trimestre de 2026</h3>
-                    <p class="card-excerpt">El sector tecnológico lidera la generación de empleo en el país, con especial demanda en roles de inteligencia artificial, ciberseguridad y desarrollo de software. Empresas multinacionales siguen apostando por el talento costarricense, consolidando la Zona Franca como hub regional de innovación.</p>
-                </div>
-                <div class="card-footer">
-                    <span class="card-date">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                        10 mar 2026
-                    </span>
-                    <a href="#" class="card-read">Leer más →</a>
-                </div>
-            </article>
-
-            <article class="news-card">
-                <div class="card-accent-bar accent-green"></div>
-                <div class="card-body">
-                    <span class="card-tag">Trabajo Remoto</span>
-                    <h3 class="card-title">El trabajo remoto se consolida: 6 de cada 10 ofertas admiten modalidad híbrida</h3>
-                    <p class="card-excerpt">Un nuevo estudio revela que la mayoría de empleadores ahora ofrecen flexibilidad de ubicación como beneficio principal para atraer talento.</p>
-                </div>
-                <div class="card-footer">
-                    <span class="card-date">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                        8 mar 2026
-                    </span>
-                    <a href="#" class="card-read">Leer más →</a>
-                </div>
-            </article>
-
-            <article class="news-card">
-                <div class="card-accent-bar accent-orange"></div>
-                <div class="card-body">
-                    <span class="card-tag">Salarios</span>
-                    <h3 class="card-title">Salarios en IA superan el promedio del sector tech por un 35%</h3>
-                    <p class="card-excerpt">Los perfiles en machine learning e ingeniería de datos son los más cotizados, con paquetes que incluyen bonos y acciones.</p>
-                </div>
-                <div class="card-footer">
-                    <span class="card-date">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                        6 mar 2026
-                    </span>
-                    <a href="#" class="card-read">Leer más →</a>
-                </div>
-            </article>
-
-            <article class="news-card">
-                <div class="card-accent-bar accent-purple"></div>
-                <div class="card-body">
-                    <span class="card-tag">Tendencias</span>
-                    <h3 class="card-title">Las habilidades blandas vuelven al centro: lo que buscan los reclutadores en 2026</h3>
-                    <p class="card-excerpt">Más allá del técnico, las empresas priorizan la adaptabilidad, comunicación asertiva y pensamiento crítico en sus procesos de selección.</p>
-                </div>
-                <div class="card-footer">
-                    <span class="card-date">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                        4 mar 2026
-                    </span>
-                    <a href="#" class="card-read">Leer más →</a>
-                </div>
-            </article>
-
-            <article class="news-card wide">
-                <div class="card-accent-bar accent-rose"></div>
-                <div class="card-body">
-                    <span class="card-tag">Educación</span>
-                    <h3 class="card-title">Bootcamps vs universidades: ¿cuál camino es más efectivo para conseguir empleo en tech?</h3>
-                    <p class="card-excerpt">Un análisis de más de 5,000 contrataciones revela que los graduados de bootcamps consiguen su primer empleo 4 meses antes en promedio, aunque la brecha salarial a largo plazo persiste.</p>
-                </div>
-                <div class="card-footer">
-                    <span class="card-date">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                        2 mar 2026
-                    </span>
-                    <a href="#" class="card-read">Leer más →</a>
-                </div>
-            </article>
-
+        <div class="news-grid" th:if="${!#lists.isEmpty(puestosDestacados)}">
+            <a th:href="@{/oferente/userform}"
+               class="inicio-puesto-card-link"
+               th:each="p, iter : ${puestosDestacados}"
+               title="Registrarte como oferente para postular">
+                <article class="news-card"
+                         th:classappend="${iter.first} ? ' featured' : (${iter.count == 5} ? ' wide' : '')">
+                    <div class="card-accent-bar"
+                         th:classappend="${iter.first} ? ' accent-blue' : (${iter.odd} ? ' accent-green' : ' accent-orange')"></div>
+                    <div class="card-body">
+                        <span class="card-tag" th:text="|${p.idUsuario.nombre} · Oferta pública|">Empresa</span>
+                        <h3 class="card-title" th:text="${p.descripcion}">Título del puesto</h3>
+                        <p class="card-excerpt">
+                            <strong>Salario:</strong> <span th:text="${p.salario}">0</span> ·
+                            <strong>Habilidades:</strong>
+                            <span th:if="${#lists.isEmpty(p.caracteristicas)}">no especificadas</span>
+                            <span th:each="car, it : ${p.caracteristicas}">
+                                <span th:text="${car.nombre}"></span><span th:if="${!it.last}">, </span>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-date">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            Destacado #<span th:text="${iter.count}">1</span>
+                        </span>
+                        <span class="card-read">Registrarme como oferente →</span>
+                    </div>
+                </article>
+            </a>
         </div>
     </section>
 </main>
