@@ -56,35 +56,4 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//
-//        http
-//                .csrf(csrf -> csrf.disable())
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers(
-//                                "/", "/inicio", "/inicio/**",
-//                                "/login", "/login/**", "/ingreso", "/registro",
-//                                "/userform",
-//                                "/empresa", "/empresa/", "/empresa/**",
-//                                "/css/**", "/js/**", "/images/**", "/webjars/**", "/favicon.ico"
-//                        ).permitAll()
-//                        .requestMatchers("/admin/**", "/Dashboard", "/dashboard/**", "/DashboardOferente", "/oferente/**").permitAll()
-//                        .anyRequest().authenticated()
-//                )
-//
-//                .formLogin(login -> login
-//                        .loginPage("/login")
-//                        .defaultSuccessUrl("/dashboard", true)
-//                        .permitAll()
-//                )
-//
-//                .logout(logout -> logout
-//                        .logoutUrl("/logout")
-//                        .logoutSuccessUrl("/inicio")
-//                );
-//
-//        return http.build();
-//    }
 }

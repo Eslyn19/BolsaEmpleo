@@ -24,7 +24,7 @@
 
     <section class="dashboard-cards">
 
-        <!-- 🔹 CUADRO 1 -->
+        <!--  CUADRO 1 -->
         <div class="card">
             <div class="card-icon">📊</div>
             <div class="card-info">
@@ -44,7 +44,7 @@
             </div>
         </div>
 
-        <!-- 🔹 CUADRO 2 -->
+        <!--  CUADRO 2 -->
         <div class="card">
             <div class="card-icon">📁</div>
             <div class="card-info">
@@ -79,7 +79,7 @@
             </div>
         </div>
 
-        <!-- 🔹 CUADRO 3 -->
+        <!--  CUADRO 3 -->
         <div class="card">
             <div class="card-icon">➕</div>
             <div class="card-info">
@@ -88,7 +88,6 @@
 
                 <form th:action="@{/oferente/agregar}" method="post">
 
-                    <!-- ESTE ES EL INPUT QUE TE FALTABA -->
                     <input type="hidden" name="actual"
                            th:value="${categoriaActual != null ? categoriaActual.id : ''}">
 

@@ -21,7 +21,7 @@ public interface PuestoRepository extends JpaRepository<Puesto, Integer> {
     @Query("SELECT p FROM Puesto p WHERE p.id = :id AND p.idUsuario.idUsuario = :emp")
     Optional<Puesto> findByIdAndEmpresaWithCaracteristicas(@Param("id") Integer id, @Param("emp") String emp);
 
-    /** Puestos activos sin candidato aceptado (visibles en “Buscar candidatos”). */
+    /* Puestos activos sin candidato aceptado (visibles en “Buscar candidatos”). */
     @EntityGraph(attributePaths = {"caracteristicas"})
     @Query("""
             SELECT p FROM Puesto p
@@ -32,7 +32,7 @@ public interface PuestoRepository extends JpaRepository<Puesto, Integer> {
             """)
     List<Puesto> findAbiertosSinAsignarPorEmpresa(@Param("idUsuario") String idUsuario);
 
-    /** Puestos públicos, activos y sin candidato asignado; relevancia: mayor salario, luego más reciente. */
+    /* Puestos públicos, activos y sin candidato asignado; relevancia: mayor salario, luego más reciente. */
     @EntityGraph(attributePaths = {"caracteristicas", "idUsuario"})
     @Query("""
             SELECT p FROM Puesto p
@@ -41,7 +41,7 @@ public interface PuestoRepository extends JpaRepository<Puesto, Integer> {
             """)
     List<Puesto> findPublicosParaInicio(Pageable pageable);
 
-    /** Para asociar características: carga la colección (tabla puesto_caracteristica). */
+    /* Para asociar características: carga la colección (tabla puesto_caracteristica). */
     @EntityGraph(attributePaths = {"caracteristicas"})
     @Query("SELECT p FROM Puesto p WHERE p.id = :id")
     Optional<Puesto> findWithCaracteristicasById(@Param("id") Integer id);

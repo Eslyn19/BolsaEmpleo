@@ -53,10 +53,10 @@ public class OferenteService {
             directorio.mkdirs();
         }
 
-        //  nombre original del archivo
+        //  nombre original
         String nombreOriginal = archivo.getOriginalFilename();
 
-        //  lo combinas con el usuario (para evitar conflictos)
+        //  comb con el usuario (para evitar conflictos)
         String nombreArchivo = idUsuario + "_" + nombreOriginal;
 
         Path ruta = Paths.get(carpeta + nombreArchivo);

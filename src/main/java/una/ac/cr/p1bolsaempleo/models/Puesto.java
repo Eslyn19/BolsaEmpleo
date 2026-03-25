@@ -33,7 +33,7 @@ public class Puesto {
     @Column(name = "activo")
     private Byte activo;
 
-    /** 0 = privado (por defecto), 1 = público (visible en inicio como oportunidad destacada). */
+    /* 0 = privado (por defecto), 1 = público (visible en inicio como oportunidad destacada). */
     @Column(name = "acceso", nullable = false, columnDefinition = "TINYINT NOT NULL DEFAULT 0")
     private Byte acceso = 0;
 
@@ -45,7 +45,7 @@ public class Puesto {
     )
     private Set<Caracteristica> caracteristicas = new LinkedHashSet<>();
 
-    /** Oferente aceptado para el puesto; al asignarse el puesto se cierra (activo = 0) y deja de mostrarse en búsqueda de candidatos. */
+    /* Oferente aceptado para el puesto; al asignarse el puesto se cierra (activo = 0) y deja de mostrarse en búsqueda de candidatos. */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_oferente_asignado", referencedColumnName = "idUsuario", nullable = true)
     private Oferente oferenteAsignado;

@@ -2,7 +2,7 @@ package una.ac.cr.p1bolsaempleo.dto;
 
 import java.util.List;
 
-/**
+/*
  * Comparativa oferente vs requisitos del puesto. Orden sugerido: más coincidencias,
  * luego más suma de nivel en requisitos cubiertos, luego más experiencia total (suma niveles).
  */

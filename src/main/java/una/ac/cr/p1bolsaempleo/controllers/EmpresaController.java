@@ -125,7 +125,7 @@ public class EmpresaController {
         return "redirect:/empresa/puestos";
     }
 
-    /** Varios checkboxes con el mismo nombre llegan como String[] (más fiable que List<Integer>). */
+    /* Varios checkboxes con el mismo nombre llegan como String[] (más fiable que List<Integer>). */
     private static List<Integer> parseIdsCaracteristicas(String[] raw) {
         if (raw == null || raw.length == 0) {
             return null;
@@ -138,7 +138,7 @@ public class EmpresaController {
             try {
                 ids.add(Integer.parseInt(s.trim()));
             } catch (NumberFormatException ignored) {
-                /* ignorar valor inválido */
+                /* ignora valor inválido */
             }
         }
         return ids.isEmpty() ? null : ids;

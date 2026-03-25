@@ -57,12 +57,12 @@ public class PuestoService {
         return puestoRepository.findByIdUsuario_IdUsuarioOrderByIdDesc(idEmpresa);
     }
 
-    /** Hasta 5 puestos públicos más relevantes para la página de inicio. */
+    /* Hasta 5 puestos públicos más relevantes para la página de inicio. */
     public List<Puesto> listarCincoPublicosParaInicio() {
         return puestoRepository.findPublicosParaInicio(PageRequest.of(0, 5));
     }
 
-    /** Solo puestos abiertos a candidatos: activos y sin oferente asignado. */
+    /* Solo puestos abiertos a candidatos: activos y sin oferente asignado. */
     public List<Puesto> listarAbiertosParaBuscarCandidatos(String idEmpresa) {
         return puestoRepository.findAbiertosSinAsignarPorEmpresa(idEmpresa);
     }
@@ -71,9 +71,9 @@ public class PuestoService {
         return puestoRepository.findByIdAndEmpresaWithCaracteristicas(idPuesto, idEmpresa);
     }
 
-    /**
-     * Todos los oferentes aprobados, con comparativa n requisitos del puesto vs habilidades del oferente.
-     * Orden: más coincidencias, luego mayor suma de nivel en requisitos cubiertos, luego más suma de nivel total.
+    /*
+      Todos los oferentes aprobados, con comparativa n requisitos del puesto vs habilidades del oferente.
+      Orden: más coincidencias, luego mayor suma de nivel en requisitos cubiertos, luego más suma de nivel total.
      */
     public List<CandidatoPuestoDto> listarCandidatosCompatibles(Puesto puesto) {
         List<Caracteristica> listaReq = puesto.getCaracteristicas().stream()

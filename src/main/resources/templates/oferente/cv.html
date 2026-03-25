@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Mi CV — Job Connect</title>
 
-    <!-- MISMO CSS del admin -->
     <link rel="stylesheet" th:href="@{/css/AdministradorView.css}"/>
 </head>
 
@@ -26,7 +25,7 @@
 
     <section class="dashboard-cards">
 
-        <!-- ✅ MENSAJE DESPUÉS DE SUBIR -->
+        <!--  MENSAJE DESPUÉS DE SUBIR -->
         <div th:if="${cvSubido}" class="card">
             <div class="card-icon">✅</div>
             <div class="card-info">
@@ -43,7 +42,7 @@
             </div>
         </div>
 
-        <!-- ✅ CV PERMANENTE -->
+        <!--  CV PERMANENTE -->
         <div th:if="${rutaCV != null and !#strings.isEmpty(rutaCV)}" class="card">
             <div class="card-icon">📄</div>
             <div class="card-info">

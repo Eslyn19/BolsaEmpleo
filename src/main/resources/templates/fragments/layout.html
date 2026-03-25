@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- ===== HEADER / NAVBAR ===== -->
+<header th:fragment="navbar" class="navbar">
+    <div class="nav-left">
+        <a th:href="@{/}" class="logo">
+            <img th:src="@{/images/logo.png}" alt="Logo">
+        </a>
+        <a th:href="@{/login}" class="btn-signin">Iniciar sesión</a>
+    </div>
+
+    <div class="nav-right">
+        <a th:href="@{/oferente/userform}" class="btn-post">Postularme / Buscar empleo</a>
+        <a th:href="@{/empresa}" class="btn-post">Empresas / Publicar empleos</a>
+    </div>
+</header>
+
+
+<!-- ===== FOOTER ===== -->
+<footer th:fragment="footer" class="inicio-footer">
+    <div class="footer-links">
+        <a href="https://github.com/Eslyn19/BolsaEmpleo">Acerca de</a>
+    </div>
+    <div class="footer-legal">
+        <span>© Job Connect 2026</span>
+    </div>
+</footer>
+
+</body>
+</html>
