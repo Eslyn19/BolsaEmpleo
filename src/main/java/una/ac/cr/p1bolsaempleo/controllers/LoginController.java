@@ -28,34 +28,4 @@ public class LoginController {
         return "Registro";
     }
 
-//    @PostMapping("/ingreso")
-//    public String ingreso(
-//            @RequestParam("identificacion") String identificacion,
-//            @RequestParam("clave") String clave,
-//            HttpSession session,
-//            RedirectAttributes redirectAttributes) {
-//        var adminOpt = administradorService.login(identificacion, clave);
-//        if (adminOpt.isPresent()) {
-//            Administrador admin = adminOpt.get();
-//            session.removeAttribute("empresaId");
-//            session.removeAttribute("empresaEmail");
-//            session.removeAttribute("empresaNombre");
-//            session.setAttribute("adminId", admin.getIdUsuario());
-//            session.setAttribute("adminEmail", admin.getNombre());
-//            return "redirect:/admin/dashboard";
-//        }
-//        var empOpt = empresaService.login(identificacion, clave);
-//        if (empOpt.isPresent()) {
-//            Empresa emp = empOpt.get();
-//            session.removeAttribute("adminId");
-//            session.removeAttribute("adminEmail");
-//            session.setAttribute("empresaId", emp.getIdUsuario());
-//            session.setAttribute("empresaEmail", emp.getCorreo());
-//            session.setAttribute("empresaNombre", emp.getNombre());
-//            return "redirect:/empresa/dashboard";
-//        }
-//        redirectAttributes.addFlashAttribute("error",
-//                "Identificación o contraseña incorrecta, o cuenta empresa no aprobada.");
-//        return "redirect:/login";
-//    }
 }

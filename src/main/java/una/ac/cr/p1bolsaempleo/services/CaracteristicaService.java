@@ -89,6 +89,7 @@ public class CaracteristicaService {
     }
 
     public List<Caracteristica> listarActivasParaSeleccionPuesto() {
-        return caracteristicaRepository.findActivasParaSeleccionPuesto();
+        List<Caracteristica> activas = caracteristicaRepository.findActivasParaSeleccionPuesto();
+        return listarHojas(activas);
     }
 }

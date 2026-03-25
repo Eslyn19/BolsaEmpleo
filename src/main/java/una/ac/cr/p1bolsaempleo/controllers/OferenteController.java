@@ -65,8 +65,6 @@ public class OferenteController {
         }
 
         Oferente oferente = oferenteService.buscarPorId(id);
-
-        // 🔥 nombre correcto
         model.addAttribute("rutaCV", oferente.getRutaCV());
 
         return "oferente/cv";
@@ -91,7 +89,6 @@ public class OferenteController {
 
             String ruta = oferenteService.guardarCV(id, archivo);
 
-            // 🔥 IMPORTANTE (para mostrar card después)
             redirectAttributes.addFlashAttribute("cvSubido", true);
             redirectAttributes.addFlashAttribute("rutaCV", ruta);
 
