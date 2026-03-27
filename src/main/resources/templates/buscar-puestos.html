@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" th:href="@{/css/Inicio.css}"/>
+    <link rel="stylesheet" th:href="@{/css/EmpresaPuestos.css}"/>
+    <title>Buscar puestos</title>
+</head>
+
+<body class="inicio-page">
+
+<div th:replace="fragments/layout :: navbar"></div>
+
+<main class="inicio-main">
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1>Buscar puestos</h1>
+        <p class="hero-sub">
+            Selecciona habilidades y encuentra ofertas públicas que coincidan con tu perfil.
+        </p>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- FILTROS -->
+    <section class="news-section">
+
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="section-dot"></span>
+                Filtrar por características
+            </h2>
+        </div>
+
+        <!-- FORM FILTRO -->
+        <form method="get" th:action="@{/buscar}" id="filtroForm">
+
+            <div class="filtro-arbol" th:if="${!#maps.isEmpty(arbolCaracteristicas)}">
+
+                <!-- PADRES -->
+                <div th:each="entry : ${arbolCaracteristicas}" class="grupo-caracteristicas">
+
+                    <!-- nombre padre -->
+                    <h3 class="categoria-padre" th:text="${entry.key.nombre}"></h3>
+
+                    <!-- HIJOS -->
+                    <div class="lista-hojas">
+
+                        <label th:each="car : ${entry.value}" class="item-hoja">
+                            <input type="checkbox"
+                                   name="caracteristicas"
+                                   th:value="${car.id}"
+                                   th:checked="${caracteristicasSeleccionadas != null and caracteristicasSeleccionadas.contains(car.id)}"
+                                   onchange="document.getElementById('filtroForm').submit()">
+
+                            <span th:text="${car.nombre}"></span>
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- RESULTADOS -->
+    <section class="news-section">
+
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="section-dot"></span>
+                Puestos públicos encontrados
+            </h2>
+        </div>
+
+        <div th:if="${#lists.isEmpty(puestos)}" class="inicio-sin-puestos">
+            <p>No hay puestos públicos que coincidan con los filtros seleccionados.</p>
+        </div>
+
+        <div class="news-grid" th:if="${!#lists.isEmpty(puestos)}">
+
+            <article class="news-card" th:each="p : ${puestos}">
+                <div class="card-accent-bar accent-green"></div>
+
+                <div class="card-body">
+                    <span class="card-tag" th:text="|${p.idUsuario.nombre} · Oferta pública|"></span>
+
+                    <h3 class="card-title" th:text="${p.descripcion}"></h3>
+
+                    <p class="card-excerpt">
+                        <strong>Salario:</strong>
+                        <span th:text="${p.salario}"></span>
+                        <br><br>
+                        <strong>Características:</strong>
+
+                        <span th:if="${#lists.isEmpty(p.caracteristicas)}">
+                            no especificadas
+                        </span>
+
+                        <span th:each="car, it : ${p.caracteristicas}">
+                            <span th:text="${car.nombre}"></span>
+                            <span th:if="${!it.last}">, </span>
+                        </span>
+                    </p>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+</main>
+
+<div th:replace="fragments/layout :: footer"></div>
+</body>
+</html>

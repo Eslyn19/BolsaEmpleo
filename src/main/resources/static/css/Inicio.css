@@ -457,6 +457,35 @@ a.inicio-puesto-card-link:hover .news-card{
     background:rgba(7,11,20,0.6);
     backdrop-filter:blur(8px);
 }
+.filtro-arbol{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.grupo-caracteristicas{
+    display:flex;
+    flex-direction:column;
+}
+
+.categoria-padre{
+    margin-bottom:8px;
+    color:#2b7a78;
+}
+.news-card{
+    position:relative;
+}
+
+.lista-hojas{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    margin-left:18px; /* sangría tipo árbol */
+}
+
+.item-hoja{
+    cursor:pointer;
+}
 
 .footer-links{
     display:flex;
@@ -512,4 +541,46 @@ a.inicio-puesto-card-link:hover .news-card{
     .search-bar{flex-direction:column;border-radius:16px;}
     .search-divider{width:100%;height:1px;min-height:0;}
     .btn-search{width:100%;padding:16px;}
+}
+.puesto-tooltip{
+    inset:0;
+    position:absolute;
+    top:0;
+    right:0;
+    left:0;
+    width:260px;
+    background:white;
+    border-radius:12px;
+    overflow:visible;
+    max-height:none;         /* nunca crece más que la tarjeta */
+    padding:14px;
+    box-shadow:0 18px 40px rgba(0,0,0,0.15);
+    font-size:13px;
+    z-index:50;
+    color:black;
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(10px) scale(.98);
+    transition:0.25s ease;
+}
+.news-card{
+    position: relative;
+    overflow: visible;
+}
+
+/* aparece al pasar mouse */
+.news-card:hover .puesto-tooltip{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.puesto-tooltip h4{
+    margin-top:0;
+    margin-bottom:8px;
+    color:#2b7a78;
+}
+
+.puesto-tooltip ul{
+    margin:5px 0 0 15px;
+    padding:0;
 }

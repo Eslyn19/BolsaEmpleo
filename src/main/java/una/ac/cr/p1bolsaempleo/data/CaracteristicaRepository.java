@@ -21,4 +21,6 @@ public interface CaracteristicaRepository extends JpaRepository<Caracteristica, 
 
     @Query("SELECT c FROM Caracteristica c WHERE c.activo = 1 OR c.activo IS NULL ORDER BY c.nombre ASC")
     List<Caracteristica> findActivasParaSeleccionPuesto();
+
+
 }

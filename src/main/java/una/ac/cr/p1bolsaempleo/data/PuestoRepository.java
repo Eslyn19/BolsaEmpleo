@@ -45,4 +45,24 @@ public interface PuestoRepository extends JpaRepository<Puesto, Integer> {
     @EntityGraph(attributePaths = {"caracteristicas"})
     @Query("SELECT p FROM Puesto p WHERE p.id = :id")
     Optional<Puesto> findWithCaracteristicasById(@Param("id") Integer id);
+    @Query("""
+    SELECT DISTINCT p
+    FROM Puesto p
+    JOIN p.caracteristicas c
+    WHERE p.acceso = 1
+    AND (p.activo = 1 OR p.activo IS NULL)
+    AND p.oferenteAsignado IS NULL
+    AND c.id IN :ids
+    """)
+    List<Puesto> buscarPublicosPorCaracteristicas(@Param("ids") List<Integer> ids);
+
+
+    @Query("""
+    SELECT p
+    FROM Puesto p
+    WHERE p.acceso = 1
+    AND (p.activo = 1 OR p.activo IS NULL)
+    AND p.oferenteAsignado IS NULL
+    """)
+    List<Puesto> buscarTodosPublicosActivos();
 }

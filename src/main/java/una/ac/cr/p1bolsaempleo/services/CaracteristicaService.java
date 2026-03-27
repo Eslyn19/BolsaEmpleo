@@ -5,9 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import una.ac.cr.p1bolsaempleo.data.CaracteristicaRepository;
 import una.ac.cr.p1bolsaempleo.models.Caracteristica;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CaracteristicaService {
@@ -67,6 +65,26 @@ public class CaracteristicaService {
         }
         return raizId != null && raizId.equals(actual.getIdPadre().getId());
     }
+    public Map<Caracteristica, List<Caracteristica>> arbolHojasActivas() {
+
+        // todas las activas
+        List<Caracteristica> activas = caracteristicaRepository.findActivasParaSeleccionPuesto();
+
+        // solo hojas
+        List<Caracteristica> hojas = activas.stream()
+                .filter(c -> esHoja(c.getId()))
+                .toList();
+
+        // agrupar por padre
+        Map<Caracteristica, List<Caracteristica>> arbol = new LinkedHashMap<>();
+
+        for (Caracteristica hoja : hojas) {
+            Caracteristica padre = hoja.getIdPadre();
+            arbol.computeIfAbsent(padre, k -> new ArrayList<>()).add(hoja);
+        }
+
+        return arbol;
+    }
 
     @Transactional
     public void crear(String nombre, Integer idPadre) {
@@ -91,5 +109,13 @@ public class CaracteristicaService {
     public List<Caracteristica> listarActivasParaSeleccionPuesto() {
         List<Caracteristica> activas = caracteristicaRepository.findActivasParaSeleccionPuesto();
         return listarHojas(activas);
+    }
+
+    public List<Caracteristica> listarHojasActivas() {
+
+        return caracteristicaRepository.findActivasParaSeleccionPuesto()
+                .stream()
+                .filter(c -> esHoja(c.getId()))
+                .toList();
     }
 }

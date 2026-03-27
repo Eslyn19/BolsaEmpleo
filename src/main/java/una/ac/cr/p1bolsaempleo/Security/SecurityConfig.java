@@ -30,7 +30,7 @@ public class SecurityConfig {
 
                         // públicas
                         .requestMatchers(
-                                "/", "/inicio", "/login", "/registro", "/userform", "/empresa",
+                                "/", "/inicio", "/login", "/registro", "/userform", "/empresa","/buscar","/puestos/buscar",
                                 "/oferente/userform",
                                 "/css/**", "/js/**", "/images/**"
                         ).permitAll()
@@ -43,6 +43,7 @@ public class SecurityConfig {
 
                         .anyRequest().authenticated()
                 )
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/buscar"))
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")

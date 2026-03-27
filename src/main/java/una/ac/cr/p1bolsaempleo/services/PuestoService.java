@@ -233,6 +233,15 @@ public class PuestoService {
         puestoRepository.save(p);
     }
 
+    public List<Puesto> buscarPublicosPorCaracteristicas(List<Integer> caracteristicas) {
+        // todos los publicos activos
+        if (caracteristicas == null || caracteristicas.isEmpty()) {
+            return puestoRepository.buscarTodosPublicosActivos();
+        }
+        // publicos activos por caracteristicas
+        return puestoRepository.buscarPublicosPorCaracteristicas(caracteristicas);
+    }
+
     @Transactional
     public void activar(String idEmpresa, Integer idPuesto) {
         Puesto p = puestoRepository.findByIdAndIdUsuario_IdUsuario(idPuesto, idEmpresa)

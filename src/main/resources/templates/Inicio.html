@@ -104,7 +104,42 @@
                             Registrarme como oferente →
                         </span>
                     </div>
+                    <!-- MINI VENTANA HOVER -->
+                    <div class="puesto-tooltip">
 
+                        <h4 th:text="${p.descripcion}"></h4>
+
+                        <p><strong>Empresa:</strong>
+                            <span th:text="${p.idUsuario.nombre}"></span>
+                        </p>
+
+                        <p><strong>Salario:</strong>
+                            ₡<span th:text="${p.salario}"></span>
+                        </p>
+
+                        <p><strong>Estado:</strong>
+                            <span th:text="${p.activo == 1 ? 'Activo' : 'Cerrado'}"></span>
+                        </p>
+
+                        <p><strong>Acceso:</strong>
+                            <span th:text="${p.acceso == 1 ? 'Público' : 'Privado'}"></span>
+                        </p>
+
+                        <p><strong>Oferente asignado:</strong>
+                            <span th:if="${p.oferenteAsignado == null}">Ninguno</span>
+                            <span th:if="${p.oferenteAsignado != null}"
+                                  th:text="${p.oferenteAsignado.nombre}"></span>
+                        </p>
+
+                        <div>
+                            <strong>Características requeridas:</strong>
+                            <ul>
+                                <li th:each="car : ${p.caracteristicas}"
+                                    th:text="${car.nombre}"></li>
+                            </ul>
+                        </div>
+
+                    </div>
                 </article>
             </a>
         </div>
