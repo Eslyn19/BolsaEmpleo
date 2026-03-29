@@ -1,4 +1,4 @@
-# Bolsa de empleo (P1BolsaEmpleo)
+# Bolsa de empleo 🌐
 
 Aplicación web para publicar puestos, postularse y administrar la bolsa. Incluye perfiles para **oferentes** (candidatos), **empresas** y **administradores**.
 
@@ -12,8 +12,7 @@ Aplicación web para publicar puestos, postularse y administrar la bolsa. Incluy
 ## Requisitos
 
 - JDK 24  
-- MySQL en ejecución  
-- Maven (o usar el wrapper si lo añades al repo)
+- MySQL
 
 ## Configuración
 
