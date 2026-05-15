@@ -1,0 +1,26 @@
+{
+  "name": "bolsaempleo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently --names \"BACKEND,FRONTEND\" --prefix-colors \"cyan,green\" \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && mvnw.cmd spring-boot:run",
+    "frontend": "cd frontend && npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eslyn19/BolsaEmpleo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Eslyn19/BolsaEmpleo/issues"
+  },
+  "homepage": "https://github.com/Eslyn19/BolsaEmpleo#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
