@@ -1,1 +1,6 @@
-en terminal -> npm run dev
+RUN: 
+en la raiz del proyecto terminal ..BolsaEmpleo 
+-> npm run dev
+
+La DB ya corre sin tener que reiniciar
+TODO: Hacer testeos de que sirva bien.
