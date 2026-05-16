@@ -66,7 +66,10 @@ public class OferenteController {
     @GetMapping("/cv")
     public ResponseEntity<?> cv(Authentication auth) {
         Oferente o = oferenteService.buscarPorId(auth.getName());
-        if (o == null) return ResponseEntity.notFound().build();
+        
+        if (o == null){ 
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(Map.of("rutaCV", o.getRutaCV() != null ? o.getRutaCV() : ""));
     }
 
@@ -89,19 +92,23 @@ public class OferenteController {
         List<Oferentehabilidad> misHabilidades = oferenteHabilidadRepository.findByOferente(idUsuario);
         List<Caracteristica> subHabilidades;
         Caracteristica actualCat = null;
+        
         if (actual == null) {
             subHabilidades = caracteristicaService.listarRaices();
         } else {
             actualCat = caracteristicaRepository.findById(actual).orElse(null);
             subHabilidades = caracteristicaService.listarHijos(actual);
         }
+        
         List<Caracteristica> hojas = caracteristicaService.listarHojas(subHabilidades);
         List<Caracteristica> ruta = new ArrayList<>();
         Caracteristica temp = actualCat;
+        
         while (temp != null) {
             ruta.add(0, temp);
             temp = temp.getIdPadre();
         }
+        
         return ResponseEntity.ok(Map.of(
                 "misHabilidades", misHabilidades,
                 "subHabilidades", subHabilidades,

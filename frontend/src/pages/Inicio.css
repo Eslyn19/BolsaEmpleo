@@ -1,0 +1,37 @@
+/* ─── Background ──────────────────────────────────────────── */
+.in-bg  { position: fixed; inset: 0; z-index: 0; }
+.in-overlay { position: fixed; inset: 0; z-index: 1; background: rgba(8,11,26,.45); pointer-events: none; }
+.in-content { position: relative; z-index: 2; }
+
+/* ─── Navbar ──────────────────────────────────────────────── */
+.in-nav {
+  background: rgba(17,29,74,.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.in-nav-brand { display: flex; align-items: center; gap: 10px; }
+.in-nav-logo  { height: 36px; width: auto; }
+
+/* ─── Hero ────────────────────────────────────────────────── */
+.in-hero {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 100px 24px 80px;
+}
+.in-hero-title {
+  font-size: 3rem; font-weight: 800; letter-spacing: -1.5px;
+  margin-bottom: 16px; color: white;
+  text-shadow: 0 2px 24px rgba(0,0,0,.6);
+}
+.in-hero-sub {
+  font-size: 1.15rem; color: rgba(255,255,255,.7);
+  margin-bottom: 36px; max-width: 520px;
+}
+.in-hero-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.in-btn-primary  { padding: 13px 36px; font-size: 1rem; }
+.in-btn-register { padding: 13px 28px; font-size: 1rem; }
+
+/* ─── Featured section ────────────────────────────────────── */
+.in-section       { padding-top: 0; }
+.in-section-title { margin-bottom: 20px; }
+.in-grid          { padding-bottom: 60px; }

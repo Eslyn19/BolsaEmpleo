@@ -35,9 +35,11 @@ public class EmpresaController {
         if (!body.get("clave").equals(body.get("claveConfirm"))) {
             return ResponseEntity.badRequest().body(Map.of("error", "Las contraseñas no coinciden"));
         }
+
         String error = empresaService.registrar(
                 body.get("correo"), body.get("nombre"), body.get("ubicacion"),
                 body.get("telefono"), body.get("descripcion"), body.get("clave"));
+        
         if (error != null) {
             return ResponseEntity.badRequest().body(Map.of("error", error));
         }
@@ -48,11 +50,11 @@ public class EmpresaController {
     public ResponseEntity<?> dashboard(Authentication auth) {
         return empresaRepository.findById(auth.getName())
                 .map(e -> ResponseEntity.ok((Object) Map.of(
-                        "id", e.getIdUsuario(),
-                        "nombre", e.getNombre(),
-                        "correo", e.getCorreo(),
-                        "ubicacion", e.getUbicacion(),
-                        "telefono", e.getTelefono()
+                    "id", e.getIdUsuario(),
+                    "nombre", e.getNombre(),
+                    "correo", e.getCorreo(),
+                    "ubicacion", e.getUbicacion(),
+                    "telefono", e.getTelefono()
                 )))
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -73,6 +75,7 @@ public class EmpresaController {
             String descripcion = (String) body.get("descripcion");
             Double salario = body.get("salario") instanceof Number n ? n.doubleValue() : null;
             List<Integer> ids = parseIds(body.get("idCaracteristica"));
+            
             puestoService.crear(auth.getName(), descripcion, salario, ids);
             return ResponseEntity.ok(Map.of("mensaje", "Puesto publicado correctamente."));
         } catch (Exception e) {

@@ -33,8 +33,8 @@ public class AdminController {
     @GetMapping("/dashboard")
     public ResponseEntity<?> dashboard() {
         return ResponseEntity.ok(Map.of(
-                "empresasPendientes", empresaService.listarPendientes().size(),
-                "oferentesPendientes", oferenteService.listarPendientes().size()
+            "empresasPendientes", empresaService.listarPendientes().size(),
+            "oferentesPendientes", oferenteService.listarPendientes().size()
         ));
     }
 
@@ -77,9 +77,9 @@ public class AdminController {
         List<Caracteristica> items = caracteristicaService.listarItemsVista(parentId);
         List<Caracteristica> padresSelect = caracteristicaService.opcionesPadre(parentId);
         return ResponseEntity.ok(Map.of(
-                "items", items,
-                "padresSelect", padresSelect,
-                "parentId", parentId != null ? parentId : 0
+            "items", items,
+            "padresSelect", padresSelect,
+            "parentId", parentId != null ? parentId : 0
         ));
     }
 

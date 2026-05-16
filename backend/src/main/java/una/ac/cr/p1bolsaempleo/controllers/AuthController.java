@@ -28,8 +28,10 @@ public class AuthController {
         try {
             Authentication auth = authManager.authenticate(
                     new UsernamePasswordAuthenticationToken(body.get("username"), body.get("password")));
+            
             String role = auth.getAuthorities().iterator().next().getAuthority();
             String token = jwtUtil.generateToken(auth.getName(), role);
+            
             return ResponseEntity.ok(Map.of("token", token, "role", role, "username", auth.getName()));
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

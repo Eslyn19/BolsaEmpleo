@@ -112,11 +112,13 @@ public class OferenteService {
         }
         Estado estado = estadoRepository.findFirstByNombreOrderByIdAsc("PENDIENTE")
                 .orElseThrow(() -> new IllegalStateException("Estado PENDIENTE no encontrado"));
+        
         Usuario usuario = new Usuario();
         usuario.setIdUsuario(identificacion);
         usuario.setClave(passwordEncoder.encode(clave));
         usuario.setRol("ROLE_OFERENTE");
         usuarioRepository.save(usuario);
+        
         Oferente oferente = new Oferente();
         oferente.setIdUsuario(identificacion);
         oferente.setNombre(nombre);
@@ -128,6 +130,7 @@ public class OferenteService {
         oferente.setRutaCV(null);
         oferente.setEstado(estado);
         oferenteRepository.save(oferente);
+        
         return null;
     }
 

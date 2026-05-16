@@ -1,0 +1,130 @@
+/* ─── Shell ───────────────────────────────────────────────── */
+.ed-shell { min-height: 100vh; background: #020d10; position: relative; }
+.ed-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.ed-bg-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.2); }
+.ed-page-content { position: relative; z-index: 1; }
+
+/* ─── Navbar ──────────────────────────────────────────────── */
+.ed-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 28px; height: 64px;
+  background: rgba(0,0,0,.95); border-bottom: 1px solid rgba(255,255,255,.08);
+  position: relative; z-index: 10;
+}
+.ed-nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.ed-nav-logo { height: 34px; width: auto; }
+.ed-nav-title { font-weight: 800; font-size: 1.1rem; color: white; }
+.ed-nav-links { display: flex; gap: 4px; align-items: center; }
+.ed-nav-link {
+  color: rgba(255,255,255,.65); padding: 6px 14px; border-radius: 8px;
+  font-size: 0.875rem; font-weight: 500; text-decoration: none;
+  transition: color .15s, background .15s;
+}
+.ed-nav-link:hover { color: white; background: rgba(255,255,255,.08); }
+.ed-nav-logout {
+  background: transparent; border: 1px solid rgba(255,255,255,.2);
+  border-radius: 10px; padding: 6px 16px; color: rgba(255,255,255,.8);
+  font-size: 0.8rem; font-weight: 500; cursor: pointer; margin-left: 8px;
+  transition: background .15s;
+}
+.ed-nav-logout:hover { background: rgba(255,255,255,.08); }
+
+/* ─── Card ────────────────────────────────────────────────── */
+.ed-card {
+  background: rgba(0,0,0,.93); border: 1px solid rgba(255,255,255,.12);
+  border-radius: 14px; box-shadow: 0 4px 24px rgba(0,0,0,.7);
+}
+
+/* ─── Buttons ─────────────────────────────────────────────── */
+.ed-btn-solid {
+  background: #308bcd; color: white; border: none; border-radius: 10px;
+  padding: 10px 22px; font-size: 0.875rem; font-weight: 700; cursor: pointer;
+  transition: opacity .2s; text-decoration: none; display: inline-block;
+}
+.ed-btn-solid:hover { opacity: .85; }
+
+.ed-btn-outline {
+  background: transparent; border: 1px solid rgba(255,255,255,.2);
+  border-radius: 10px; padding: 10px 20px; color: rgba(255,255,255,.8);
+  font-size: 0.875rem; font-weight: 500; cursor: pointer;
+  text-decoration: none; display: inline-block; transition: background .15s;
+}
+.ed-btn-outline:hover { background: rgba(255,255,255,.08); }
+
+/* ─── Forms ───────────────────────────────────────────────── */
+.ed-input {
+  width: 100%; padding: 9px 12px; border-radius: 8px;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15);
+  color: white; font-size: 0.9rem; outline: none; box-sizing: border-box;
+}
+.ed-label { display: block; font-size: 0.875rem; font-weight: 500; color: rgba(255,255,255,.65); margin-bottom: 6px; }
+.ed-form-field { margin-bottom: 18px; }
+
+/* ─── Row item ────────────────────────────────────────────── */
+.ed-row-item {
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(255,255,255,.08); border-radius: 10px;
+  padding: 10px 14px; border: 1px solid rgba(255,255,255,.1);
+}
+
+/* ─── Dashboard ───────────────────────────────────────────── */
+.ed-dashboard { text-align: center; padding-top: 48px; padding-bottom: 48px; }
+.ed-eyebrow {
+  margin-bottom: 4px; font-size: 0.85rem; color: rgba(255,255,255,.35);
+  letter-spacing: 2px; text-transform: uppercase; font-weight: 600;
+}
+.ed-hero-title { color: white; font-size: 2.6rem; margin-bottom: 6px; line-height: 1.15; }
+.ed-hero-sub { color: rgba(255,255,255,.4); font-size: 0.95rem; margin-bottom: 52px; margin-top: 0; }
+
+.ed-nav-cards { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+.ed-nav-card {
+  background: rgba(0,0,0,.93); border: 1px solid rgba(255,255,255,.12);
+  border-radius: 14px; box-shadow: 0 4px 24px rgba(0,0,0,.7);
+  width: 210px; padding: 36px 24px; text-align: center;
+  cursor: pointer; text-decoration: none; display: block;
+  transition: transform .25s, background .2s;
+}
+.ed-nav-card:hover { transform: translateY(-5px); background: rgba(0,0,0,.97); }
+.ed-nav-card-icon {
+  width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 16px;
+  background: rgba(48,139,205,.15); border: 1.5px solid rgba(48,139,205,.35);
+  display: flex; align-items: center; justify-content: center; font-size: 1.6rem;
+}
+.ed-nav-card-label { color: white; font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; }
+.ed-nav-card-sub { color: rgba(255,255,255,.4); font-size: 0.8rem; line-height: 1.5; }
+
+/* ─── Pages ───────────────────────────────────────────────── */
+.ed-page { max-width: 780px; margin: 0 auto; padding-top: 32px; }
+.ed-page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.ed-page-title { color: white; margin: 0; }
+.ed-empty-state { padding: 40px; text-align: center; }
+.ed-empty-state p { color: rgba(255,255,255,.4); }
+
+/* ─── Puesto card ─────────────────────────────────────────── */
+.ed-puesto-card { padding: 20px; }
+.ed-puesto-name { font-weight: 700; font-size: 1rem; color: white; margin-bottom: 10px; }
+.ed-puesto-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.ed-puesto-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.ed-badge { padding: 3px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+.ed-badge--salary { background: rgba(34,197,94,.2);    color: #4ade80;              border: 1px solid rgba(34,197,94,.3);    }
+.ed-badge--blue   { background: rgba(48,139,205,.2);   color: #7dd3fc;              border: 1px solid rgba(48,139,205,.35);  }
+.ed-badge--green  { background: rgba(34,197,94,.15);   color: #86efac;              border: 1px solid rgba(34,197,94,.25);   }
+.ed-badge--dim    { background: rgba(255,255,255,.08); color: rgba(255,255,255,.4); border: 1px solid rgba(255,255,255,.12); }
+
+/* ─── Nuevo puesto form ───────────────────────────────────── */
+.ed-form-page { max-width: 560px; margin: 0 auto; padding-top: 32px; }
+.ed-form-card { padding: 32px; }
+.ed-char-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+.ed-error-msg {
+  margin-bottom: 16px; padding: 10px 14px; border-radius: 8px;
+  background: rgba(220,38,38,.15); color: #f87171;
+  border: 1px solid rgba(220,38,38,.3); font-size: 0.875rem;
+}
+.ed-form-actions { display: flex; gap: 10px; }
+
+/* ─── Candidatos ──────────────────────────────────────────── */
+.ed-candidato-card { padding: 20px; }
+.ed-candidato-name { font-weight: 700; font-size: 1rem; color: white; margin-bottom: 4px; }
+.ed-candidato-meta { color: rgba(255,255,255,.45); font-size: 0.875rem; margin: 0 0 10px; }
+.ed-candidato-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }

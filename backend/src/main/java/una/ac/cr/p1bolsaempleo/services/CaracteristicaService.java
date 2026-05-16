@@ -15,17 +15,21 @@ public class CaracteristicaService {
     public CaracteristicaService(CaracteristicaRepository caracteristicaRepository) {
         this.caracteristicaRepository = caracteristicaRepository;
     }
+
     public boolean esHoja(Integer id) {
         return caracteristicaRepository.findByIdPadre_IdOrderByNombreAsc(id).isEmpty();
     }
+
     public List<Caracteristica> listarRaices() {
         return caracteristicaRepository.findByIdPadreIsNullOrderByNombreAsc();
     }
+
     public List<Caracteristica> listarHojas(List<Caracteristica> lista) {
         return lista.stream()
                 .filter(c -> esHoja(c.getId()))
                 .toList();
     }
+    
     public List<Caracteristica> listarHijos(Integer idPadre) {
         return caracteristicaRepository.findByIdPadre_IdOrderByNombreAsc(idPadre);
     }
@@ -42,7 +46,7 @@ public class CaracteristicaService {
     public List<Caracteristica> listarItemsVista(Integer parentIdVista) {
         if (parentIdVista == null) {
             return idRaizPasiva()
-                    .map(this::listarHijos)
+                    .<List<Caracteristica>>map(id -> listarHijos(id))
                     .orElseGet(this::listarRaices);
         }
         return listarHijos(parentIdVista);
@@ -51,12 +55,12 @@ public class CaracteristicaService {
     public List<Caracteristica> opcionesPadre(Integer parentIdVista) {
         if (parentIdVista == null) {
             return idRaizPasiva()
-                    .map(this::listarHijos)
+                    .<List<Caracteristica>>map(id -> listarHijos(id))
                     .orElseGet(this::listarRaices);
         }
         return obtenerConPadre(parentIdVista)
-                .map(Collections::singletonList)
-                .orElseGet(Collections::emptyList);
+                .<List<Caracteristica>>map(c -> List.of(c))
+                .orElseGet(List::of);
     }
 
     public boolean volverEsRaices(Caracteristica actual, Integer raizId) {

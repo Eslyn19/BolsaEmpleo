@@ -1,0 +1,172 @@
+/* ─── Shell ───────────────────────────────────────────────── */
+.od-shell { min-height: 100vh; background: #0d0a14; position: relative; }
+.od-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.od-bg-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.2); }
+.od-page-content { position: relative; z-index: 1; }
+
+/* ─── Navbar ──────────────────────────────────────────────── */
+.od-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 28px; height: 64px;
+  background: rgba(0,0,0,.95); border-bottom: 1px solid rgba(255,255,255,.1);
+  position: relative; z-index: 10;
+}
+.od-nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.od-nav-logo { height: 34px; width: auto; }
+.od-nav-title { font-weight: 800; font-size: 1.1rem; color: white; }
+.od-nav-links { display: flex; gap: 4px; align-items: center; }
+.od-nav-link {
+  color: rgba(255,255,255,.65); padding: 6px 14px; border-radius: 8px;
+  font-size: 0.875rem; font-weight: 500; text-decoration: none;
+  transition: color .15s, background .15s;
+}
+.od-nav-link:hover { color: white; background: rgba(255,255,255,.08); }
+.od-nav-logout {
+  background: transparent; border: 1px solid rgba(255,255,255,.2);
+  border-radius: 10px; padding: 6px 16px; color: rgba(255,255,255,.8);
+  font-size: 0.8rem; font-weight: 500; cursor: pointer; margin-left: 8px;
+  transition: background .15s;
+}
+.od-nav-logout:hover { background: rgba(255,255,255,.08); }
+
+/* ─── Card ────────────────────────────────────────────────── */
+.od-card {
+  background: rgba(0,0,0,.93); border: 1px solid rgba(255,255,255,.14);
+  border-radius: 14px; box-shadow: 0 4px 24px rgba(0,0,0,.8);
+}
+
+/* ─── Buttons ─────────────────────────────────────────────── */
+.od-btn-solid {
+  background: #35b389; color: white; border: none; border-radius: 10px;
+  padding: 11px 28px; font-size: 0.9rem; font-weight: 700;
+  cursor: pointer; transition: opacity .2s;
+}
+.od-btn-solid:hover { opacity: .85; }
+
+.od-btn-outline {
+  background: transparent; border: 1px solid rgba(255,255,255,.2);
+  border-radius: 10px; padding: 10px 20px; color: rgba(255,255,255,.8);
+  font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: background .15s;
+}
+.od-btn-outline:hover { background: rgba(255,255,255,.08); }
+
+/* ─── Row item ────────────────────────────────────────────── */
+.od-row-item {
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(255,255,255,.08); border-radius: 10px;
+  padding: 10px 14px; border: 1px solid rgba(255,255,255,.1);
+}
+
+/* ─── Dashboard ───────────────────────────────────────────── */
+.od-dashboard { text-align: center; padding-top: 48px; padding-bottom: 48px; }
+.od-eyebrow {
+  margin-bottom: 4px; font-size: 0.85rem; color: rgba(255,255,255,.35);
+  letter-spacing: 2px; text-transform: uppercase; font-weight: 600;
+}
+.od-hero-title { color: white; font-size: 2.6rem; margin-bottom: 6px; line-height: 1.15; }
+.od-hero-sub { color: rgba(255,255,255,.4); font-size: 0.95rem; margin-bottom: 52px; margin-top: 0; }
+
+.od-nav-cards { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+.od-nav-card {
+  background: rgba(0,0,0,.93); border: 1px solid rgba(255,255,255,.14);
+  border-radius: 14px; box-shadow: 0 4px 24px rgba(0,0,0,.8);
+  width: 210px; padding: 36px 24px; text-align: center;
+  cursor: pointer; text-decoration: none; display: block;
+  transition: transform .25s, background .25s;
+}
+.od-nav-card:hover { transform: translateY(-5px); background: rgba(0,0,0,.97); }
+.od-nav-card-icon {
+  width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 16px;
+  background: rgba(53,179,137,.15); border: 1.5px solid rgba(53,179,137,.35);
+  display: flex; align-items: center; justify-content: center; font-size: 1.6rem;
+}
+.od-nav-card-label { color: white; font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; }
+.od-nav-card-sub { color: rgba(255,255,255,.4); font-size: 0.8rem; line-height: 1.5; }
+
+/* ─── Habilidades ─────────────────────────────────────────── */
+.od-habilidades-page { max-width: 780px; margin: 0 auto; padding-top: 32px; }
+.od-habilidades-title { color: white; font-size: 2rem; margin-bottom: 6px; text-align: center; }
+.od-habilidades-sub { color: rgba(255,255,255,.38); text-align: center; margin-bottom: 36px; margin-top: 0; }
+
+.od-breadcrumb { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+.od-breadcrumb-root {
+  background: none; border: none; color: #35b389;
+  cursor: pointer; font-weight: 600; font-size: 0.875rem; padding: 4px 0;
+}
+.od-breadcrumb-sep { color: rgba(255,255,255,.25); }
+.od-breadcrumb-item {
+  background: none; border: none; color: rgba(255,255,255,.7);
+  cursor: pointer; font-weight: 600; font-size: 0.875rem; padding: 4px 0;
+}
+
+.od-habilidades-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+
+.od-section-label {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: rgba(255,255,255,.35); margin-bottom: 14px;
+}
+
+.od-category-btn {
+  background: transparent; border: 1px solid rgba(255,255,255,.2);
+  border-radius: 10px; padding: 10px 16px; color: rgba(255,255,255,.8);
+  font-size: 0.875rem; font-weight: 500; cursor: pointer;
+  text-align: left; display: flex; justify-content: space-between; align-items: center;
+  transition: background .15s; width: 100%;
+}
+.od-category-btn:hover { background: rgba(255,255,255,.08); }
+.od-category-arrow { color: rgba(255,255,255,.4); font-size: 1.1rem; }
+
+.od-nivel-label { display: block; font-size: 0.8rem; color: rgba(255,255,255,.5); margin-bottom: 8px; }
+.od-nivel-buttons { display: flex; gap: 8px; }
+.od-nivel-btn {
+  width: 36px; height: 36px; border-radius: 8px; border: none; cursor: pointer;
+  font-weight: 700; font-size: 0.85rem; transition: background .2s;
+  background: rgba(255,255,255,.1); color: rgba(255,255,255,.45);
+}
+.od-nivel-btn--active { background: #35b389; color: white; }
+
+.od-nivel-badge {
+  padding: 3px 12px; border-radius: 999px; font-size: 0.75rem; font-weight: 700;
+  background: rgba(53,179,137,.2); color: #35b389; border: 1px solid rgba(53,179,137,.35);
+}
+
+/* ─── CV ──────────────────────────────────────────────────── */
+.od-cv-page { max-width: 520px; margin: 0 auto; padding-top: 32px; padding-bottom: 48px; }
+.od-cv-title { color: white; font-size: 2rem; margin-bottom: 6px; text-align: center; }
+.od-cv-sub { color: rgba(255,255,255,.38); text-align: center; margin-bottom: 36px; margin-top: 0; }
+
+.od-cv-current { padding: 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
+.od-cv-meta-label {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: rgba(255,255,255,.35); margin-bottom: 4px;
+}
+.od-cv-filename { color: rgba(255,255,255,.7); font-size: 0.875rem; }
+.od-cv-link {
+  border: 1px solid rgba(255,255,255,.2); border-radius: 10px;
+  padding: 10px 20px; color: rgba(255,255,255,.8); font-size: 0.8rem; font-weight: 500;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+  transition: background .15s;
+}
+.od-cv-link:hover { background: rgba(255,255,255,.08); }
+
+.od-cv-form-card { padding: 32px; }
+.od-dropzone {
+  border-radius: 12px; padding: 40px 24px;
+  text-align: center; cursor: pointer;
+  transition: border-color .2s, background .2s; margin-bottom: 24px;
+}
+.od-dropzone-icon { font-size: 2.6rem; margin-bottom: 10px; }
+.od-dropzone-filename { color: #35b389; font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+.od-dropzone-ready { color: rgba(255,255,255,.35); font-size: 0.8rem; }
+.od-dropzone-title { color: rgba(255,255,255,.7); font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+.od-dropzone-hint { color: rgba(255,255,255,.35); font-size: 0.8rem; }
+.od-cv-submit { width: 100%; font-size: 1rem; padding: 13px 0; }
+
+.od-msg-success {
+  margin-top: 16px; padding: 12px 16px; border-radius: 10px; font-size: 0.875rem;
+  background: rgba(53,179,137,.15); color: #35b389; border: 1px solid rgba(53,179,137,.3);
+}
+.od-msg-error {
+  margin-top: 16px; padding: 12px 16px; border-radius: 10px; font-size: 0.875rem;
+  background: rgba(220,38,38,.15); color: #f87171; border: 1px solid rgba(220,38,38,.3);
+}

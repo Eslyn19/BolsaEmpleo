@@ -35,12 +35,15 @@ public class EmpresaService {
     public String registrar(String correo, String nombre, String ubicacion, String telefono,
                             String descripcion, String clave) {
         correo = correo != null ? correo.trim() : "";
+        
         if (correo.isEmpty()) {
             return "El correo es obligatorio";
         }
+        
         if (usuarioRepository.existsByIdUsuario(correo)) {
             return "El correo ya está registrado";
         }
+        
         Estado estadoPendiente = estadoRepository.findFirstByNombreOrderByIdAsc("PENDIENTE")
                 .orElseThrow(() -> new IllegalStateException("Estado PENDIENTE no encontrado"));
         Usuario usuario = new Usuario();
@@ -48,6 +51,7 @@ public class EmpresaService {
         usuario.setClave(passwordEncoder.encode(clave));
         usuario.setRol("ROLE_EMPRESA");
         usuarioRepository.save(usuario);
+        
         Empresa empresa = new Empresa();
         empresa.setIdUsuario(correo);
         empresa.setCorreo(correo);
@@ -58,6 +62,7 @@ public class EmpresaService {
         empresa.setTipo(null);
         empresa.setEstado(estadoPendiente);
         empresaRepository.save(empresa);
+        
         return null;
     }
 
@@ -68,10 +73,10 @@ public class EmpresaService {
             return Optional.empty();
         }
         return usuarioRepository.findById(id)
-                .filter(u -> "ROLE_EMPRESA".equalsIgnoreCase(trimRol(u.getRol())))
-                .filter(u -> matchesClave(clave, u.getClave()))
-                .flatMap(u -> empresaRepository.findByIdUsuarioWithEstado(id))
-                .filter(e -> "APROBADO".equalsIgnoreCase(e.getEstado().getNombre()));
+        .filter(u -> "ROLE_EMPRESA".equalsIgnoreCase(trimRol(u.getRol())))
+        .filter(u -> matchesClave(clave, u.getClave()))
+        .flatMap(u -> empresaRepository.findByIdUsuarioWithEstado(id))
+        .filter(e -> "APROBADO".equalsIgnoreCase(e.getEstado().getNombre()));
     }
 
     private static String trimRol(String rol) {
@@ -82,6 +87,7 @@ public class EmpresaService {
         if (stored == null) {
             return false;
         }
+        
         if (stored.startsWith("$2")) {
             return passwordEncoder.matches(raw, stored);
         }

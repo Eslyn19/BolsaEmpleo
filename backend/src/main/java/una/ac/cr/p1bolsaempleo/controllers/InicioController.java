@@ -31,6 +31,7 @@ public class InicioController {
     public ResponseEntity<?> buscar(@RequestParam(required = false) List<Integer> caracteristicas) {
         Map<Caracteristica, List<Caracteristica>> arbolMap = caracteristicaService.arbolHojasActivas();
         List<Map<String, Object>> arbol = new ArrayList<>();
+        
         arbolMap.forEach((padre, hijos) -> {
             String nombrePadre = padre != null ? padre.getNombre() : "Sin categoría";
             Integer idPadre = padre != null ? padre.getId() : 0;
@@ -39,6 +40,7 @@ public class InicioController {
                     "hijos", hijos
             ));
         });
+        
         List<Puesto> puestos = puestoService.buscarPublicosPorCaracteristicas(caracteristicas);
         return ResponseEntity.ok(Map.of("arbol", arbol, "puestos", puestos));
     }

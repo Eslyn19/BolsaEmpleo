@@ -1,0 +1,69 @@
+/* ─── Shell ───────────────────────────────────────────────── */
+.lg-shell { min-height: 100vh; background: #060912; position: relative; overflow: hidden; }
+.lg-bg    { position: absolute; inset: 0; z-index: 0; }
+.lg-center {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+
+/* ─── Card ────────────────────────────────────────────────── */
+.lg-card {
+  width: 100%; max-width: 380px;
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px; padding: 40px 36px;
+  box-shadow: 0 24px 64px rgba(0,0,0,.5);
+}
+.lg-logo  { height: 48px; display: block; margin: 0 auto 20px; filter: drop-shadow(0 2px 12px rgba(233,69,245,.5)); }
+.lg-title { color: white; text-align: center; font-weight: 700; font-size: 1.4rem; margin-bottom: 28px; }
+
+/* ─── Form ────────────────────────────────────────────────── */
+.lg-field       { margin-bottom: 14px; }
+.lg-field--last { margin-bottom: 20px; }
+.lg-label { display: block; color: rgba(255,255,255,.65); font-size: 0.83rem; margin-bottom: 5px; }
+.lg-input {
+  width: 100%; padding: 10px 12px; box-sizing: border-box;
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14);
+  border-radius: 8px; color: white; font-size: 0.9rem; outline: none;
+}
+.lg-error {
+  background: rgba(220,38,38,.15); border: 1px solid rgba(220,38,38,.3);
+  color: #fca5a5; border-radius: 8px; padding: 9px 12px;
+  font-size: 0.83rem; margin-bottom: 16px; text-align: center;
+}
+.lg-btn-submit {
+  width: 100%; padding: 11px;
+  background: linear-gradient(135deg, #e945f5, #7c3aed, #2563eb);
+  border: none; border-radius: 8px; color: white;
+  font-weight: 700; font-size: 0.95rem; cursor: pointer;
+  box-shadow: 0 4px 20px rgba(233,69,245,.3); transition: opacity .2s;
+}
+.lg-btn-submit:disabled { opacity: .6; cursor: not-allowed; }
+
+/* ─── Footer / register links ─────────────────────────────── */
+.lg-footer      { margin-top: 24px; border-top: 1px solid rgba(255,255,255,.08); padding-top: 20px; }
+.lg-footer-text { color: rgba(255,255,255,.35); font-size: 0.78rem; text-align: center; margin-bottom: 12px; }
+.lg-register-links { display: flex; gap: 10px; }
+.lg-register-btn {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14);
+  border-radius: 9px; color: rgba(255,255,255,.75);
+  font-size: 0.85rem; font-weight: 600; text-decoration: none;
+  transition: background .2s, border-color .2s, color .2s;
+}
+.lg-register-btn:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.25); color: white; }
+
+/* ─── Home button ─────────────────────────────────────────── */
+.lg-home-wrap { margin-top: 20px; display: flex; justify-content: center; }
+.lg-home-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+  color: rgba(255,255,255,.45); text-decoration: none;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.lg-home-btn:hover { background: rgba(233,69,245,.2); color: white; border-color: rgba(233,69,245,.5); }

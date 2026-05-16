@@ -1,29 +1,46 @@
 import { useEffect, useState } from 'react'
 import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import { api } from '../../services/api'
+import Dither from '../../components/Dither'
+import './AdminDashboard.css'
 
 function Dashboard() {
   const [stats, setStats] = useState(null)
   useEffect(() => { api.get('/admin/dashboard').then(setStats).catch(() => {}) }, [])
+
+  const navCards = [
+    { to: '/admin/empresas', emoji: '🏢', label: 'Aprobar empresas', sub: 'Revisa solicitudes pendientes' },
+    { to: '/admin/oferentes', emoji: '👤', label: 'Aprobar oferentes', sub: 'Gestiona nuevos registros' },
+    { to: '/admin/caracteristicas', emoji: '🏷️', label: 'Características', sub: 'Administra el árbol de skills' },
+  ]
+
   return (
-    <div>
-      <h2>Resumen</h2>
+    <div className="ad-dashboard">
+      <div className="ad-eyebrow">Panel de Administración</div>
+      <h1 className="ad-hero-title">Resumen</h1>
+
       {stats && (
-        <div className="stats-grid">
-          <div className="stat-card">
-            <div className="stat-number">{stats.empresasPendientes}</div>
-            <div className="stat-label">Empresas pendientes</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-number">{stats.oferentesPendientes}</div>
-            <div className="stat-label">Oferentes pendientes</div>
-          </div>
+        <div className="ad-stats">
+          {[
+            { n: stats.empresasPendientes,  label: 'Empresas pendientes'  },
+            { n: stats.oferentesPendientes, label: 'Oferentes pendientes' },
+          ].map(s => (
+            <div key={s.label} className="ad-stat-card">
+              <div className="ad-stat-num">{s.n}</div>
+              <div className="ad-stat-label">{s.label}</div>
+            </div>
+          ))}
         </div>
       )}
-      <div className="dash-nav">
-        <Link to="/admin/empresas">Aprobar empresas</Link>
-        <Link to="/admin/oferentes">Aprobar oferentes</Link>
-        <Link to="/admin/caracteristicas">Características</Link>
+
+      <div className="ad-nav-cards">
+        {navCards.map(c => (
+          <Link key={c.to} to={c.to} className="ad-nav-card">
+            <div className="ad-nav-card-emoji">{c.emoji}</div>
+            <div className="ad-nav-card-label">{c.label}</div>
+            <div className="ad-nav-card-sub">{c.sub}</div>
+          </Link>
+        ))}
       </div>
     </div>
   )
@@ -44,28 +61,32 @@ function Empresas() {
   }
 
   return (
-    <div>
-      <h2>Empresas pendientes</h2>
+    <div className="ad-approval-page">
+      <h2 className="ad-page-title">Empresas pendientes</h2>
       {lista.length === 0 ? (
-        <div className="card"><p>No hay empresas pendientes.</p></div>
-      ) : lista.map(e => (
-        <div key={e.idUsuario} className="card">
-          <div className="card-title">{e.nombre}</div>
-          <p>{e.correo} · {e.ubicacion}</p>
-          <p>{e.descripcion}</p>
-          <div className="card-actions">
-            <select value={tipo[e.idUsuario] || ''}
-              onChange={ev => setTipo({ ...tipo, [e.idUsuario]: ev.target.value })}
-              style={{ padding: '6px 10px', borderRadius: 6, border: '1px solid var(--border)', fontSize: '0.875rem' }}>
-              <option value="">Tipo de empresa…</option>
-              <option value="Pública">Pública</option>
-              <option value="Privada">Privada</option>
-            </select>
-            <button className="btn btn-primary btn-sm" onClick={() => aprobar(e.idUsuario)}>Aprobar</button>
-            <button className="btn btn-danger btn-sm" onClick={() => rechazar(e.idUsuario)}>Rechazar</button>
-          </div>
+        <div className="ad-card ad-empty-state"><p>No hay empresas pendientes.</p></div>
+      ) : (
+        <div className="grid">
+          {lista.map(e => (
+            <div key={e.idUsuario} className="ad-card" style={{ padding: 20 }}>
+              <div className="ad-empresa-name">{e.nombre}</div>
+              <p className="ad-empresa-meta">{e.correo} · {e.ubicacion}</p>
+              <p className="ad-empresa-desc">{e.descripcion}</p>
+              <div className="ad-empresa-actions">
+                <select value={tipo[e.idUsuario] || ''}
+                  onChange={ev => setTipo({ ...tipo, [e.idUsuario]: ev.target.value })}
+                  className="ad-select">
+                  <option value="">Tipo de empresa…</option>
+                  <option value="Pública">Pública</option>
+                  <option value="Privada">Privada</option>
+                </select>
+                <button className="ad-btn-solid" onClick={() => aprobar(e.idUsuario)}>Aprobar</button>
+                <button className="ad-btn-danger" onClick={() => rechazar(e.idUsuario)}>Rechazar</button>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   )
 }
@@ -84,28 +105,32 @@ function Oferentes() {
   }
 
   return (
-    <div>
-      <h2>Oferentes pendientes</h2>
+    <div className="ad-approval-page">
+      <h2 className="ad-page-title">Oferentes pendientes</h2>
       {lista.length === 0 ? (
-        <div className="card"><p>No hay oferentes pendientes.</p></div>
-      ) : lista.map(o => (
-        <div key={o.idUsuario} className="card">
-          <div className="card-title">{o.nombre} {o.apellido}</div>
-          <p>{o.correo} · {o.nacionalidad}</p>
-          <div className="card-actions">
-            <button className="btn btn-primary btn-sm" onClick={() => aprobar(o.idUsuario)}>Aprobar</button>
-            <button className="btn btn-danger btn-sm" onClick={() => rechazar(o.idUsuario)}>Rechazar</button>
-          </div>
+        <div className="ad-card ad-empty-state"><p>No hay oferentes pendientes.</p></div>
+      ) : (
+        <div className="grid">
+          {lista.map(o => (
+            <div key={o.idUsuario} className="ad-card" style={{ padding: 20 }}>
+              <div className="ad-oferente-name">{o.nombre} {o.apellido}</div>
+              <p className="ad-oferente-meta">{o.correo} · {o.nacionalidad}</p>
+              <div className="ad-oferente-actions">
+                <button className="ad-btn-solid" onClick={() => aprobar(o.idUsuario)}>Aprobar</button>
+                <button className="ad-btn-danger" onClick={() => rechazar(o.idUsuario)}>Rechazar</button>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   )
 }
 
 function Caracteristicas() {
-  const [data, setData] = useState(null)
-  const [parentId, setParentId] = useState(null)
-  const [nombre, setNombre] = useState('')
+  const [data, setData]               = useState(null)
+  const [parentId, setParentId]       = useState(null)
+  const [nombre, setNombre]           = useState('')
   const [padreSelect, setPadreSelect] = useState('')
 
   function cargar(pid) {
@@ -125,70 +150,91 @@ function Caracteristicas() {
     cargar(parentId)
   }
 
-  if (!data) return <p>Cargando...</p>
+  if (!data) return <div style={{ textAlign: 'center', paddingTop: 80, color: 'rgba(255,255,255,.4)' }}>Cargando...</div>
 
   return (
-    <div>
-      <h2>Características</h2>
+    <div className="ad-approval-page">
+      <h2 className="ad-page-title">Características</h2>
+
       {parentId != null && (
-        <button className="btn btn-outline btn-sm" onClick={() => cargar(null)} style={{ marginBottom: 16 }}>
+        <button className="ad-btn-outline" style={{ marginBottom: 20 }} onClick={() => cargar(null)}>
           ← Volver a raíces
         </button>
       )}
+
       <div className="grid" style={{ marginBottom: 24 }}>
         {data.items.map(c => (
-          <div key={c.id} className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <span style={{ fontWeight: 600 }}>{c.nombre}</span>
-              <span className={`badge ${c.activo ? 'badge-green' : 'badge-gray'}`} style={{ marginLeft: 10 }}>
+          <div key={c.id} className="ad-card ad-char-item">
+            <div className="ad-char-info">
+              <span className="ad-char-name">{c.nombre}</span>
+              <span className={`ad-badge ${c.activo ? 'ad-badge--active' : 'ad-badge--inactive'}`}>
                 {c.activo ? 'Activa' : 'Inactiva'}
               </span>
             </div>
-            <div className="card-actions">
-              <button className="btn btn-outline btn-sm" onClick={() => cargar(c.id)}>Ver hijos</button>
-              <button className="btn btn-outline btn-sm" onClick={() => toggle(c.id)}>Toggle</button>
+            <div className="ad-char-actions">
+              <button className="ad-btn-outline" style={{ padding: '5px 12px', fontSize: '0.8rem' }} onClick={() => cargar(c.id)}>Ver hijos</button>
+              <button className="ad-btn-outline" style={{ padding: '5px 12px', fontSize: '0.8rem' }} onClick={() => toggle(c.id)}>Toggle</button>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="card">
-        <h3>Agregar característica</h3>
-        <form onSubmit={crear} style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+      <div className="ad-card">
+        <div className="ad-section-label">Agregar característica</div>
+        <form onSubmit={crear} className="ad-char-form">
           <input placeholder="Nombre" value={nombre} onChange={e => setNombre(e.target.value)} required
-            style={{ flex: 1, minWidth: 160, padding: '8px 12px', border: '1px solid var(--border)', borderRadius: 6 }} />
-          <select value={padreSelect} onChange={e => setPadreSelect(e.target.value)} required
-            style={{ padding: '8px 12px', border: '1px solid var(--border)', borderRadius: 6 }}>
+            className="ad-input" style={{ flex: 1, minWidth: 160 }} />
+          <select value={padreSelect} onChange={e => setPadreSelect(e.target.value)} required className="ad-select">
             <option value="">Padre…</option>
             {data.padresSelect.map(p => <option key={p.id} value={p.id}>{p.nombre}</option>)}
           </select>
-          <button type="submit" className="btn btn-primary">Agregar</button>
+          <button type="submit" className="ad-btn-solid">Agregar</button>
         </form>
       </div>
     </div>
   )
 }
 
+// Agrupar todos los componentes
 export default function AdminDashboard() {
   const navigate = useNavigate()
   function logout() { localStorage.clear(); navigate('/') }
 
   return (
-    <>
-      <nav className="navbar">
-        <Link to="/admin" className="navbar-brand" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <img src="/logo.png" alt="Job Connect" style={{ height: 34, width: 'auto' }} />
-          <span>Administrador</span>
+    <div className="ad-shell">
+      <div className="ad-bg">
+        <Dither
+          waveColor={[0.5, 0.5, 0.5]}
+          disableAnimation
+          enableMouseInteraction
+          mouseRadius={0.3}
+          colorNum={13.7}
+          waveAmplitude={0.24}
+          waveFrequency={10}
+          waveSpeed={0.02}
+        />
+        <div className="ad-bg-overlay" />
+      </div>
+
+      <nav className="ad-nav">
+        <Link to="/admin" className="ad-nav-brand">
+          <img src="/logo.png" alt="Job Connect" className="ad-nav-logo" />
+          <span className="ad-nav-title">Administrador</span>
         </Link>
-        <div className="navbar-links">
-          <Link to="/admin">Dashboard</Link>
-          <Link to="/admin/empresas">Empresas</Link>
-          <Link to="/admin/oferentes">Oferentes</Link>
-          <Link to="/admin/caracteristicas">Características</Link>
-          <button className="btn btn-glass btn-sm" onClick={logout}>Salir</button>
+        <div className="ad-nav-links">
+          {[
+            ['/admin', 'Dashboard'],
+            ['/admin/empresas', 'Empresas'],
+            ['/admin/oferentes', 'Oferentes'],
+            ['/admin/caracteristicas','Características'],
+          ].map(([to, label]) => (
+            <Link key={to} to={to} className="ad-nav-link">{label}</Link>
+          ))}
+          <button onClick={logout} className="ad-nav-logout">Salir</button>
         </div>
       </nav>
-      <div className="page">
+
+      <div className="page ad-page-content">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="empresas" element={<Empresas />} />
@@ -196,6 +242,6 @@ export default function AdminDashboard() {
           <Route path="caracteristicas" element={<Caracteristicas />} />
         </Routes>
       </div>
-    </>
+    </div>
   )
 }

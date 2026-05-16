@@ -10,6 +10,7 @@ const card = {
   borderRadius: 14,
   boxShadow: '0 4px 24px rgba(0,0,0,.8)',
 }
+
 const solidBtn = {
   background: '#35b389',
   color: 'white',
@@ -21,6 +22,7 @@ const solidBtn = {
   cursor: 'pointer',
   transition: 'opacity .2s',
 }
+
 const outlineBtn = {
   background: 'transparent',
   border: '1px solid rgba(255,255,255,.2)',
@@ -31,20 +33,20 @@ const outlineBtn = {
   fontWeight: 500,
   cursor: 'pointer',
 }
+
 const rowItem = {
   display: 'flex', justifyContent: 'space-between', alignItems: 'center',
   background: 'rgba(255,255,255,.08)', borderRadius: 10, padding: '10px 14px',
   border: '1px solid rgba(255,255,255,.1)',
 }
 
-// ─── Dashboard (inicio) ──────────────────────────────────────────
 function Dashboard() {
   const [info, setInfo] = useState(null)
   useEffect(() => { api.get('/oferente/dashboard').then(setInfo).catch(() => {}) }, [])
 
   const cards = [
     { to: '/oferente/habilidades', emoji: '⚡', label: 'Mis habilidades', sub: 'Gestiona tus habilidades técnicas' },
-    { to: '/oferente/cv',          emoji: '📄', label: 'Mi CV',           sub: 'Sube y actualiza tu currículum'   },
+    { to: '/oferente/cv', emoji: '📄', label: 'Mi CV', sub: 'Sube y actualiza tu currículum'   },
   ]
 
   return (
@@ -89,7 +91,6 @@ function Dashboard() {
   )
 }
 
-// ─── Habilidades ─────────────────────────────────────────────────
 function Habilidades() {
   const [data, setData]     = useState(null)
   const [actual, setActual] = useState(null)
@@ -222,11 +223,10 @@ function Habilidades() {
   )
 }
 
-// ─── CV ──────────────────────────────────────────────────────────
 function CV() {
-  const [rutaCV, setRutaCV]     = useState('')
-  const [msg, setMsg]           = useState('')
-  const [error, setError]       = useState('')
+  const [rutaCV, setRutaCV] = useState('')
+  const [msg, setMsg] = useState('')
+  const [error, setError] = useState('')
   const [dragging, setDragging] = useState(false)
   const [fileName, setFileName] = useState('')
   const inputRef = useRef(null)
@@ -334,7 +334,6 @@ function CV() {
   )
 }
 
-// ─── Shell ───────────────────────────────────────────────────────
 export default function OferenteDashboard() {
   const navigate = useNavigate()
   function logout() { localStorage.clear(); navigate('/') }
