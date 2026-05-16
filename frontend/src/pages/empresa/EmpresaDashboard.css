@@ -127,4 +127,29 @@
 .ed-candidato-card { padding: 20px; }
 .ed-candidato-name { font-weight: 700; font-size: 1rem; color: white; margin-bottom: 4px; }
 .ed-candidato-meta { color: rgba(255,255,255,.45); font-size: 0.875rem; margin: 0 0 10px; }
-.ed-candidato-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.ed-candidato-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.ed-candidato-btn {
+  background: rgba(48,139,205,.12); border: 1px solid rgba(48,139,205,.3);
+  border-radius: 8px; padding: 6px 14px;
+  color: white; font-size: 0.95rem; font-weight: 700;
+  cursor: pointer; text-align: left;
+  transition: background .15s, border-color .15s;
+}
+.ed-candidato-btn:hover { background: rgba(48,139,205,.22); border-color: rgba(48,139,205,.55); }
+.ed-candidato-btn--active { background: rgba(48,139,205,.28); border-color: #308bcd; }
+
+.ed-candidato-selected {
+  border-color: #308bcd !important;
+  box-shadow: 0 0 0 2px rgba(48,139,205,.25), 0 4px 24px rgba(0,0,0,.7);
+}
+
+.ed-confirm-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+  background: rgba(2,13,16,.97); border-top: 1px solid rgba(48,139,205,.35);
+  padding: 14px 24px;
+}
+.ed-confirm-bar-inner {
+  max-width: 780px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+}

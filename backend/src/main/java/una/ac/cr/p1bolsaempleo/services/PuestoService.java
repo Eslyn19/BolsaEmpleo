@@ -169,27 +169,9 @@ public class PuestoService {
         if (!"APROBADO".equalsIgnoreCase(est)) {
             throw new IllegalStateException("El oferente no está aprobado");
         }
-        if (!oferenteCumpleCaracteristicas(idOferente, p)) {
-            throw new IllegalStateException("El oferente no cumple las habilidades del puesto");
-        }
         p.setOferenteAsignado(o);
         p.setActivo((byte) 0);
         puestoRepository.save(p);
-    }
-
-    private boolean oferenteCumpleCaracteristicas(String idOferente, Puesto puesto) {
-        Set<Integer> requeridas = puesto.getCaracteristicas().stream()
-                .map(Caracteristica::getId)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toSet());
-        if (requeridas.isEmpty()) {
-            return true;
-        }
-        List<Oferentehabilidad> habs = oferenteHabilidadRepository.findByOferente(idOferente);
-        Set<Integer> tiene = habs.stream()
-                .map(oh -> oh.getIdCaracteristica().getId())
-                .collect(Collectors.toSet());
-        return tiene.containsAll(requeridas);
     }
 
     @Transactional

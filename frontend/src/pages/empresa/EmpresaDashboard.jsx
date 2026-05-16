@@ -180,38 +180,85 @@ function Candidatos() {
   const { id } = useParams()
   const navigate = useNavigate()
   const [candidatos, setCandidatos] = useState([])
-  const [error, setError]           = useState('')
+  const [seleccionado, setSeleccionado] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
   useEffect(() => { api.get(`/empresa/puestos/${id}/candidatos`).then(setCandidatos).catch(() => {}) }, [id])
 
-  async function asignar(idOferente) {
+  function toggleSeleccion(c) {
+    setSeleccionado(prev => prev?.idUsuario === c.idUsuario ? null : c)
+    setError('')
+  }
+
+  async function confirmar() {
+    if (!seleccionado) return
+    setLoading(true)
+    setError('')
     try {
-      await api.post(`/empresa/puestos/${id}/asignar-candidato`, { idOferente })
+      await api.post(`/empresa/puestos/${id}/asignar-candidato`, { idOferente: seleccionado.idUsuario })
       navigate('/empresa/buscar-puestos')
-    } catch (err) { setError(err.message) }
+    } catch (err) {
+      setError(err.message)
+      setLoading(false)
+    }
   }
 
   return (
-    <div className="ed-page">
-      <h2 style={{ color: 'white', marginBottom: 24 }}>Candidatos compatibles</h2>
+    <div className="ed-page" style={{ paddingBottom: seleccionado ? 100 : 32 }}>
+      <h2 style={{ color: 'white', marginBottom: 8 }}>Candidatos compatibles</h2>
+      <p style={{ color: 'rgba(255,255,255,.4)', fontSize: '0.875rem', marginBottom: 24 }}>
+        Selecciona un candidato para asignarlo al puesto.
+      </p>
       {error && <div className="ed-error-msg">{error}</div>}
       {candidatos.length === 0 ? (
         <div className="ed-card ed-empty-state"><p>No hay candidatos disponibles.</p></div>
       ) : (
         <div className="grid">
-          {candidatos.map(c => (
-            <div key={c.idOferente} className="ed-card ed-candidato-card">
-              <div className="ed-candidato-name">{c.nombre} {c.apellido}</div>
-              <p className="ed-candidato-meta">{c.correo}</p>
-              <div className="ed-candidato-badges">
-                <span className="ed-badge ed-badge--blue">Coincidencia: {c.porcentajeCoincidencia}%</span>
-                <span className="ed-badge ed-badge--dim">{c.coincidencias}/{c.totalRequeridas} requisitos</span>
+          {candidatos.map(c => {
+            const activo = seleccionado?.idUsuario === c.idUsuario
+            return (
+              <div
+                key={c.idUsuario}
+                className={`ed-card ed-candidato-card${activo ? ' ed-candidato-selected' : ''}`}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
+                  <button
+                    className={`ed-candidato-btn${activo ? ' ed-candidato-btn--active' : ''}`}
+                    onClick={() => toggleSeleccion(c)}
+                  >
+                    {c.nombre} {c.apellido}
+                  </button>
+                  {activo && <span className="ed-badge ed-badge--green" style={{ flexShrink: 0 }}>Seleccionado</span>}
+                </div>
+                <p className="ed-candidato-meta">{c.correo}</p>
+                <div className="ed-candidato-badges">
+                  <span className={`ed-badge ${c.porcentajeEncaje === 100 ? 'ed-badge--green' : c.porcentajeEncaje >= 50 ? 'ed-badge--blue' : 'ed-badge--dim'}`}>
+                    {c.porcentajeEncaje}% coincidencia
+                  </span>
+                  <span className="ed-badge ed-badge--dim">{c.coincidencias}/{c.totalRequeridas} requisitos</span>
+                </div>
               </div>
-              <button className="ed-btn-solid" style={{ padding: '7px 16px', fontSize: '0.8rem' }} onClick={() => asignar(c.idOferente)}>
-                Asignar candidato
+            )
+          })}
+        </div>
+      )}
+
+      {seleccionado && (
+        <div className="ed-confirm-bar">
+          <div className="ed-confirm-bar-inner">
+            <span style={{ color: 'rgba(255,255,255,.7)', fontSize: '0.875rem' }}>
+              {seleccionado.nombre} {seleccionado.apellido} · {seleccionado.porcentajeEncaje}% coincidencia
+            </span>
+            <div style={{ display: 'flex', gap: 10 }}>
+              <button className="ed-btn-outline" style={{ padding: '8px 18px' }} onClick={() => setSeleccionado(null)}>
+                Cancelar
+              </button>
+              <button className="ed-btn-solid" style={{ padding: '8px 20px' }} onClick={confirmar} disabled={loading}>
+                {loading ? 'Asignando…' : 'Confirmar asignación'}
               </button>
             </div>
-          ))}
+          </div>
         </div>
       )}
     </div>
